@@ -69,8 +69,12 @@ The focus on the design of the game engine have been on making it as generic
  Instead of directly using EIS data types, we have implemented support for
  converters, which convert percepts and actions to and from foreign data
  types.
- An agent in the game engine is an entity capable of performing actions
- and gathering percepts.
+ 
+\end_layout
+
+\begin_layout Standard
+An agent in the game engine is an entity capable of performing actions and
+ gathering percepts.
  An agent controller is connected to an agent and knows how to receive actions
  and send percepts to an environment.
  
@@ -89,7 +93,11 @@ We have designed our game engine so that all agents have a thread of their
  It also means that the properties of agents can be more fine grained, eg.
  an agent's speed can be given as an integer indicating the milliseconds
  it takes to move from one tile to another.
- GOAL, however, seems to be designed to run all agents sequentially in a
+ 
+\end_layout
+
+\begin_layout Standard
+GOAL, however, seems to be designed to run all agents sequentially in a
  single thread, which means that if a single agent blocks in the call to
  get all its percepts from the environment (because the environment only
  returns when the agent’s current action is fully performed), no other agents
@@ -103,7 +111,11 @@ We have designed our game engine so that all agents have a thread of their
 nt through GOAL; the agent may not have any new information in each percept
  cycle, and it may sit idle, waiting for the next percept cycle when it
  has finished the action.
- In order to have a more dynamic, responsive and efficient system, we have
+ 
+\end_layout
+
+\begin_layout Standard
+In order to have a more dynamic, responsive and efficient system, we have
  chosen to launch a GOAL environment for each agent.
  This means that the agents will have to share communicate through the environme
 nt.
