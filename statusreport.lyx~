@@ -1,0 +1,263 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Our project is about designing a multiagent system with goal, in doing this
+ we will design and implement an engine for designing environments in which
+ agents can act.
+ The engine will be capable of running multiple agents and they will be
+ able to communicate with each other.
+ This engine can be used to fill multiple roles such as designing a video
+ game, design a world populated only with agents or even be used for testing
+ individual agents.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will use a general interface for communicating with agents, so
+ that it may work with any language.
+ But it will also come with a full implementation of EIS
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Environment Standard Interface
+\end_layout
+
+\end_inset
+
+ which is a standardized interface between environments and agents, which
+ supported to work with languages such as Goal and Jason.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will be completely modularized using the MVC
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Model view controller
+\end_layout
+
+\end_inset
+
+ design pattern, this will tie into our idea of making an engine capable
+ of handling different Agent languages, since the model
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+inhabitants of the world in the engine
+\end_layout
+
+\end_inset
+
+, will not care if they are controlled by a Jason program or a Goal program.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will come with a simple 2D top down view using Unity
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+www.unity3d.com
+\end_layout
+
+\end_inset
+
+ and a Top down view in a text based console.
+ This will allow the user of the engine to design and test their agent program
+ in a fast loading console but will allow him to switch to a nicer looking
+ environment once the program is working as expected.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will run using .NET platform fully capable of running in the Mono
+ platform as well as the windows platform, The EIS implementation is designed
+ for Java and will communicate with our engine using XML encoding.
+\end_layout
+
+\begin_layout Section
+Game Engine Design
+\end_layout
+
+\begin_layout Standard
+The focus on the design of the game engine have been on making it as generic
+ as possible, and we have been careful not to tie it to GOAL or EIS.
+ 
+\end_layout
+
+\begin_layout Standard
+An 
+\emph on
+agent
+\emph default
+ in the game engine is an entity capable of performing actions and gathering
+ percepts.
+ An 
+\emph on
+agent controller
+\emph default
+ is connected to an agent and knows how to receive actions from and send
+ percepts to an environment.
+ The 
+\emph on
+agent server
+\emph default
+ is responsible for attaching agents to agent controllers.
+\end_layout
+
+\begin_layout Standard
+We have implemented the general concepts of percepts and actions without
+ requirements as to what they contain and how they are structured.
+ Instead, the designer writes converters, which can transform percepts and
+ actions to and from foreign types.
+ 
+\end_layout
+
+\begin_layout Section
+Interfacing with EIS
+\end_layout
+
+\begin_layout Standard
+For reasons explained below, we have chosen to have each agent running as
+ a single GOAL instance with its own EIS environment.
+ 
+\end_layout
+
+\begin_layout Standard
+When the environment is created, it contacts the agent server through a
+ provided socket and receives another socket for communicating with the
+ agent controller, to which it sends the name of the agent.
+ On the server side, the agent controller requests a reference to the server
+ instance of the named agent and -- if it exists -- assumes control of it.
+\end_layout
+
+\begin_layout Standard
+The agent controller continously listens on the socket, until it receives
+ an XML encoded 
+\family typewriter
+EISAction
+\family default
+ from the environment.
+ When this happens, it uses a converter to transform it into a 
+\family typewriter
+GameAction
+\family default
+, and queues it on the agent.
+ The request to receive all percepts is also sent as an action.
+ When it is received by the server, it blocks until the agent has completed
+ its current task, and then sends the percepts back to the environment,
+ which is now listening on the socket.
+\end_layout
+
+\begin_layout Subsection
+GOAL and asynchronous agents
+\end_layout
+
+\begin_layout Standard
+We have designed our game engine so that all agents have a thread of their
+ own, meaning they can perform actions and receive percepts independent
+ of other agents' states.
+ This allows for a more fluently running game, as agents do not stop and
+ start actions in synchronization.
+ It also means that the properties of agents can be more fine grained, eg.
+ an agent's speed can be given as an integer indicating the milliseconds
+ it takes to move from one tile to another.
+ 
+\end_layout
+
+\begin_layout Standard
+GOAL, however, seems to be designed to run all agents sequentially in a
+ single thread, which means that if a single agent blocks in the call to
+ get all its percepts from the environment (because the environment only
+ returns when the agent’s current action is fully performed), no other agents
+ can continue execution until the call returns.
+ One way to circumvent this is to use 
+\emph on
+durative actions
+\emph default
+ (as explained in the GOAL user manual).
+ With this method an ongoing action is started through GOAL, and in each
+ percept cycle GOAL evaluates whether the agent should continue executing
+ the action or choose another.
+ The problem with this approach is that we are effectively polling the environme
+nt through GOAL; the agent may not have any new information in each percept
+ cycle, and it may sit idle, waiting for the next percept cycle when it
+ has finished the action.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to have a more dynamic, responsive and efficient system, we have
+ chosen to launch a GOAL environment for each agent.
+ This means that the agents will have to share communicate through the environme
+nt.
+\end_layout
+
+\end_body
+\end_document
