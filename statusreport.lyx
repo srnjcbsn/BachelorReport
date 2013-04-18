@@ -60,27 +60,166 @@
 \begin_body
 
 \begin_layout Section
+Overview
+\end_layout
+
+\begin_layout Standard
+Our project is about designing a multiagent system with goal, in doing this
+ we will design and implement an engine for designing environments in which
+ agents can act.
+ The engine will be capable of running multiple agents and they will be
+ able to communicate with each other.
+ This engine can be used to fill multiple roles such as designing a video
+ game, design a world populated only with agents or even be used for testing
+ individual agents.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will use a general interface for communicating with agents, so
+ that it may work with any language.
+ But it will also come with a full implementation of EIS
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Environment Standard Interface
+\end_layout
+
+\end_inset
+
+ which is a standardized interface between environments and agents, which
+ supported to work with languages such as Goal and Jason.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will be completely modularized using the MVC
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Model view controller
+\end_layout
+
+\end_inset
+
+ design pattern, this will tie into our idea of making an engine capable
+ of handling different Agent languages, since the model
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+inhabitants of the world in the engine
+\end_layout
+
+\end_inset
+
+, will not care if they are controlled by a Jason program or a Goal program.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will come with a simple 2D top down view using Unity
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+www.unity3d.com
+\end_layout
+
+\end_inset
+
+ and a Top down view in a text based console.
+ This will allow the user of the engine to design and test their agent program
+ in a fast loading console but will allow him to switch to a nicer looking
+ environment once the program is working as expected.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will run using .NET platform fully capable of running in the Mono
+ platform as well as the windows platform, The EIS implementation is designed
+ for Java and will communicate with our engine using XML encoding.
+\end_layout
+
+\begin_layout Section
 Game Engine Design
 \end_layout
 
 \begin_layout Standard
 The focus on the design of the game engine have been on making it as generic
  as possible, and we have been careful not to tie it to GOAL or EIS.
- Instead of directly using EIS data types, we have implemented support for
- converters, which convert percepts and actions to and from foreign data
- types.
  
 \end_layout
 
 \begin_layout Standard
-An agent in the game engine is an entity capable of performing actions and
- gathering percepts.
- An agent controller is connected to an agent and knows how to receive actions
- and send percepts to an environment.
+An 
+\emph on
+agent
+\emph default
+ in the game engine is an entity capable of performing actions and gathering
+ percepts.
+ An 
+\emph on
+agent controller
+\emph default
+ is connected to an agent and knows how to receive actions from and send
+ percepts to an environment.
+ The 
+\emph on
+agent server
+\emph default
+ is responsible for attaching agents to agent controllers.
+\end_layout
+
+\begin_layout Standard
+We have implemented the general concepts of percepts and actions without
+ requirements as to what they contain and how they are structured.
+ Instead, the designer writes converters, which can transform percepts and
+ actions to and from foreign types.
  
 \end_layout
 
 \begin_layout Section
+Interfacing with EIS
+\end_layout
+
+\begin_layout Standard
+For reasons explained below, we have chosen to have each agent running as
+ a single GOAL instance with its own EIS environment.
+ 
+\end_layout
+
+\begin_layout Standard
+When the environment is created, it contacts the agent server through a
+ provided socket and receives another socket for communicating with the
+ agent controller, to which it sends the name of the agent.
+ On the server side, the agent controller requests a reference to the server
+ instance of the named agent and -- if it exists -- assumes control of it.
+\end_layout
+
+\begin_layout Standard
+The agent controller continously listens on the socket, until it receives
+ an XML encoded 
+\family typewriter
+EISAction
+\family default
+ from the environment.
+ When this happens, it uses a converter to transform it into a 
+\family typewriter
+GameAction
+\family default
+, and queues it on the agent.
+ The request to receive all percepts is also sent as an action.
+ When it is received by the server, it blocks until the agent has completed
+ its current task, and then sends the percepts back to the environment,
+ which is now listening on the socket.
+\end_layout
+
+\begin_layout Subsection
 GOAL and asynchronous agents
 \end_layout
 
@@ -102,8 +241,11 @@ GOAL, however, seems to be designed to run all agents sequentially in a
  get all its percepts from the environment (because the environment only
  returns when the agent’s current action is fully performed), no other agents
  can continue execution until the call returns.
- One way to circumvent this is to use durative actions (as explained in
- the GOAL user manual).
+ One way to circumvent this is to use 
+\emph on
+durative actions
+\emph default
+ (as explained in the GOAL user manual).
  With this method an ongoing action is started through GOAL, and in each
  percept cycle GOAL evaluates whether the agent should continue executing
  the action or choose another.
