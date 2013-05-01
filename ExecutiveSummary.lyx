@@ -241,6 +241,196 @@ When an agent controller receives an action to be executed, its default
  percepts in response to actions.
 \end_layout
 
+\begin_layout Subsection
+Agents
+\end_layout
+
+\begin_layout Standard
+In this section we will explain how we plan to fuse the Agent Programming
+ Languages (APLs) with our world through our engine.
+\end_layout
+
+\begin_layout Standard
+In our world each agent will be represented as an entity, It won’t have
+ any behavior and function much like a shell or body for the Agent Program
+ (AP).
+ The AP on the other hand will function much like a brain for the agent
+ and will contain all its behaviors and knowledge, but only be able to act
+ through the agent and never outside its limitations.
+ If, for instance, the AP commanded the agent to go through a wall and if
+ the agent does not possess such an ability, it will be prevented from doing
+ that.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename OverviewEngineAgentsAI.png
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The agents in the engine follow commands given by an AP and return feedback
+ such as what they see or hear for the AP to interp
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Overview-AI-Agents-XMAS"
+
+\end_inset
+
+ret.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename StateDiagramAgentEngineAI.png
+	width 90text%
+
+\end_inset
+
+x
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+State diagram for the acq
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:State-diagram"
+
+\end_inset
+
+uisition and execution of an agent
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the AP wants to acquire an agent, the basic idea is that it will request
+ a certain available agent entity and take control of this entity.
+ This will all be done through a manager designed specifically for each
+ APL, so that it knows how to handle any special cases.
+ After the agent has been acquired, the AI will send a command describing
+ which actions it should perform and wait for the agent to perform them.
+ This sequence will be repeated until the connection between the agent and
+ the AI has been broken.
+ 
+\end_layout
+
+\begin_layout Section
+Interfacing with EIS
+\end_layout
+
+\begin_layout Standard
+All APLs that needs to interact with the world will need an interface designed
+ with our API.
+ Fortunately, a lot of APLs can use EIS (Environment Interface Standard).
+ Since our engine will be designed using C# and EIS is implemented in Java,
+ the plan is to use a local TCP connection between EIS and our engine (see
+ Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Interaction-between-GOAL,"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename OverviewOfGoalEISEngine.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Interaction-between-GOAL,"
+
+\end_inset
+
+Interaction between GOAL, EIS, and XMAS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Glossary
 \end_layout
