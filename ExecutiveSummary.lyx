@@ -72,8 +72,101 @@ LatexCommand tableofcontents
 Introduction
 \end_layout
 
+\begin_layout Standard
+Our project is about designing a multiagent system with goal, in doing this
+ we will design and implement an engine for designing environments in which
+ agents can act.
+ The engine will be capable of running multiple agents and they will be
+ able to communicate with each other.
+ This engine can be used to fill multiple roles such as designing a video
+ game, design a world populated only with agents or even be used for testing
+ individual agents.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will use a general interface for communicating with agents, so
+ that it can work with any language.
+ But it will also come with a full implementation of EIS
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Environment Standard Interface
+\end_layout
+
+\end_inset
+
+ which is a standardized interface between environments and agents, which
+ supported to work with languages such as Goal and Jason.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will be completely modularized using the MVC
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Model view controller
+\end_layout
+
+\end_inset
+
+ design pattern, this will tie into our idea of making an engine capable
+ of handling different Agent languages, since the model
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+inhabitants of the world in the engine
+\end_layout
+
+\end_inset
+
+, will not care if they are controlled by a Jason program or a Goal program.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will come with a simple 2D top down view using Unity
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+www.unity3d.com
+\end_layout
+
+\end_inset
+
+ and a Top down view in a text based console.
+ This will allow the user of the engine to design and test their agent program
+ in a fast loading console but will allow him to switch to a nicer looking
+ environment once the program is working as expected.
+ 
+\end_layout
+
+\begin_layout Standard
+The engine will run using .NET platform fully capable of running in the Mono
+ platform as well as the windows platform, The EIS implementation is designed
+ for Java and will communicate with our engine using XML encoding.
+\end_layout
+
 \begin_layout Subsection
 Motivation
+\end_layout
+
+\begin_layout Standard
+While the EIS standard makes it easy to set up a basic environment capable
+ of communicating with certain MAS languages, the user still has to design
+ the actual environment and display it.
+ Our goal is to provide an engine for designing a world in which agents
+ written in any MAS language (GOAL, Jason, etc.) can interact with each other
+ as well as the environment.
+ Furthermore, we will use the API to develop a world occupied by GOAL agents
+ with organizational behaviour.
 \end_layout
 
 \begin_layout Subsection
