@@ -59,23 +59,14 @@
 
 \begin_body
 
-\begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Introduction
 \end_layout
 
 \begin_layout Standard
-Our project is about designing a multiagent system with goal, in doing this
- we will design and implement an engine for designing environments in which
- agents can act.
+Our project is about designing a multiagent system with goal.
+ In doing this we will design and implement an engine for designing environments
+ in which agents can act.
  The engine will be capable of running multiple agents and they will be
  able to communicate with each other.
  This engine can be used to fill multiple roles such as designing a video
@@ -169,42 +160,37 @@ While the EIS standard makes it easy to set up a basic environment capable
  with organizational behaviour.
 \end_layout
 
-\begin_layout Subsection
-Multi Agent Systems
-\end_layout
-
-\begin_layout Subsubsection
-GOAL
-\end_layout
-
-\begin_layout Section
-Theory
-\end_layout
-
-\begin_layout Subsection
-Organizational Multi Agent Systems
-\end_layout
-
-\begin_layout Section
-GOAL and EIS
-\end_layout
-
-\begin_layout Part
-System Features
+\begin_layout Standard
+ 
 \end_layout
 
 \begin_layout Section
 Interface agnosticity
 \end_layout
 
-\begin_layout Section
-Virtual World
-\end_layout
-
 \begin_layout Standard
 The focus on the design of the game engine have been on making it as generic
  as possible, and we have been careful not to tie it to GOAL or EIS.
  
+\end_layout
+
+\begin_layout Standard
+We have implemented the general concepts of percepts and actions without
+ requirements as to what they contain and how they are structured.
+ Instead, the designer writes converters, which can transform percepts and
+ actions to and from foreign types.
+ 
+\end_layout
+
+\begin_layout Standard
+In the same way, we have not implemented a way of displaying the world.
+ Instead, we provide classes which can listen to events triggered by the
+ world and the entities in it.
+ These classes can then be used to produce any desired output.
+\end_layout
+
+\begin_layout Section
+Virtual World
 \end_layout
 
 \begin_layout Standard
@@ -227,14 +213,6 @@ agent server
  is responsible for attaching agents to agent controllers.
 \end_layout
 
-\begin_layout Standard
-We have implemented the general concepts of percepts and actions without
- requirements as to what they contain and how they are structured.
- Instead, the designer writes converters, which can transform percepts and
- actions to and from foreign types.
- 
-\end_layout
-
 \begin_layout Subsection
 Execution protocol
 \end_layout
@@ -251,36 +229,73 @@ We have designed our game engine so that all agents have a thread of their
  
 \end_layout
 
-\begin_layout Subsection
-Entities
+\begin_layout Standard
+When an agent controller receives an action to be executed, its default
+ behaviour is to command its associated agent to perform the action, and
+ then return immediately.
+ When it receives the request to return all percepts, it blocks until the
+ agent has some new percepts to be returned.
+ This allows us to let the APL backend process any new percepts when for
+ example the agent is moving.
+ This default behaviour can be overridden if the designer wants to return
+ percepts in response to actions.
 \end_layout
 
-\begin_layout Subsubsection
-Movement Blocking
+\begin_layout Section
+Glossary
 \end_layout
 
-\begin_layout Subsection
-Percepts
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+AP 
+\emph on
+Agent Program
 \end_layout
 
-\begin_layout Subsubsection
-Vision
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+APL 
+\emph on
+Agent Programming Language
 \end_layout
 
-\begin_layout Subsection
-Interacting with the world
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+EIS 
+\emph on
+Environment Interface Standard
+\emph default
+ -- A standard for connecting APs to environments, implemented in Java
 \end_layout
 
-\begin_layout Subsubsection
-Actions
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+GOAL An agent programming language
 \end_layout
 
-\begin_layout Subsubsection
-Events
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+MAS 
+\emph on
+Multi Agent System
 \end_layout
 
-\begin_layout Part
-Implementation
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+MVC 
+\emph on
+Model-View-Controller
+\emph default
+ -- A common design pattern
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+XMAS 
+\emph on
+Cross Platform Multi Agent System 
+\emph default
+-- name of the environment engine
 \end_layout
 
 \end_body
