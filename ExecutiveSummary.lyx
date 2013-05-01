@@ -246,11 +246,6 @@ Agents
 \end_layout
 
 \begin_layout Standard
-In this section we will explain how we plan to fuse the Agent Programming
- Languages (APLs) with our world through our engine.
-\end_layout
-
-\begin_layout Standard
 In our world each agent will be represented as an entity, It won’t have
  any behavior and function much like a shell or body for the Agent Program
  (AP).
@@ -284,23 +279,18 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The agents in the engine follow commands given by an AP and return feedback
- such as what they see or hear for the AP to interp
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Overview-AI-Agents-XMAS"
 
 \end_inset
 
-ret.
+The agents in the engine follow commands given by an AP and return feedback
+ such as what they see or hear for the AP to interpret.
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -330,14 +320,13 @@ x
 \begin_inset Caption
 
 \begin_layout Plain Layout
-State diagram for the acq
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:State-diagram"
 
 \end_inset
 
-uisition and execution of an agent
+State diagram for the acquisition and execution of an agent
 \end_layout
 
 \end_inset
@@ -398,6 +387,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename OverviewOfGoalEISEngine.png
+	width 90text%
 
 \end_inset
 
