@@ -59,90 +59,34 @@
 
 \begin_body
 
+\begin_layout Title
+Organizational Multi-Agent Systems in GOAL
+\end_layout
+
+\begin_layout Author
+Søren Jacobsen & Jannick Johnsen
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
 
 \begin_layout Standard
-Our project is about designing a multiagent system with goal.
- In doing this we will design and implement an engine for designing environments
- in which agents can act.
- The engine will be capable of running multiple agents and they will be
- able to communicate with each other.
- This engine can be used to fill multiple roles such as designing a video
- game, design a world populated only with agents or even be used for testing
- individual agents.
+In this executive summary we will document our efforts to design an API
+ for creation of MAS (Multi Agent System) environments and a reference implement
+ation developed with the GOAL agent programming language.
+ The API is written in C# and can be used to control multiple agents acting
+ and communicating asynchronously in a world.
+ As the API is for designing environments, the agents are supposed to receive
+ commands from and send percepts to a seperate agent programming language,
+ which implements the artificial intelligence of the agents.
  
 \end_layout
 
 \begin_layout Standard
-The engine will use a general interface for communicating with agents, so
- that it can work with any language.
- But it will also come with a full implementation of EIS
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Environment Standard Interface
-\end_layout
-
-\end_inset
-
- which is a standardized interface between environments and agents, which
- supported to work with languages such as Goal and Jason.
+In our reference implementation, we have built a tile based game on top
+ of the API, in which agents are controlled by GOAL programs.
  
-\end_layout
-
-\begin_layout Standard
-The engine will be completely modularized using the MVC
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Model view controller
-\end_layout
-
-\end_inset
-
- design pattern, this will tie into our idea of making an engine capable
- of handling different Agent languages, since the model
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-inhabitants of the world in the engine
-\end_layout
-
-\end_inset
-
-, will not care if they are controlled by a Jason program or a Goal program.
- 
-\end_layout
-
-\begin_layout Standard
-The engine will come with a simple 2D top down view using Unity
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-
-\family typewriter
-www.unity3d.com
-\end_layout
-
-\end_inset
-
- and a Top down view in a text based console.
- This will allow the user of the engine to design and test their agent program
- in a fast loading console but will allow him to switch to a nicer looking
- environment once the program is working as expected.
- 
-\end_layout
-
-\begin_layout Standard
-The engine will run using .NET platform fully capable of running in the Mono
- platform as well as the windows platform, The EIS implementation is designed
- for Java and will communicate with our engine using XML encoding.
 \end_layout
 
 \begin_layout Subsection
@@ -169,8 +113,8 @@ Interface agnosticity
 \end_layout
 
 \begin_layout Standard
-The focus on the design of the game engine have been on making it as generic
- as possible, and we have been careful not to tie it to GOAL or EIS.
+The focus of the design of the API have been on making it as generic as
+ possible, and we have been careful not to tie it to GOAL or EIS.
  
 \end_layout
 
@@ -198,14 +142,13 @@ An
 \emph on
 agent
 \emph default
- in the game engine is an entity capable of performing actions and gathering
- percepts.
+ in the API is an entity capable of performing actions and gathering percepts.
  An 
 \emph on
 agent controller
 \emph default
  is connected to an agent and knows how to receive actions from and send
- percepts to an environment.
+ percepts to the connected APL.
  The 
 \emph on
 agent server
@@ -218,14 +161,14 @@ Execution protocol
 \end_layout
 
 \begin_layout Standard
-We have designed our game engine so that all agents have a thread of their
- own, meaning they can perform actions and receive percepts independent
- of other agents' states.
+We have designed our API so that all agents have a thread of their own,
+ meaning they can perform actions and receive percepts independently of
+ other agents' states.
  This allows for a more fluently running game, as agents do not stop and
  start actions in synchronization.
  It also means that the properties of agents can be more fine grained, eg.
  an agent's speed can be given as an integer indicating the milliseconds
- it takes to move from one tile to another.
+ it takes to move from one tile to another (in a tile based world).
  
 \end_layout
 
@@ -313,7 +256,7 @@ status open
 
 \end_inset
 
-x
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -363,9 +306,8 @@ Interfacing with EIS
 All APLs that needs to interact with the world will need an interface designed
  with our API.
  Fortunately, a lot of APLs can use EIS (Environment Interface Standard).
- Since our engine will be designed using C# and EIS is implemented in Java,
- the plan is to use a local TCP connection between EIS and our engine (see
- Fig.
+ Since our engine is designed using C# and EIS is implemented in Java, we
+ use a local TCP connection between EIS and our engine (see Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -375,6 +317,36 @@ reference "fig:Interaction-between-GOAL,"
 
 ).
  
+\end_layout
+
+\begin_layout Standard
+As mentioned, all agents in the API execute asynchronously in their own
+ thread.
+ GOAL, however, seems to be designed to run all agents sequentially in a
+ single thread, which means that if a single agent blocks in the call to
+ get all its percepts from the environment (because the environment only
+ returns when the agent’s current action is fully performed), no other agents
+ can continue execution until the call returns.
+ One way to circumvent this is to use 
+\emph on
+durative actions
+\emph default
+ (as explained in the GOAL user manual).
+ With this method an ongoing action is started through GOAL, and in each
+ percept cycle GOAL evaluates whether the agent should continue executing
+ the action or choose another.
+ The problem with this approach is that we are effectively polling the environme
+nt through GOAL; the agent may not have any new information in each percept
+ cycle, and it may sit idle, waiting for the next percept cycle when it
+ has finished the action.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to have a more dynamic, responsive and efficient system, we have
+ chosen to launch a GOAL environment for each agent.
+ This means that the agents will have to share communicate through the environme
+nt.
 \end_layout
 
 \begin_layout Standard
@@ -416,6 +388,13 @@ Interaction between GOAL, EIS, and XMAS
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
