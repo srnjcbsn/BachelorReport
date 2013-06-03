@@ -104,8 +104,111 @@ While the EIS standard makes it easy to set up a basic environment capable
  with organizational behaviour.
 \end_layout
 
+\begin_layout Section
+Reference Implementation
+\end_layout
+
 \begin_layout Standard
+To showcase and test our engine, we have used it to create a simple environment
+ with a tile based world.
+ In this world, agents are tasked with finding packages in a maze and dropping
+ them at a tile containing a 
+\family typewriter
+dropzone
+\family default
+.
  
+\end_layout
+
+\begin_layout Standard
+Each agent is controlled by a separate GOAL instance connected to the environmen
+t.
+ Whenever new percepts are available to an agent, all its current percepts
+ are returned to GOAL, which chooses an appropriate action.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename TileWorldColoredScrot.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\family typewriter
+D
+\family default
+ (red) marks the dropzone, 
+\family typewriter
+X
+\family default
+s (green) are packages, 
+\family typewriter
+A
+\family default
+s (black) are agents and 
+\family typewriter
+W
+\family default
+s (grey) are walls
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family typewriter
+move(Direction)
+\family default
+ moves the agent one tile in the specified 
+\family typewriter
+Direction
+\family default
+.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family typewriter
+grab
+\family default
+ removes the package in the same tile as the agent (if any) from the world,
+ and marks the agent as carrying a package.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family typewriter
+drop
+\family default
+ adds a package to the world in the same tile as the agent (if it is carrying
+ a package) and marks the agent as not carrying a package.
 \end_layout
 
 \begin_layout Section
@@ -277,10 +380,6 @@ State diagram for the acquisition and execution of an agent
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -381,10 +480,6 @@ Interaction between GOAL, EIS, and XMAS
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
