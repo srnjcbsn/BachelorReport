@@ -116,16 +116,23 @@ To showcase and test our engine, we have used it to create a simple environment
 \family typewriter
 dropzone
 \family default
-.
+ (see figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:maze-scrot"
+
+\end_inset
+
+).
  
 \end_layout
 
 \begin_layout Standard
 Each agent is controlled by a separate GOAL instance connected to the environmen
-t.
+t via an EIS environmentin.
  Whenever new percepts are available to an agent, all its current percepts
- are returned to GOAL, which chooses an appropriate action.
- 
+ are returned to its GOAL instance, which choose an appropriate action.
+ The actions available to an agent is listed below.
 \end_layout
 
 \begin_layout Standard
@@ -149,7 +156,8 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-
+An initial configuration of the package grabber scenario.
+ 
 \family typewriter
 D
 \family default
@@ -166,6 +174,13 @@ s (black) are agents and
 W
 \family default
 s (grey) are walls
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:maze-scrot"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -209,6 +224,79 @@ drop
 \family default
  adds a package to the world in the same tile as the agent (if it is carrying
  a package) and marks the agent as not carrying a package.
+\end_layout
+
+\begin_layout Standard
+Additionally, we plan to implement a messaging action, allowing the agents
+ to communicate with each other.
+ This is particularly necessary when using GOAL, as the GOAL instances have
+ no knowledge of each other and ths cannot use the messaging system built
+ into GOAL.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename C:/Users/Søren/report/BachelorReport/sequenceDiagram.png
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+When the EIS method 
+\family typewriter
+performAction(
+\emph on
+Action
+\emph default
+)
+\family default
+ is called, it sends an XML representation of 
+\family typewriter
+\emph on
+Action
+\family default
+\emph default
+ to the engine over a socket, and immediately returns 
+\family typewriter
+null
+\family default
+.
+ Next, the GOAL instance begins its percept-action cycle, and calls the
+ EIS method 
+\family typewriter
+getAllPercepts
+\family default
+, which sends the 
+\family typewriter
+getAllPercepts
+\family default
+ action to the engine and 
+\family typewriter
+read
+\family default
+s on the socket until the engine has some useful percepts to deliver.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
