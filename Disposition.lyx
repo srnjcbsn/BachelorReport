@@ -68,16 +68,19 @@ LatexCommand tableofcontents
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
 
 \begin_layout Subsection
-Motivation
-\end_layout
-
-\begin_layout Subsection
-Multi Agent Systems
+Motivation 
 \end_layout
 
 \begin_layout Subsubsection
@@ -89,11 +92,48 @@ Theory
 \end_layout
 
 \begin_layout Subsection
-Organizational Multi Agent Systems
+Multi Agent Systems
+\end_layout
+
+\begin_layout Subsubsection
+Agents
+\end_layout
+
+\begin_layout Subsubsection
+Multi-Agent System Programming Languages
+\end_layout
+
+\begin_layout Standard
+Something about what MASPLs need to be able to do to support a MAS.
+ GOAL, Logic Programming.
+\end_layout
+
+\begin_layout Subsection
+System Design / Design Patterns
+\end_layout
+
+\begin_layout Subsubsection
+Factory Design Pattern
+\end_layout
+
+\begin_layout Subsubsection
+Model-View-Controller
+\end_layout
+
+\begin_layout Subsubsection
+Test Driven Development
+\end_layout
+
+\begin_layout Subsubsection
+Parallelism (?)
 \end_layout
 
 \begin_layout Section
-GOAL and EIS
+System Design Patterns (?)
+\end_layout
+
+\begin_layout Section
+Reference Implementation
 \end_layout
 
 \begin_layout Part
@@ -101,11 +141,15 @@ System Features
 \end_layout
 
 \begin_layout Section
-Interface agnosticity
+Overview
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
+GOAL implementation
+\end_layout
 
+\begin_layout Subsection
+EIS Environment
 \end_layout
 
 \begin_layout Section
@@ -113,15 +157,15 @@ Virtual World
 \end_layout
 
 \begin_layout Subsection
-Execution protocol
-\end_layout
-
-\begin_layout Subsection
 Entities
 \end_layout
 
 \begin_layout Subsubsection
-Movement Blocking
+Agents
+\end_layout
+
+\begin_layout Subsubsection
+Entity Modules
 \end_layout
 
 \begin_layout Subsection
@@ -144,8 +188,72 @@ Actions
 Events
 \end_layout
 
+\begin_layout Section
+Agent Controllers
+\end_layout
+
+\begin_layout Section
+Views
+\end_layout
+
+\begin_layout Section
+Execution Protocol
+\end_layout
+
 \begin_layout Part
 Implementation
+\end_layout
+
+\begin_layout Section
+Architecture
+\end_layout
+
+\begin_layout Section
+Reference Implementation
+\end_layout
+
+\begin_layout Section
+Engine
+\end_layout
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout Subsection
+Agent Controllers
+\end_layout
+
+\begin_layout Subsection
+Views
+\end_layout
+
+\begin_layout Section
+Execution Protocol
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Subsection
+Interfacing with different MAS Programming Languages (Interface Agnosticity)
+\end_layout
+
+\begin_layout Section
+Perspective / Reflection (?)
 \end_layout
 
 \end_body
