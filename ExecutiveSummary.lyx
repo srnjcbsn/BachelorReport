@@ -124,15 +124,11 @@ reference "fig:maze-scrot"
 \end_inset
 
 ).
- 
-\end_layout
-
-\begin_layout Standard
-Each agent is controlled by a separate GOAL instance connected to the environmen
-t via an EIS environmentin.
- Whenever new percepts are available to an agent, all its current percepts
- are returned to its GOAL instance, which choose an appropriate action.
- The actions available to an agent is listed below.
+ Agents are controlled by separate GOAL instances with an EIS environment,
+ which communicates with the XMAS engine via XML messages passed over sockets.
+ The agent programs catalogue the tiles they can see and uses A* search
+ to find paths to packages and the dropzone.
+ The actions available to an agent are listed below.
 \end_layout
 
 \begin_layout Standard
@@ -197,12 +193,18 @@ name "fig:maze-scrot"
 \labelwidthstring 00.00.0000
 
 \family typewriter
-move(Direction)
+move(
+\emph on
+Direction
+\emph default
+)
 \family default
  moves the agent one tile in the specified 
 \family typewriter
+\emph on
 Direction
 \family default
+\emph default
 .
 \end_layout
 
@@ -230,19 +232,168 @@ drop
 Additionally, we plan to implement a messaging action, allowing the agents
  to communicate with each other.
  This is particularly necessary when using GOAL, as the GOAL instances have
- no knowledge of each other and ths cannot use the messaging system built
+ no knowledge of each other and thus cannot use the messaging system built
  into GOAL.
+\end_layout
+
+\begin_layout Section
+The XMAS Engine
+\end_layout
+
+\begin_layout Standard
+We have implemented our tile based environment by overriding the interfaces
+ and abstractions provided by our API.
+\end_layout
+
+\begin_layout Subsection
+World
+\end_layout
+
+\begin_layout Standard
+A world in our engine contains a mapping from entities to their position
+ in the world, as well as rules specifying how entities should be removed
+ and added.
+ The world used in our reference implementation also contains the game map,
+ a two-dimensional array containing the tiles in the world.
+ The position is an abstract definition that can be overridden to fit the
+ world in question.
+ In the case of our tile based world, it is the 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ coordinates of the entity; in a graph-based world it might be the a reference
+ to the node the entity is in.
+\end_layout
+
+\begin_layout Subsection
+Agent Controllers and Servers
+\end_layout
+
+\begin_layout Standard
+An agent controller is the link between agents in the world and their backend
+ agent program; they can receive actions and send percepts back.
+ Each controller is connected to exactly one agent program and controls
+ exactly on agent in the world.
+ In the package grabber scenario, agent controllers connect to an EIS environeme
+nt (attached to a GOAL instance) by means of sockets, on which they pass
+ actions and percepts back and forth as XML.
+ Agent servers are responsioble for connecting controllers to agents.
+\end_layout
+
+\begin_layout Standard
+When the AP wants to acquire an agent, the basic idea is that it will request
+ a certain available agent entity and take control of this entity.
+ This will all be done through a manager designed specifically for each
+ APL, so that it knows how to handle any special cases.
+ After the agent has been acquired, the AI will send a command describing
+ which actions it should perform and wait for the agent to perform them.
+ This sequence will be repeated until the connection between the agent and
+ the AI has been broken.
+ 
+\end_layout
+
+\begin_layout Subsection
+Entities, Agents and Modules
+\end_layout
+
+\begin_layout Standard
+An entity in the envionment is something that exists in a world and may
+ be interacted with.
+ An agent is an entity capable of performing actions and gathering percepts.
+ 
+\end_layout
+
+\begin_layout Standard
+Entities have a set of modules which define their properties.
+ In the package grabbing scenario, agents have modules specifying which
+ entities blocks movement and vision, as well as a module to to keep track
+ of whether or not they are carrying a package.
+ 
+\end_layout
+
+\begin_layout Subsection
+Percepts, Actions and Converters
+\end_layout
+
+\begin_layout Standard
+Percepts are retrieved from agetns via their modules.
+ In the tile based world for example, the list of all the tiles an agent
+ can see is gotten through the 
+\family typewriter
+Vision
+\family default
+ module.
+ 
+\end_layout
+
+\begin_layout Standard
+Percepts in the engine are very abstract objects, with no restrictions as
+ to what they contain.
+ To encode the percepts to a format recognisable to the APL, the designer
+ writes percept converters.
+ In our reference implementation, we convert them into EIS 
+\family typewriter
+iilang
+\family default
+ objects, which can then be serialized to XML and sent to the EIS environment.
+\end_layout
+
+\begin_layout Standard
+Similarly, actions are parsed from XML to 
+\family typewriter
+iilang
+\family default
+ objects and then converted into actions known by the engine.
+\end_layout
+
+\begin_layout Subsection
+Execution protocol
+\end_layout
+
+\begin_layout Standard
+We have designed our API so that all agents have a thread of their own,
+ meaning they can perform actions and receive percepts independently of
+ other agents' states.
+ This allows for a more fluently running game, as agents do not necessarily
+ stop and start actions in synchronization.
+ It also means that the properties of agents can be more fine grained, eg.
+ an agent's speed can be given as an integer indicating the milliseconds
+ it takes to move from one tile to another (in a tile based world).
+ 
+\end_layout
+
+\begin_layout Standard
+When an agent controller receives an action to be executed, its default
+ behaviour is to command its associated agent to perform the action, and
+ then return immediately.
+ When it receives the request to return all percepts, it blocks until the
+ agent has some new percepts to be returned (see figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:SequenceDiagram"
+
+\end_inset
+
+).
+ This allows us to let the APL backend process any new percepts when for
+ example the agent is moving.
+ This default behaviour can be overridden if the designer wants to return
+ percepts in response to actions.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename C:/Users/Søren/report/BachelorReport/sequenceDiagram.png
+	filename sequenceDiagram.png
 	width 90text%
 
 \end_inset
@@ -254,6 +405,12 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:SequenceDiagram"
+
+\end_inset
+
 When the EIS method 
 \family typewriter
 performAction(
@@ -300,31 +457,6 @@ s on the socket until the engine has some useful percepts to deliver.
 \end_layout
 
 \begin_layout Section
-Interface agnosticity
-\end_layout
-
-\begin_layout Standard
-The focus of the design of the API have been on making it as generic as
- possible, and we have been careful not to tie it to GOAL or EIS.
- 
-\end_layout
-
-\begin_layout Standard
-We have implemented the general concepts of percepts and actions without
- requirements as to what they contain and how they are structured.
- Instead, the designer writes converters, which can transform percepts and
- actions to and from foreign types.
- 
-\end_layout
-
-\begin_layout Standard
-In the same way, we have not implemented a way of displaying the world.
- Instead, we provide classes which can listen to events triggered by the
- world and the entities in it.
- These classes can then be used to produce any desired output.
-\end_layout
-
-\begin_layout Section
 Virtual World
 \end_layout
 
@@ -355,8 +487,8 @@ Execution protocol
 We have designed our API so that all agents have a thread of their own,
  meaning they can perform actions and receive percepts independently of
  other agents' states.
- This allows for a more fluently running game, as agents do not stop and
- start actions in synchronization.
+ This allows for a more fluently running game, as agents do not necessarily
+ stop and start actions in synchronization.
  It also means that the properties of agents can be more fine grained, eg.
  an agent's speed can be given as an integer indicating the milliseconds
  it takes to move from one tile to another (in a tile based world).
@@ -373,116 +505,6 @@ When an agent controller receives an action to be executed, its default
  example the agent is moving.
  This default behaviour can be overridden if the designer wants to return
  percepts in response to actions.
-\end_layout
-
-\begin_layout Subsection
-Agents
-\end_layout
-
-\begin_layout Standard
-In our world each agent will be represented as an entity, It won’t have
- any behavior and function much like a shell or body for the Agent Program
- (AP).
- The AP on the other hand will function much like a brain for the agent
- and will contain all its behaviors and knowledge, but only be able to act
- through the agent and never outside its limitations.
- If, for instance, the AP commanded the agent to go through a wall and if
- the agent does not possess such an ability, it will be prevented from doing
- that.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename OverviewEngineAgentsAI.png
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Overview-AI-Agents-XMAS"
-
-\end_inset
-
-The agents in the engine follow commands given by an AP and return feedback
- such as what they see or hear for the AP to interpret.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename StateDiagramAgentEngineAI.png
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:State-diagram"
-
-\end_inset
-
-State diagram for the acquisition and execution of an agent
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-When the AP wants to acquire an agent, the basic idea is that it will request
- a certain available agent entity and take control of this entity.
- This will all be done through a manager designed specifically for each
- APL, so that it knows how to handle any special cases.
- After the agent has been acquired, the AI will send a command describing
- which actions it should perform and wait for the agent to perform them.
- This sequence will be repeated until the connection between the agent and
- the AI has been broken.
- 
 \end_layout
 
 \begin_layout Section
