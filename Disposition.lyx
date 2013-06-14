@@ -75,16 +75,16 @@ LatexCommand tableofcontents
 
 \end_layout
 
+\begin_layout Abstract
+Abstract
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
 
 \begin_layout Subsection
 Motivation 
-\end_layout
-
-\begin_layout Subsubsection
-GOAL
 \end_layout
 
 \begin_layout Section
@@ -144,14 +144,6 @@ System Features
 Overview
 \end_layout
 
-\begin_layout Subsection
-GOAL implementation
-\end_layout
-
-\begin_layout Subsection
-EIS Environment
-\end_layout
-
 \begin_layout Section
 Virtual World
 \end_layout
@@ -170,10 +162,6 @@ Entity Modules
 
 \begin_layout Subsection
 Percepts
-\end_layout
-
-\begin_layout Subsubsection
-Vision
 \end_layout
 
 \begin_layout Subsection
@@ -200,6 +188,18 @@ Views
 Execution Protocol
 \end_layout
 
+\begin_layout Section
+Engine Extensions
+\end_layout
+
+\begin_layout Section
+Usage Example / Reference Implementation
+\end_layout
+
+\begin_layout Standard
+Describe how the system features above are used in the package grabber scenario.
+\end_layout
+
 \begin_layout Part
 Implementation
 \end_layout
@@ -209,27 +209,43 @@ Architecture
 \end_layout
 
 \begin_layout Section
-Reference Implementation
-\end_layout
-
-\begin_layout Section
-Engine
-\end_layout
-
-\begin_layout Subsection
 Model
 \end_layout
 
 \begin_layout Subsection
-Agent Controllers
+World
 \end_layout
 
 \begin_layout Subsection
+Entities, Agents, entiy modules
+\end_layout
+
+\begin_layout Subsection
+Events and Triggers
+\end_layout
+
+\begin_layout Subsection
+Actions
+\end_layout
+
+\begin_layout Section
+Controllers
+\end_layout
+
+\begin_layout Section
 Views
 \end_layout
 
 \begin_layout Section
 Execution Protocol
+\end_layout
+
+\begin_layout Section
+Engine Extensions
+\end_layout
+
+\begin_layout Section
+Reference Implementation
 \end_layout
 
 \begin_layout Standard
@@ -254,6 +270,10 @@ Interfacing with different MAS Programming Languages (Interface Agnosticity)
 
 \begin_layout Section
 Perspective / Reflection (?)
+\end_layout
+
+\begin_layout Section
+Conclusion
 \end_layout
 
 \end_body
