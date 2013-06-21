@@ -25,6 +25,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -42,8 +43,8 @@
 \shortcut idx
 \color #008000
 \end_index
-\secnumdepth 3
-\tocdepth 3
+\secnumdepth 4
+\tocdepth 4
 \paragraph_separation indent
 \paragraph_indentation default
 \quotes_language english
@@ -94,7 +95,7 @@ What the types of projects can be is manifold but here are some possible
  examples
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Paragraph*
 Agent comparison software 
 \end_layout
 
@@ -114,7 +115,7 @@ For instance if two groups wanted to test their agent programs against each
  in which this test could occur.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Paragraph*
 Agent testing/Simulation software
 \end_layout
 
@@ -125,7 +126,7 @@ Testing agent software can be complicated being able to rapidly create an
  
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Paragraph*
 Agent teaching tools
 \end_layout
 
@@ -142,7 +143,7 @@ Teaching agent languages can be tough without proper exercises; however
  are supposed to deal with.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Paragraph*
 Computer games
 \end_layout
 
@@ -286,15 +287,15 @@ Additionally, we plan to implement a messaging action, allowing the agents
  into GOAL.
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 System Features
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Overview
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Virtual World
 \end_layout
 
@@ -338,7 +339,7 @@ ions of the graph as seen from different nodes.
 [More detailed usage examples?, Tile Extension]
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Entities, Agents and Entity Modules
 \end_layout
 
@@ -362,20 +363,7 @@ entity modules
 \end_layout
 
 \begin_layout Standard
-In the tile extension, we have provided several modules that can be equipped
- to agents to make them better suited for inhabiting a tile based environment.
- For example, the 
-\emph on
-movement blocking-
-\emph default
- and 
-\emph on
-vision blocking
-\emph default
- modules apply to all entities with a physical presence in the environment;
- given another entity, they specify whether the entity they are attached
- to blocks the aforementioned entity's movement or vision, respectively.
- In our reference implementation, package grabber agents have the 
+In our reference implementation, package grabber agents have the 
 \emph on
 package
 \emph default
@@ -429,6 +417,266 @@ agent
 \family typewriter
 \emph on
 [move this paragraph up (and rewrite?)]
+\end_layout
+
+\begin_layout Subsection
+Engine Extensions
+\end_layout
+
+\begin_layout Standard
+Since most of the engine is very abstract in functionality, we have made
+ three extensions, which makes it easy to implement a tile based environment
+ and communicating with EIS.
+\end_layout
+
+\begin_layout Subsubsection
+Tile Extension
+\end_layout
+
+\begin_layout Standard
+This extension represents the world as a two-dimensional array of tiles
+ using what we will call a tile map.
+ 
+\family typewriter
+\emph on
+[Elaborate on tile, that entities can move]
+\family default
+\emph default
+ We have implemented it so that the tile in the center has the position
+ 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ This means that all positions are given relative to the origo tile at 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ As a consequence of this, a tile map must have odd dimensions, as it would
+ otherwise not have a center tile.
+ If the user tries to access a tile that is out of bounds (for example the
+ tile at position 
+\begin_inset Formula $(0,n+1)$
+\end_inset
+
+ in a 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ tile map), a tile containing a special entity signaling that the tile is
+ not part of the world is returned.
+ This ensures that querying the tile map for a tile at any position will
+ never fail and always return a valid value.
+ As well as accessing tiles at arbitrary positions, the tile map can be
+ queried with a position and a range 
+\begin_inset Formula $r$
+\end_inset
+
+, in which case a two dimensional array of size 
+\begin_inset Formula $(2r+1)\times(2r+1)$
+\end_inset
+
+ is returned, containing the tiles in that square.
+ 
+\family typewriter
+\emph on
+[Figure?]
+\end_layout
+
+\begin_layout Standard
+In the tile extension, we have provided several modules that can be equipped
+ to agents to make them better suited for inhabiting a tile based environment.
+ For example, the 
+\emph on
+movement blocking-
+\emph default
+ and 
+\emph on
+vision blocking
+\emph default
+ modules apply to all entities with a physical presence in the environment;
+ given another entity, they specify whether the entity they are attached
+ to blocks the aforementioned entity's movement or vision, respectively.
+ The 
+\emph on
+speed
+\emph default
+ module defines how long it takes for the entity to move to an adjacent
+ square.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Vision?, move action, move event]
+\end_layout
+
+\begin_layout Subsubsection
+EIS Extension
+\end_layout
+
+\begin_layout Section
+Implementation
+\end_layout
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout Subsubsection
+World
+\end_layout
+
+\begin_layout Standard
+To be able to unambiguously reference an entity, they are assigned an 
+\family typewriter
+id
+\family default
+ (represented as a number) in the engine.
+ This is relevant when, for example, a backend APL such as GOAL executes
+ an action involving other entities than the agent it is controlling.
+ In this case, the entity's position can be amiguous, since several agents
+ may very well occupy the same spot in the world.
+\end_layout
+
+\begin_layout Standard
+To hold references to all entities in the environment, the 
+\family typewriter
+XmasWorld
+\family default
+ class contains a set of mappings (a C# 
+\family typewriter
+Dictionary
+\family default
+) from 
+\family typewriter
+id
+\family default
+s to entities.
+ Since all agents have a name, it also contains mappings from names to agents.
+ 
+\end_layout
+
+\begin_layout Standard
+When an entity is added to the world, the variable holding the last used
+ 
+\family typewriter
+id
+\family default
+ is increased by one, and the entity is associated with this number.
+ This ensures unambiguity, since no number can be used twice.
+ However, it does impose a limit on the number of entities that can be added
+ to the world.
+ We have represented the 
+\family typewriter
+id
+\family default
+ as a 64 bit unsigned integer (C#
+\family typewriter
+ ulong
+\family default
+ type), so it supports adding more than 
+\begin_inset Formula $1.8\times10^{19}$
+\end_inset
+
+ entities.
+ In an environment that is meant to run indefinetely, and where entities
+ are added and removed often (such as a server based website indexing tool),
+ this limit may be a concern.
+ 
+\end_layout
+
+\begin_layout Standard
+The process of assigning 
+\family typewriter
+id
+\family default
+s to entities is handled in the 
+\family typewriter
+AddEntity
+\family default
+ method, which takes as arguments the entity to be added and an 
+\family typewriter
+EntitySpawnInformation 
+\family default
+object, containing the desired position of the entity in the world, and
+ any other relevant information, such as initial state.
+ However, this only occurs after the user-implemented method 
+\family typewriter
+OnAddEntity
+\family default
+ is called with the entity and spawn information as arguments, and has returned
+ success.
+ This method is overridable by the designer, and can be used to ensure that
+ entities are added properly to the custom world, or not at all.
+ For example, if the world has the restriction that no two entitites can
+ start in the same position, 
+\family typewriter
+OnAddEntity
+\family default
+ can be implemented so as to return failure when an the entity in question
+ would be spawned in an occupied position.
+ Alternatively, it may correct the error, for example by placing the entity
+ in an adjacent, unoccupied square and return success.
+ In any case, the 
+\family typewriter
+AddEntity
+\family default
+ method propagates the return value from 
+\family typewriter
+OnAddEntity
+\family default
+ to its caller when it returns.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+RemoveEntity
+\family default
+ method dereferences the entity by removing itself and its 
+\family typewriter
+id
+\family default
+ from the previously mentioned set of mappings.
+ Similarly to the 
+\family typewriter
+AddEntity
+\family default
+ method, it calls the user-supplied 
+\family typewriter
+OnRemoveEntity
+\family default
+ method, and returns its return value.
+ 
+\family typewriter
+\emph on
+[entity.OnLeaveWorld?]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[pseudo code for AddEntity, RemoveEntity?]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[abstract methods in System Features?]
+\end_layout
+
+\begin_layout Section
+\start_of_appendix
+iiLang (and xml serialization/deserialization?)
+\end_layout
+
+\begin_layout Section
+Network Streaming
 \end_layout
 
 \end_body
