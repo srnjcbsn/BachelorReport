@@ -1605,15 +1605,163 @@ speed
  square.
 \end_layout
 
+\begin_layout Paragraph*
+Vision
+\end_layout
+
+\begin_layout Standard
+The tile extension also provides means for seeing tiles around an entity
+ via the 
+\family typewriter
+Vision
+\family default
+ module.
+ All entities that are able to sense their surroundings also have a 
+\family typewriter
+VisionRange
+\family default
+ module which -- as the name implies -- defines how far (in tiles) the entity
+ can see.
+\end_layout
+
+\begin_layout Standard
+When the vision module is asked to return its percepts, it asks the world
+ to build it a 
+\family typewriter
+Vision
+\family default
+ object, which it returns.
+ The 
+\family typewriter
+Vision
+\family default
+ object uses an algorithm described in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:VisionAppendix"
+
+\end_inset
+
+ to assemble a set of mappings from positions (relative to the entity) to
+ tile references.
+ To determine whether a tile 
+\begin_inset Formula $t$
+\end_inset
+
+ is visible to an entity 
+\begin_inset Formula $e$
+\end_inset
+
+, we draw straight lines from each corner of 
+\begin_inset Formula $e$
+\end_inset
+
+'s tile to the corners of 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ If such a line does not intersect with a tile that is vision blocking with
+ respect to 
+\begin_inset Formula $e$
+\end_inset
+
+, we say that the line 
+\emph on
+connects
+\emph default
+.
+ If 
+\begin_inset Formula $e$
+\end_inset
+
+'s tile has any corner from which we can connect lines to all corners of
+ 
+\begin_inset Formula $t$
+\end_inset
+
+, then 
+\begin_inset Formula $t$
+\end_inset
+
+ is visible to 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ If, however, 
+\begin_inset Formula $t$
+\end_inset
+
+ is itself vision blocking, we require only two connecting lines, since
+ at least one line would not have to travel through 
+\begin_inset Formula $t$
+\end_inset
+
+, and as such not connect.
+ 
+\family typewriter
+\emph on
+[expand]
+\end_layout
+
 \begin_layout Standard
 
 \family typewriter
 \emph on
-[Vision?, move action, move event]
+[move action, move event]
 \end_layout
 
 \begin_layout Subsubsection
 EIS Extension
+\end_layout
+
+\begin_layout Standard
+The EIS extension provides means for communicating with an EIS instance
+ over a socket, as well as serializing and deserializing percepts and actions
+ encoded in an XML representation of EIS' 
+\family typewriter
+iilang
+\family default
+ format.
+\end_layout
+
+\begin_layout Paragraph*
+Communicating with EIS
+\end_layout
+
+\begin_layout Standard
+As EIS is implemented in Java and our engine is written in C#, information
+ can not easily be passed between the two in a native manner.
+ Instead, we have opted to have the two communicate over sockets.
+ As EIS already supports formatting 
+\family typewriter
+iilang
+\family default
+ objects to XML, we chose this to encode information passed over the sockets.
+ We have implemented our own 
+\family typewriter
+iilang
+\family default
+ object tree in C#, which implements XML serialization and deserialization
+ (see appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:iiLang"
+
+\end_inset
+
+), as well as a Java class used to parse XML to 
+\family typewriter
+iilang
+\family default
+ objects.
+ Furthermore, we have implemented special package streaming objects in both
+ C# and Java, which sends the size of a payload before the actual data when
+ streaming XML over sockets.
+ This allows us to detect when an XML message has been completely received.
+ This means that designers wanting to use EIS with our engine should implement
+ our accompanying Java libraries, as well as the EIS engine extension.
 \end_layout
 
 \begin_layout Section
@@ -2224,10 +2372,28 @@ A lot of the considerations when designing the action all comes down to
 \begin_layout Section
 \start_of_appendix
 iiLang (and xml serialization/deserialization?)
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:iiLang"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Network Streaming
+\end_layout
+
+\begin_layout Section
+Vision
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:VisionAppendix"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
