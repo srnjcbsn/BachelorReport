@@ -946,9 +946,10 @@ Events and Triggers
 \end_layout
 
 \begin_layout Standard
-In this part the concept and idea of both events and triggers.
- We will go through their intention and how to use them when using the engine,
- furthermore a couple of example will be shown in order to give the general
+In this part the concepts and ideas of both events and triggers will be
+ explained.
+ We will go through their intention and how to use them with the engine.
+ Furthermore, a couple of examples will be provided to give the general
  idea of what they can be used for.
  
 \end_layout
@@ -958,7 +959,7 @@ Concept
 \end_layout
 
 \begin_layout Standard
-In the natural world all actions have a reaction, these reactions could
+In the natural world, all actions have a reaction, these reactions could
  be thought of as events meant to trigger when such actions are performed.
  Thus an engine for modeling a virtual environment must provide as many
  features as those of the real world environment.
@@ -969,14 +970,14 @@ Events
 \end_layout
 
 \begin_layout Standard
-To be clear an Event when speaking in the context of this engine is the
- occurrence of something, for instance an Event could be that “an Agent
- has moved”, or “an Agent has picked up an item”.
- Furthermore an event also has the duty of providing necessary information
- for the listener giving the listener a correct idea of the meaning behind
+To be clear, an event in the context of this engine is the occurrence of
+ something, for instance an event could be that “an Agent has moved”, or
+ “an Agent has picked up an item”.
+ Furthermore, an event also has the duty of providing necessary information
+ for the listener, giving the listener a correct idea of the meaning behind
  an event.
- Going back to the Event of an Agent that has moved, in this case it necessary
- to provide the listener 
+ In the case of the event which signified the movement of an agent, it is
+ necessary to provide the listener 
 \begin_inset Foot
 status collapsed
 
@@ -990,12 +991,12 @@ Listeners refer to the object which is listening to the occurrence of an
  with information of which direction the agent moved, where its starting
  position is and how far it has moved.
  Since a listener might be operating in a different thread, the listener
- is completely dependent on this information as it might no longer be retrievabl
-e at the time the event is being analyzed.
- For instance if an agent moved and then was killed and removed from the
+ is completely dependent on this information, as it might no longer be retrievab
+le at the time the event is being analyzed.
+ For instance, if an agent moved and then was killed and removed from the
  world, its position would no longer be stored in the world.
- As such the listener would have no way to determine where the move had
- ended if not provided in the event.
+ As such, the listener would have no way to determine where the move had
+ ended if this information was not provided in the event.
 \end_layout
 
 \begin_layout Paragraph*
@@ -1024,12 +1025,13 @@ The
 \begin_inset space ~
 \end_inset
 
-events are what the Trigger is listening for these can be any type of event,
- furthermore a trigger can be registered to any number of events.
- But only one event is required to “trigger” a Trigger for instance if a
- Trigger is listening on the event “10 seconds passed” and the event “Agent
- has moved”, then if either of the event has occurred the Trigger will be
- “triggered”.
+events are what the trigger is listening for.
+ These can be any type of event, and a trigger can be registered to any
+ number of events.
+ But only one event is required to “trigger” a Trigger.
+ For instance, if a Trigger is listening on both the events “10 seconds
+ passed” and “Agent has moved”, then the Trigger will be “triggered” when
+ either of these events occur.
  However it will be triggered each and every time such event has occurred
  and is not limited to just one occurrence.
 \end_layout
@@ -1041,7 +1043,7 @@ The
 
 Condition is a built in predicate for the trigger to check if it is willing
  to respond to the event.
- If the condition is satisfied the trigger’s action is fired.
+ If the condition is satisfied, the trigger’s action is fired.
  A condition should only be used in cases that is not covered by another
  event.
  For instance, say you have the event “An agent has moved”.
@@ -1072,8 +1074,9 @@ As we can see the condition narrows the range of events that are responded
 \begin_inset Formula $a_{i}$
 \end_inset
 
- has moved”, this purely an example as events should of course not be tied
- to specific objects.
+ has moved”.
+ This is purely an example as events should of course not be tied to specific
+ objects.
  
 \family typewriter
 \emph on
@@ -1086,11 +1089,10 @@ The
 \begin_inset space ~
 \end_inset
 
-Action of a trigger is meant as the one that performs the work, it is a
- mere method which is executed once an event has been raised and the condition
- is satisfied.
+Action of a trigger is the part that performs the work, it is a method which
+ is executed once an event has been raised and the condition is satisfied.
  For instance if a trigger is meant to write a message when a specific event
- has occurred then this is where the action of writing such message should
+ has occurred, then this is where the action of writing such a message should
  be placed.
 \end_layout
 
@@ -1102,8 +1104,8 @@ EventManager
 
 \begin_layout Standard
 For triggers to become part of the engine it is required that the trigger
- is registered to the engine, however it is crucial what one registers the
- trigger to.
+ is registered to the engine, however it is of crucial importance what one
+ registers the trigger to.
  A trigger can be registered to either a specific entity or the 
 \family typewriter
 EventManager
@@ -1113,7 +1115,7 @@ EventManager
 \family typewriter
 EventManager
 \family default
- will be triggered each an 
+ will be triggered each time an 
 \family typewriter
 Event
 \family default
@@ -1122,7 +1124,7 @@ Event
 \family typewriter
 Trigger
 \family default
- registered to a specific entity, will only be informed of events raised
+ registered to a specific entity will only be informed of events raised
  on the specific entity instead of when the event is raised for every single
  entity.
  
@@ -1149,7 +1151,8 @@ An example of this would be: assume you have a Trigger
 \family typewriter
 A
 \family default
-, also in this example you have a Trigger 
+.
+ Additionally, you have a Trigger 
 \family typewriter
 
 \begin_inset Formula $\mathtt{T_{2}}$
@@ -1163,10 +1166,10 @@ A
 \begin_inset Formula $\mathtt{T_{1}}$
 \end_inset
 
-
+,
 \family default
  but this trigger is registered to the EventManager.
- To give a complete picture also assume there is an Agent 
+ To give a complete picture, also assume there is an Agent 
 \family typewriter
 B
 \family default
@@ -1230,7 +1233,7 @@ A
 
 
 \family default
- listens to any
+ listens on any
 \family typewriter
  
 \family default
@@ -1307,17 +1310,18 @@ Then, add all the necessary data fields on the newly created event class.
 \end_layout
 
 \begin_layout Standard
-To utilize the newly created event it must be raised when appropriate.
- In this case the appropriate place would be to raise it during a move action.
+To utilize the newly created event, it must be raised when appropriate.
+ In this case, the appropriate place would be to raise it during a move
+ action.
 \end_layout
 
 \begin_layout Standard
-In this action after the movement of the agent had been performed the method
- 
+In this action, after the movement of the agent had been performed, the
+ method 
 \family typewriter
 RaiseEvent
 \family default
- would need to be called on the Agent Entity itself that is being moved.
+ would need to be called on the entity that is being moved.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1326,10 +1330,11 @@ Summary
 
 \begin_layout Standard
 Events are what provides the engine flexibility and allows making reactions
- to others actions, events are designed for easy use and are meant to be
- used as much as possible.
- Triggers are used as a way to interface with the Events and they are the
- only way to connect an object to the event it wishes to listen to.
+ to others actions.
+ Events are designed for ease of use and are meant to be used as much as
+ possible.
+ Triggers are used as a way to interface with events and they are the only
+ way to connect an object to the event it wishes to listen to.
 \end_layout
 
 \begin_layout Subsection
@@ -1341,12 +1346,19 @@ Actions
 \family typewriter
 XmasAction
 \family default
-s in the UML Domain model diagram refers to a the object type that performs
- actions inside the engine, the reasoning behind these actions being its
- own class is to ensure only one action at a time is being performed this
- is because there are many separate threads operating on the model code
- at once and as such there must be a way to active only one action at a
- time.
+s in the UML Domain model diagram in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Domain-Model-UML"
+
+\end_inset
+
+ refers to the object type that performs actions inside the engine.
+ The reasoning behind these actions being its own class is to ensure only
+ one action at a time is being performed.
+ This is because there are many separate threads operating on the model
+ code at once and as such, there must be a way to active only one action
+ at a time.
 \end_layout
 
 \begin_layout Standard
@@ -1399,9 +1411,9 @@ Sequence diagram illustrating how a
 MoveEntityAction
 \family default
  is processed.
- The idea is that a controller, such as keyboard input or an agent language
- queues an action such as moving an entity on the action manager, the action
- manager will then execute the action as soon as it is ready.
+ The idea is that a controller, such as keyboard input or an agent language,
+ queues an action such as moving an entity on the action manager.
+ The action manager will then execute the action as soon as it is ready.
 \end_layout
 
 \end_inset
@@ -1419,24 +1431,31 @@ Action Types
 \end_layout
 
 \begin_layout Standard
-The engine is featured with two different action types, one is an Environment
- Action, and this action type is meant to reflect actions that do changes
- to the entire environment.
- The can be actions such as closing this engine or adding/removing entities
+The engine is equipped with two different action types.
+ One of them is the 
+\family typewriter
+EnvironmentAction
+\family default
+, which are actions that perform changes on the entire environment.
+ Examples of such actions are closing this engine or adding/removing entities
  from the world.
 \end_layout
 
 \begin_layout Standard
-The other action type is an 
+The other action type is the 
 \family typewriter
 EntityAction
 \family default
 .
- this action type is meant as an action that a single entity performs; ideally
+ This action type is meant as an action that a single entity performs; ideally
  the actions should be as atomic as possible.
  In our reference implementation we have given some ideas how these actions
- work such as grab which is an action that grabs a package from below an
- agent.
+ work, such as 
+\family typewriter
+grab
+\family default
+, which is an action that grabs a package from the tile the executing agent
+ is standing on.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1444,7 +1463,8 @@ Example -- Move Entity Action
 \end_layout
 
 \begin_layout Standard
-To give an idea of how an entity action is made by inheriting the 
+Here we will show how an entity action is constructed by inheriting the
+ 
 \family typewriter
 EntityAction
 \family default
@@ -1516,9 +1536,13 @@ MoveEntityAction
 \end_layout
 
 \begin_layout Standard
-To make so the action performs something it is required that an abstract
- method Execute is implemented this execute method is the method that is
- executed by the action manager.
+To have the action actually perform something, it is required that an abstract
+ method 
+\family typewriter
+Execute
+\family default
+ is implemented.
+ This execute method is the method that is executed by the action manager.
  The implementation of the execute action could then look something like
  the following pseudo code:
 \end_layout
@@ -1578,15 +1602,15 @@ end{alltt}
 \end_layout
 
 \begin_layout Standard
-As one can see the idea would be that you find the position of the source
- of the 
+As one can see, the idea is that you find the position of the source of
+ the 
 \family typewriter
 EntityAction
 \family default
- and use that to generate a new position which is its old position incremented
- by its direction vector.
- The wait is there to give the move a speed otherwise it would be an instant
- movement.
+ and use that to generate the new position, which is its old position incremente
+d by its direction vector.
+ The wait is there to give the move a speed, as it would otherwise be an
+ instant movement.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1594,21 +1618,22 @@ Summary
 \end_layout
 
 \begin_layout Standard
-The idea of actions is fairly simple to use and it is there to hide the
- user of the engine from a lot of hassle that happens behind the scene.
+Using actions is fairly simple and serves to shield the user from the tedious
+ and error prone workings that takes place behind the scenes.
  It is meant to ensure thread safety and allow multiple threads working
  with the engine at once.
- The reasoning why we chose this design was for these exact reasons as we
- had to deal with the problem of interference from multiple concurrent threads.
- Furthermore it also is meant to reduce code redundancy as generic actions
- can be reused by other actions.
+ These were the exact reasons we chose this design, as we ourselves had
+ to deal with the problem of interference from multiple concurrent threads.
+ Furthermore, it will also reduce code redundancy as generic actions can
+ be reused by other actions.
  The problem with this design is that it in a sense remakes what is already
  implemented in a programming language.
- As running procedural code is what programming languages are meant to do.
- However in return it provides a lot of utility and in the sense that it
- makes it possible to make tools for simplifying the process of making actions.
- As well it gives the ability to differentiate between different action
- types and even create new action type if one wishes to.
+ After all, running procedural code is what programming languages are meant
+ to do.
+ However, in return it provides a lot of utility and makes it possible to
+ make tools for simplifying the process of making actions.
+ It also gives the ability to differentiate between different action types
+ and even create new action types if one wishes so.
 \end_layout
 
 \begin_layout Subsection
@@ -1647,10 +1672,9 @@ Agent Controllers
 \end_layout
 
 \begin_layout Standard
-Being able to control any of the agents inside the engine, is what the purpose
- of this engine is.
- This Section will cover how we thought the design of an agent controller
- should look like.
+The purpose of the agent controllers is to be able to control agents in
+ the engine from outside.
+ This section will cover our design of an agent controller.
  To get an overview of the classes used for the 
 \family typewriter
 AgentController
@@ -1702,10 +1726,6 @@ name "fig:AgentControllerDomainModel"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -1726,9 +1746,9 @@ Agent Programming Language
 
 \end_inset
 
- types, this means that the engine itself does not support all APL but instead
- provides a framework for quickly design of an interface between the engine
- and the APL.
+ types, this means that the engine itself does not support all APLs but
+ instead provides a framework for quickly designing interfaces between the
+ engine and any APL.
  There are two classes that one must use in order to properly design the
  interface:
 \end_layout
@@ -1743,19 +1763,25 @@ The
 AgentManager
 \family default
  has the duty of speaking directly with the agent language it attempts to
- interface with, its job is to arrange it so that all agents the APL wishes
- to take control of is done so through it, it should do so by spawning 
+ interface with.
+ Its job is to spawn an 
 \family typewriter
-AgentControllers
+AgentController
 \family default
- to all newly controlled agents.
+ for each agent the AP wishes to take control of.
  The 
 \family typewriter
 AgentManager
 \family default
- is in that sense much akin to an Abstract Factory which according to the
- design pattern requires that an abstract class has a method generates a
- certain type of what object but not exactly which object.
+ is in that sense much akin to an Abstract Factory, which according to the
+ design pattern requires that an abstract class has a method generating
+ a certain type of what object but not exactly which object
+\family typewriter
+\emph on
+ [rewrite sentence]
+\family default
+\emph default
+.
  The idea is of course that if you have an 
 \family typewriter
 GoalAgentManager
@@ -1765,9 +1791,12 @@ GoalAgentManager
 GoalAgentController
 \family default
 .
- By making it an abstract method we ensure at compile time that the engine
+ By making it an abstract method, we ensure at compile time that the engine
  framework is properly used which is very good for the user.
  
+\family typewriter
+\emph on
+[Explain]
 \end_layout
 
 \begin_layout Description
@@ -1783,15 +1812,15 @@ AgentController
 \begin_inset Foot
 status open
 
-\begin_layout Description
+\begin_layout Plain Layout
 Agent Program
 \end_layout
 
 \end_inset
 
-, this means its job is to take all commands directed to it and transform
- them into actions understood by the engine, and apply them to the agent
- that it controls.
+.
+ Its job is to take all commands directed to it and transform them into
+ actions understood by the engine, and apply them to the agent that it controls.
 \end_layout
 
 \begin_layout Standard
@@ -1799,27 +1828,25 @@ To simplify the
 \family typewriter
 AgentController
 \family default
- design we provide a method on it called 
+ design, it provides the method 
 \family typewriter
 PerformAction
 \family default
-, this method purpose is to make it very easy for executing actions on the
- agent it controls.
- Basically when the 
+, which makes it easy to execute actions on the agent it controls.
+ When the 
 \family typewriter
 PerformAction
 \family default
- is called the 
+ is called, the 
 \family typewriter
 AgentController
 \family default
- queues the action given through the method.
- Then puts the 
+ queues the action given through the method and puts the 
 \family typewriter
 AgentController
 \family default
-’s thread to sleep, once the action has been executed by the engine.
- The 
+’s thread to sleep.
+ Once the action has been executed by the engine, the 
 \family typewriter
 AgentController
 \family default
@@ -1892,7 +1919,7 @@ name "fig:APConnectingToAndControllingAC"
 \end_layout
 
 \begin_layout Standard
-The process of an AP taking control of an agent can be seen on fig.
+The process of an AP taking control of an agent is illustrated in fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1900,22 +1927,24 @@ reference "fig:APConnectingToAndControllingAC"
 
 \end_inset
 
-, basically the AP calls the 
+.
+ The AP calls the 
 \family typewriter
 AgentManager
 \family default
  to locate the agent it wishes to assume control of.
- The agent is located through a string which is unique to it and ensures
- only one agent is taken.
+ The agent is located through a string (its name) which is unique to it
+ and ensures only one agent is taken.
  When the 
 \family typewriter
 AgentManager
 \family default
- finds the given agent it will immediately generate a new 
+ finds the correct agent, it will immediately generate a new 
 \family typewriter
 AgentController
 \family default
-, the AP will not gain access to the agent but instead it will gain access
+.
+ The AP will not gain access to the agent but instead it will gain access
  to the 
 \family typewriter
 AgentController
@@ -1925,13 +1954,13 @@ AgentController
 \family typewriter
 AgentController
 \family default
- it will have the ability to send the 
+, it will have the ability to send the 
 \family typewriter
 AgentController
 \family default
- commands, these commands might not be understood by the engine if the APL
- is foreign enough to the engine’s own language and as such it is the duty
- of the 
+ commands.
+ These commands might not be understood by the engine if the APL is foreign
+ enough to the engine’s own language and as such it is the duty of the 
 \family typewriter
 AgentController
 \family default
@@ -1939,12 +1968,18 @@ AgentController
 \end_layout
 
 \begin_layout Standard
-As this project is about working with goal in particular we have created
- an extension for the AgentController designed specially to work with goal,
- therefor any example shown here would be incomplete compared to the EIS/Goal
+As this project is about working with GOAL in particular, we have created
+ an extension for the 
+\family typewriter
+AgentController
+\family default
+ designed specifically to work with GOAL.
+ Therefore any example shown here would be incomplete compared to the EIS/Goal
  implementation we have made.
- As such go to Section: GOAL/EIS Extension for a proper example of how to
- use the AgentController.
+ 
+\family typewriter
+\emph on
+[Remove paragraph?]
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1952,9 +1987,10 @@ Summary
 \end_layout
 
 \begin_layout Standard
-The agent controller is designed very lightweight the reason for this is
- we do not wish to impose any restrictions that might limit an APL which
- we know nothing about, as such the 
+The agent controller is designed to be very lightweight, since we do not
+ want to impose any restrictions that might limit an APL which we know nothing
+ about.
+ As such, the 
 \family typewriter
 AgentController
 \family default
@@ -1971,8 +2007,9 @@ View
 \begin_layout Standard
 The engine is designed to assist the user in all parts of the process when
  making an environment, this also extends to the visualization of said environme
-nt, however since our goal is to have as few restrictions on the model our
- knowledge of how that view’s form is shaped is very limited.
+nt.
+ However, since our goal is to have as few restrictions on the model as
+ possible, our knowledge of that view’s representation is very limited.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1980,9 +2017,9 @@ Concept
 \end_layout
 
 \begin_layout Standard
-The view API which the engine provides is exactly four abstract classes
+The view API which the engine provides consists of four abstract classes
  that are meant to be implemented by the user.
- The four classes can be seen on fig.
+ The four classes can be seen in fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1990,7 +2027,8 @@ reference "fig:ViewUMLView"
 
 \end_inset
 
-, we will go through each class and explain how they are meant to be implemented.
+.
+ We will go through each class and explain how they are meant to be implemented.
 \end_layout
 
 \begin_layout Standard
@@ -2029,10 +2067,6 @@ name "fig:ViewUMLView"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -2049,9 +2083,10 @@ The
 \family typewriter
 XmasView
 \family default
- class is very simple it only provides a single method that is required
- to be implemented, when the engine starts the view up it generates a thread
- for the view and the 
+ class is very simple; it only provides a single method that is required
+ to be implemented.
+ When the engine starts the view up it generates a thread for the view and
+ the 
 \family typewriter
 Start
 \family default
@@ -2060,28 +2095,29 @@ Start
  updates the view.
  Another task of the implemented view is also to update its 
 \family typewriter
-ThreadSafeEventManager
+ThreadSafeEventManager.
+
 \family default
-, the 
-\family typewriter
-ThreadSafeEventManager
-\family default
- ensures that events that are sent from model thread of the engine is not
- immediately executed instead they lie dormant in the 
-\family typewriter
-ThreadSafeEventManager
-\family default
- until the view thread is ready to execute them.
- How many events that one wish to trigger is up to the user, We also provide
- the appropriate methods so that the user can say exactly how long he wishes
- to wait for the next event, or if it should timeout.
  The 
 \family typewriter
 ThreadSafeEventManager
 \family default
- is very important to the view as without it designing view code comes complicat
-ed as one need to constantly ensure that no concurrent bugs has been applied
- to the system.
+ ensures that events sent from the model thread of the engine is not immediately
+ executed, but instead lie dormant in the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ until the view thread is ready to execute them.
+ How many events that one wishes to trigger is up to the user.
+ We also provide the appropriate methods for the user to specify exactly
+ how long he wishes to wait for the next event, or if it should timeout.
+ The 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ is very important to the view as without it, designing view code becomes
+ complicated as one need to constantly ensure that no concurrency bugs has
+ been applied to the system.
 \end_layout
 
 \begin_layout Paragraph*
@@ -2096,9 +2132,9 @@ The
 WorldView
 \family default
  class is added because of the long term benefits, as of now it provides
- nothing for the designer, however if we found benefits to add to the class,
- making it ahead of time even if it is empty can have many benefits as the
- project expands.
+ nothing for the designer.
+ However if we found benefits to add to the class, making it ahead of time,
+ even if it is initially empty, can have many benefits as the project expands.
 \end_layout
 
 \begin_layout Paragraph*
@@ -2112,13 +2148,14 @@ Much like the
 \family typewriter
 WorldView
 \family default
- class the 
+ class, the 
 \family typewriter
 EntityView
 \family default
- is also very minimal however, it enforces certain things that the user
- of the engine should take care off.
- First off it automatic makes an 
+ is also very minimal.
+ However, it enforces certain things that the user of the engine should
+ take care of.
+ First, it automatically makes a 
 \family typewriter
 ThreadSafeEventQueue
 \family default
@@ -2139,7 +2176,7 @@ XmasView
 \family typewriter
 XmasView 
 \family default
-wishes to listen to should be done by registering its triggers to the 
+wishes to listen on should be done by registering its triggers to the 
 \family typewriter
 ThreadSafeEventQueue
 \family default
@@ -2152,7 +2189,7 @@ ThreadSafeEventManager
 \family typewriter
 EntityView
 \family default
-’s triggers, but done so on the view thread instead of the model thread
+’s triggers, but done so on the view thread instead of the model thread,
  separating the two threads completely.
 \end_layout
 
@@ -2190,7 +2227,7 @@ XmasEntities
 EntityView
 \family default
 .
- For instance assume you have a class inheriting 
+ For instance, assume you have a class inheriting 
 \family typewriter
 XmasEntity
 \family default
@@ -2886,9 +2923,9 @@ Events and Triggers
 
 \begin_layout Standard
 This section will cover the inner workings of how events and triggers are
- connected, furthermore it will detail why we designed it as it is.
- We will also cover exact producer when an event is raised, to defuse any
- confusion their might be as to what happens inside the engine.
+ connected, as well as detail why we designed it the way we did.
+ We will also cover the exact procedure when an event is raised, to defuse
+ any confusion there might be as to what happens inside the engine.
 \end_layout
 
 \begin_layout Paragraph*
@@ -2896,8 +2933,8 @@ Explanation
 \end_layout
 
 \begin_layout Standard
-By themselves events are not particularly complicated since they are essentially
- just date structures that are transferred to all its listeners upon triggering.
+By themselves, events are not particularly complicated since they are essentiall
+y just data structures that are transferred to all its listeners upon triggering.
  As such we shall do a close examination of how exactly the
 \family typewriter
  EventManager 
@@ -2910,12 +2947,12 @@ The
 \family typewriter
 EventManager
 \family default
- is tethered through the engine to all entities that are inside, whenever
- an entity has an event raised on it; it is copied to the event manager
- which also raises the event.
+ is tethered through the engine to all entities that are inside.
+ Whenever an entity has an event raised on it, it is copied to the event
+ manager which also raises the event.
  The intent is to minimize the number of events needed to cover a single
  case.
- To be clear on how exactly this transpires we have drawn a sequence diagram.
+ To be clear on how exactly this transpires, we have drawn a sequence diagram.
 \end_layout
 
 \begin_layout Standard
@@ -2927,18 +2964,19 @@ d to the event manager]
 \end_layout
 
 \begin_layout Standard
-As shown on this sequence diagram, an action in this case a move action
- raises an 
+As shown on this sequence diagram, an action -- in this case a move action
+ -- raises an 
 \family typewriter
-EntityMoved
+EntityMovedEvent
 \family default
- Event on a given entity, the entity then calls all triggers registered
- to it, where the trigger also contain the event being raised.
- After this the entity informs the 
+ on a given entity.
+ The entity then calls all triggers registered to it, where the trigger
+ also contain the event being raised.
+ After this, the entity informs the 
 \family typewriter
 EventManager
 \family default
- that an event has been raised on this, this causes the 
+ that an event has been raised on it, which causes the 
 \family typewriter
 EventManager
 \family default
@@ -2952,13 +2990,13 @@ EventManager
 \end_layout
 
 \begin_layout Standard
-In the case of events are not linkable to a specific entity such as an “Engine
- Close Event” the raise of the event to done purely on the 
+In the case of events that are not linkable to a specific entity such as
+ an “Engine Close Event”, the event is raised purely on the 
 \family typewriter
 EventManager
 \family default
  itself.
- The process is otherwise the exact same as above except that no particular
+ Otherwise, the process is exactly the same as above, except that no particular
  entity is involved.
 \end_layout
 
@@ -2967,9 +3005,9 @@ Considerations
 \end_layout
 
 \begin_layout Standard
-As there were many considerations that went through our design process we
- will take each component of this area and break down why exactly why we
- designed it as is.
+As there were many considerations that went through our design process,
+ we will take each component of this area and break down why exactly why
+ we designed it as we did.
 \end_layout
 
 \begin_layout Subparagraph*
@@ -2978,26 +3016,28 @@ Problems of C# events and why we chose to design our own events
 
 \begin_layout Standard
 The language which our engine is written in is C#, one of the fantastic
- things about C# is that events is built into the language, as such it may
- come as a surprise that we have chosen to re-implement events ourselves.
- However while the name be the same the intent between C# events and our
+ things about C# is that events is built into the language.
+ As such it may come as a surprise that we have chosen to re-implement events
+ ourselves.
+ However, while the name be the same, the intent between C# events and our
  events is so different that it is impossible to compare the two.
  The intent behind C# events is to keep maintenance on single objects, so
  that changes to a given object can affect its linked objects without having
  to be designed specifically to do so.
- This allows for great decoupled projects and is what makes object maintenance
+ This allows for really decoupled projects and is what makes object maintenance
  in C# quite easy.
- However our events are not meant for such low-level tasks instead they
- are meant to allow reactions to occur in responds to other actions.
- Furthermore C# actions are bound to a specific class, and can only be fired
- inside methods of an instantiation of the specific class.
+ However our events are not meant for such low-level tasks.
+ Instead they are meant to allow reactions to occur in response to other
+ actions.
+ Furthermore, C# actions are bound to a specific class, and can only be
+ fired inside methods of an instantiation of the specific class.
  The events we have designed are meant to be raised by all types of class
  that wish to signal such an event has occurred.
 \end_layout
 
 \begin_layout Standard
 To give an idea of what sort of problems that would arise from using C#
- events one need only look at how global events would have to be implemented.
+ events, one need only look at how global events would have to be implemented.
  Since Events using C# are linked to a specific class, which would essentially
  mean that the EventManager class would need to be setup for every single
  event the engine is capable of running.
@@ -3006,25 +3046,41 @@ To give an idea of what sort of problems that would arise from using C#
  more than one way and greatly reduces productivity.
  It also makes the engine difficult to extend and modify at a later time
  since the design would be practically hardcoded into it.
+ 
+\family typewriter
+\emph on
+[Explain in detail / rewrite paragraph]
 \end_layout
 
 \begin_layout Subparagraph*
-Improvemens of events
+Improvements of events
 \end_layout
 
 \begin_layout Standard
-As of now our events are currently not tied to being an Entity Event or
- environment Event like actions are, however this might have been a wrong
- move on our part.
+As of now, our events are not tied to being 
+\family typewriter
+EntityEvent
+\family default
+s or 
+\family typewriter
+EnvironmentEvent
+\family default
+s like actions are, however this might have been a wrong move on our part.
  The problem is that the user of the engine might be unclear as to which
  is what, currently the difference lies in the name convention used for
  events.
- For instance an event such as “EntityMoved” it is clear that this is an
- event that can be tied to a specific entity.
- However for an event such as “AddedEntityToEngine” this might be confusion
- because the event is clearly speaking about a single entity but as the
- entity is only just added it would have been impossible for any trigger
- to be registered to it.
+ For instance, it is clear from the name that the 
+\family typewriter
+EntityMovedEvent
+\family default
+ can be tied to a specific entity.
+ In the case of the 
+\family typewriter
+AddedEntityToEngineEvent
+\family default
+, however, there is some ambiguity, as the event is clearly speaking about
+ a single entity, but as the entity is only just added it would have been
+ impossible for any trigger to be registered to it.
  If one was to make improvements to the event design this would be one change
  that was worth looking into.
 \end_layout
@@ -3048,15 +3104,15 @@ The trigger design came about as a necessity for providing a way for the
 
 \begin_layout Standard
 Another way the triggers could have been designed would be if the user simply
- registered lambda functions(anonymous function), this would help reduce
- the amount of class a user should know and understand.
+ registered lambda functions (anonymous function), this would help reduce
+ the amount of classes a user should know and understand.
  However we preferred to encapsulate this into what we call the Trigger,
  since we wanted to have the ability to expand the capability of the trigger
  at a later time.
 \end_layout
 
 \begin_layout Standard
-In short triggers are a simple design that gives the engine logic a lot
+In short, triggers are a simple design that gives the engine logic a lot
  of flexibility.
  
 \end_layout
@@ -3066,13 +3122,12 @@ Summary
 \end_layout
 
 \begin_layout Standard
-Events and triggers might be a hassle to setup and design however what they
- return in value is tenfold to that, they provide the engine with much flexibili
-ty.
+Events and triggers might be a hassle to setup and design, but in return
+ they provide the engine with a lot of flexibility.
  Without Events the engine would suffer greatly and all actions would be
  required to be bogged down with a lot of extra logic.
  This would not only remove the modularity of the engine but also make using
- engine more error-prone.
+ the engine more error-prone.
 \end_layout
 
 \begin_layout Subsubsection
@@ -3080,9 +3135,8 @@ Actions
 \end_layout
 
 \begin_layout Standard
-As we already went through what actions can be used this section will keep
- that to a minimum and instead focus on our idea behind, and how we implemented
- them.
+As we already went through what actions can be used for, this section will
+ instead focus on the idea behind actions, and how we implemented them.
  It will furthermore cover the entire life span of an action object.
 \end_layout
 
@@ -3195,8 +3249,8 @@ XmasModel
 \family typewriter
 XmasModel
 \family default
- will remain in wait state until a new action has been placed on the queue;
- this is preventing it from busy waiting when no actions are to be executed.
+ will remain in a waiting state until a new action has been placed on the
+ queue; this prevents it from busy waiting when no actions are to be executed.
 \end_layout
 
 \begin_layout Paragraph*
@@ -3205,12 +3259,13 @@ Considerations
 
 \begin_layout Standard
 The way that action completion is designed might seem tedious in that it
- has to call a special method 
+ has to call the special method 
 \family typewriter
 Completed
 \family default
- on each action however it is quite necessary as the completion of the execute
- method call does not guarantee that a method is completed.
+ on each action.
+ However it is quite necessary as the completion of the execute method call
+ does not guarantee that a method is completed.
  
 \end_layout
 
@@ -3220,14 +3275,23 @@ The reason why the completion of the method
 Execute
 \family default
  does not guarantee that Action has actually completed is that in cases
- of actions not being instantaneous the rule would not apply.
- To give an example of such action, take the action of moving from one place
- to another.
+ of actions not being instantaneous, the rule would not apply.
+ 
+\family typewriter
+\emph on
+[What rule?] 
+\family default
+\emph default
+To give an example of such an action, take the action of moving from one
+ place to another.
  In this case the move action would need to create a timer to give the idea
  that the move action had a speed.
  As we can’t halt other actions during this time it is paramount that the
- Execute method is released so that other actions can be executed during
- this period.
+ 
+\family typewriter
+Execute
+\family default
+ method is released so that other actions can be executed during this period.
  
 \end_layout
 
@@ -3237,11 +3301,11 @@ This is also how the move action is designed in our reference implementation,
 \end_layout
 
 \begin_layout Enumerate
-Move action put on queue 
+The move action is put on the queue 
 \end_layout
 
 \begin_layout Enumerate
-Move action sets up a timer on a different thread and finishes its execution
+The move action sets up a timer on a different thread and finishes its execution
 \end_layout
 
 \begin_layout Enumerate
@@ -3267,14 +3331,15 @@ As one can see, the problem in this design is the redundancy created by
 Completed 
 \family default
 on each execution.
- This might not seem like a problem however it is problematic in a few ways.
+ This might not seem like a problem but it is problematic in a few ways.
  First and foremost it adds complexity in usage of the engine, a person
- with no knowledge of using the engine would not have a way in realizing
- the correct way to make and use actions.
- Thus it creates a second problem there is no way to determine if an Action
- is correctly constructed during compile time, this means bugs will naturally
- accumulate during extended use, even if a user has experience and foreknowledge
- forgetting even for a single action can be crucial.
+ with no knowledge of using the engine would not intuitively deduce the
+ correct way to make and use actions.
+ Thus it creates a second problem: there is no way to determine if an action
+ is correctly constructed during compile time.
+ This means bugs will naturally accumulate during extended use, even if
+ a user has experience and foreknowledge forgetting even for a single action
+ can be crucial.
  This is because running actions use resources and if never completed the
  resources of the actions are never released.
  For instance let us assume the 
@@ -3333,7 +3398,7 @@ A lot of the considerations when designing the action all comes down to
  the engine.
  This is also why this design method was chosen as our philosophy in the
  engine design was to minimize limitations as much as possible while still
- providing the features we thought necessary to fulfill the engines goal.
+ providing the features we thought necessary to fulfill the engine's goal.
 \end_layout
 
 \begin_layout Subsection
@@ -3342,8 +3407,9 @@ Agent Controller
 
 \begin_layout Standard
 The agent controller is designed specifically to be able to accommodate
- all types of APL, this meant that a lot of special care had to be taken
- in order for us to impose as few restrictions as possible.
+ all types of APL.
+ This means that a lot of special care had to be taken in order for us to
+ impose as few restrictions as possible.
  This section will focus on the different designs we went through and why
  we eventually landed on the design we have now.
 \end_layout
@@ -3421,18 +3487,24 @@ AgentManager
 \family typewriter
 AgentController
 \family default
- to be used by the AP.
- It also generates a new thread which the 
+ to be used by the AP, it also generates a new thread which the 
 \family typewriter
 AgentController
 \family default
  is executed on.
- In the System features we covered how 
+ In the System Features section we covered how 
 \family typewriter
 AgentController
 \family default
 ’s in order to give an idea of how to use them, however we did not fully
- explain everything, on fig.
+ explain everything
+\family typewriter
+\emph on
+ [Rewrite sentence]
+\family default
+\emph default
+.
+ In fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3442,8 +3514,8 @@ reference "fig:ImplementationAgentControllerSequenceDiagram"
 
 , a sequence diagram is shown that looks familiar to the one shown in the
  system features.
- However there are a few key differences first off this sequence diagram
- shows the complete life cycle of an 
+ However there are a few key differences.
+ First, this sequence diagram shows the complete life cycle of an 
 \family typewriter
 AgentManager
 \family default
@@ -3457,12 +3529,12 @@ AgentManager
 \family typewriter
 AgentController
 \family default
-s are generated for APs in need of the.
- Secondly it also details that 
+s are generated for APs in need of them.
+ Second, it also details that 
 \family typewriter
 AgentController
 \family default
-s do in fact get generated by the 
+s are in fact generated by the 
 \family typewriter
 AgentManager
 \family default
@@ -3478,8 +3550,8 @@ The
 \family typewriter
 AgentManager
 \family default
-, went through many design iterations in order to fully, originally the
- 
+ went through many design iterations in order to arrive at its present state.
+ Originally, the 
 \family typewriter
 AgentManager
 \family default
@@ -3487,20 +3559,27 @@ AgentManager
 \family typewriter
 AgentServer
 \family default
- the reason for this is that for another language to interface with the
- language of the engine which is C# there must be universal way of connecting
- the two languages.
+.
+ The reason was that for another language to interface with the language
+ of the engine -- C# -- there must be a universal way of connecting the
+ two languages.
  A way in which practically no languages was prohibited from interacting,
  and as we thought such a way could only be achieved through a TCP connecting
- since the protocol for TPC connections is very old and as such is universally
- by almost any language.
+ since the protocol for TPC connections is very old and as such usable in
+ most languages by far.
  While it is true that probably almost all languages do require a TCP connecting
- in order for them to work with our engine.
- It is not true for languages that the engine understand, considering that
- all the .NET platform languages works together very well.
+ in order for them to work with our engine, it is not true for languages
+ that the engine understand, considering that all the .NET platform languages
+ works together very well.
  The most obvious language to use would of course be F# since it is a functional
- language.
- As such if we imposed that all 
+ language 
+\family typewriter
+\emph on
+[Why? subjective]
+\family default
+\emph default
+.
+ As such, if we imposed that all 
 \family typewriter
 AgentManager
 \family default
@@ -3508,13 +3587,13 @@ s are
 \family typewriter
 AgentServer
 \family default
-s
-\family typewriter
- 
-\family default
-then it would be required to setup a server just for using a language which
+s, it would be required to setup a server just for using a language which
  the engine already understands.
  
+\family typewriter
+\emph on
+[Consider rewriting paragraph from another standpoint: AgentManager is more
+ general, less restrictive than AgentServer]
 \end_layout
 
 \begin_layout Subsubsection*
@@ -3531,8 +3610,9 @@ AgentManager
 AgentController
 \family default
  is designed as a framework for making an interface between an APL and the
- engine, they are intentionally made very lightweight so that they do not
- prohibit the any special requirements of any given APL.
+ engine.
+ They are intentionally made very lightweight so that they do not prohibit
+ the any special requirements of any given APL.
 \end_layout
 
 \begin_layout Subsection
@@ -3542,8 +3622,8 @@ View
 \begin_layout Standard
 As the view our engine provides is only a framework for making an actual
  view, it limits what can be said about its implementation.
- However what this section will focus on is why we chose to design the view
- in this manner and how we provide ways to ensure that the view can be executed
+ What this section will focus on is why we chose to design the view in this
+ manner and how we provide ways to ensure that the view can be executed
  on a different thread while not being affected by its problems.
 \end_layout
 
@@ -3569,7 +3649,7 @@ status open
 
 \begin_layout Plain Layout
 Sequence diagram show how events triggered on the model is stored and put
- on hold until the view thread is able to take care of them
+ on hold until the view thread is able to process them
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:ThreadSafeSequenceDiagram"
@@ -3581,10 +3661,6 @@ name "fig:ThreadSafeSequenceDiagram"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -3613,9 +3689,16 @@ Thread Safety
 \end_layout
 
 \begin_layout Standard
-One thing all view has in common is the dangers of having not thread-safe
- code, by having two threads run through the same address space at the same
- time the guarantee of a race condition or a deadlock is almost 100%.
+One thing all views have in common is the dangers of having code that is
+ not thread safe, by having two threads run through the same address space
+ at the same time the guarantee of a race condition or a deadlock is almost
+ 100% 
+\family typewriter
+\emph on
+[No]
+\family default
+\emph default
+.
  This makes programming a view rather difficult, to combat this problem
  we came up with the 
 \family typewriter
@@ -3626,8 +3709,8 @@ ThreadSafeEventManager
 ThreadSafeEventQueue
 \family default
 .
- These classes both assists on ensuring that the model thread is never involved
- in the view thread’s business.
+ These classes both assist with ensuring that the model thread is never
+ involved in the view thread’s business.
  The way the 
 \family typewriter
 ThreadSafeEventManager
@@ -3672,7 +3755,7 @@ Summary
 \end_layout
 
 \begin_layout Standard
-The view design is mostly focused on ensure that that the user of the engine
+The view design is mostly focused on ensuring that the user of the engine
  should deal with as few threading problems as possible as such we have
  developed two classes 
 \family typewriter
