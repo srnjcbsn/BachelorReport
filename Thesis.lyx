@@ -80,6 +80,17 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
+\begin_layout Subsection
 Motivation
 \end_layout
 
@@ -88,14 +99,14 @@ There are many complications when developing multi agent systems, our goal
  with this project was to lessen one of these by designing an engine with
  the specific purpose to develop multi agent environments.
  What these environments can be is left to the developer, however almost
- everything in the engine is modular and interchangeable ensuring that all
- types of multi agent environments are possible.
+ everything in the engine is modular and interchangeable, ensuring that
+ all types of multi agent environments are possible.
  
 \end_layout
 
 \begin_layout Standard
-What the types of projects can be is manifold but here are some possible
- examples
+What the types of projects can be is manyfold but here are some possible
+ examples:
 \end_layout
 
 \begin_layout Paragraph*
@@ -103,19 +114,18 @@ Agent comparison software
 \end_layout
 
 \begin_layout Standard
-There are many complications when developing multi agent systems, our goal
- with this project was to lessen one of these by designing an engine with
- the specific purpose to develop multi agent environments.
- What these environments can be is left to the developer, however almost
- everything in the engine is modular and interchangeable ensuring that all
- types of multi agent environments are possible.What the types of projects
- can be is manifold but here are some possible examples
+There are many different languages in which it is possible to write agent
+ programs, some are specifically designed for it others are powerful enough
+ to accommodate the possibility of agent programming.
+ Our engine is designed with support for multiple languages at once which
+ makes this engine a perfect candidate for designing a comparator program.
+ 
 \end_layout
 
 \begin_layout Standard
-For instance if two groups wanted to test their agent programs against each
- other this engine would make it possible for them to easily design a world
- in which this test could occur.
+For instance, if two groups wanted to test their agent programs against
+ each other, this engine would make it possible for them to easily design
+ a world in which this test could occur.
 \end_layout
 
 \begin_layout Paragraph*
@@ -123,9 +133,10 @@ Agent testing/Simulation software
 \end_layout
 
 \begin_layout Standard
-Testing agent software can be complicated being able to rapidly create an
- environment and visualize it can be important to the project as it ensure
- basic mistakes are ironed out before larger scale implementation.
+Testing agent software can be complicated.
+ Being able to rapidly create an environment and visualize it can be important
+ to the project, as it ensure basic mistakes are ironed out before larger
+ scale implementation.
  
 \end_layout
 
@@ -134,7 +145,7 @@ Agent teaching tools
 \end_layout
 
 \begin_layout Standard
-Teaching agent languages can be tough without proper exercises; however
+Teaching agent languages can be tough without proper exercises; however,
  the time spent on designing these exercises can prove too exhausting for
  the teacher to develop.
  In this case the teacher can rapidly design the world he had in mind for
@@ -142,8 +153,8 @@ Teaching agent languages can be tough without proper exercises; however
  system himself.
  This is because our engine provides all the basic features of a multi agent
  system, so that the time can be spent more productively on designing how
- a given exercise should play out, show casing the problem the students
- are supposed to deal with.
+ a given exercise should play out, showcasing the problem the students are
+ supposed to deal with.
 \end_layout
 
 \begin_layout Paragraph*
@@ -156,6 +167,10 @@ In theory most computer games are just multi agent programs where one of
  Our engine should make it fairly easy for setting up a framework for creating
  rules inside a given world and ensure that the agents of the world follow
  said rules.
+ 
+\family typewriter
+\emph on
+[Expand]
 \end_layout
 
 \begin_layout Section
@@ -163,23 +178,34 @@ Theory
 \end_layout
 
 \begin_layout Subsection
+Multi-Agent Systems
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
+\begin_layout Subsection
 Model View Controller
 \end_layout
 
 \begin_layout Standard
-To ensure that code is correctly decoupled from one another strict design
- patterns are necessary, these allow for developing complex projects without
+To ensure that code is correctly decoupled from one another, strict design
+ patterns are necessary, as these allow developing complex projects without
  losing the sight of the entire project.
- If no pattern is followed then code can easily become so entangled that
- later development might prove impossible.
- This section will cover all the rules and ideas behind the Model-View-Controlle
-r design pattern shortened MVC.
+ If no pattern is followed, code can easily become so entangled that later
+ development might prove impossible.
+ This section will cover all the rules and ideas behind the MVC (Model-View-Cont
+roller) design pattern.
 \end_layout
 
 \begin_layout Standard
-The MVC pattern principle is that programs that can be interacted with a
- user can be split into three different components.
- The three components are as follows:
+The MVC pattern principle is that programs that can be interacted with by
+ a user can be split into three different components.
+ These components are as follows:
 \end_layout
 
 \begin_layout Itemize
@@ -201,10 +227,6 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename MVC.png
@@ -224,17 +246,13 @@ name "fig:MVCBasic"
 This image shows how the three components are connected to each other; the
  full arrows indicate that a component has complete knowledge of the component
  it is pointing to.
- A stripped arrow indicates that the component the stripped arrow is pointing
+ A dashed arrow indicates that the component the dashed arrow is pointing
  to is listening to the component the arrow is originating from.
  
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -248,23 +266,36 @@ Model
 \end_layout
 
 \begin_layout Standard
-The model is the core of the program it is why the program functions as
- it does, it contains all information of the data and it is here all business
- logic is located.
- The model should have no knowledge of either the view or the controller,
- thus by not knowing either the program is ensured to not be tainted by
- their influence.
+The model is the core of the program.
+ It is why the program functions as it does, it contains all information
+ of the data, and it is here all business logic is located.
+ The model should have no knowledge of either the view or the controller;
+ by not knowing either the program is ensured to not be tainted by their
+ influence.
 \end_layout
 
 \begin_layout Standard
-While may not know of the view or controller it is paramount that the model
- is built to optimally transfer information concerning its current state.
- That means putting in a way in the model for other components to listen
- to it is very welcome.
- Commonly this is referred to as events in most programming languages, what
- this does for the model is that in the case that model state has been altered
- it will have a way to provide the information of the state.
- If such features are not built into the model then it would require the
+While it may not know of the view or the controller, it is paramount that
+ the model is built to optimally transfer information concerning its current
+ state.
+ That means that providing a way for other components to listen on the model
+ is very welcome
+\emph on
+.
+ 
+\emph default
+This gives the model a way to publish its state when it has been altered
+\emph on
+.
+
+\emph default
+ What this does for the model is that in the case that model state has been
+ altered, it will have a way to provide the information of the state.
+ 
+\end_layout
+
+\begin_layout Standard
+If such features are not built into the model then it would require the
  component changing the state to inform of the state changes, in case of
  a MVC design.
  The component changing state is the controller and such the controller
@@ -280,28 +311,32 @@ View
 
 \begin_layout Standard
 The view is a way to visualize what is currently occurring inside model
- by visualizing it to the user, a view may take many shapes depending on
- the model.
- For instance if the model is a program calculating data on a server, then
+ by visualizing it to the user.
+ A view may take many shapes depending on the model.
+ If, for instance, the model is a program crunching data on a server, then
  the view could take the form of a logging console.
  Or if the model was a computer game then the view would be the graphic
  representation of the game.
- Generally a view should only have knowledge of the model and not the controller
-, the idea is that if the model data is complete then interaction with the
+ Additionally, a model can have severl views, each displaying information
+ in a different manner.
+ For example, the computer game mentioned above could also feature a view
+ printing debugging information to a console while the game was running.
+ Generally, a view should only have knowledge of the model and not the controlle
+r.
+ The idea is that if the model data is complete then interaction with the
  controller should not be necessary.
 \end_layout
 
 \begin_layout Standard
 When designing a view there are some common pitfalls that happen easily
  if one is not careful of the design.
- First off the view is what it is named; a view this means that it should
- never do any state changes to the model.
+ First off, the view is what it is named; a view.
+ This means that it should never do any state changes to the model.
  If getting hold of data means that the model must change its state to accommoda
-te this then the model is poorly made and should be changed.
- However a view is allowed to change its own state without involving either
+te this, then the model is poorly made and should be changed.
+ However, a view is allowed to change its own state without involving either
  the controller or model.
- To fully understand what is meant by this is easily understood with an
- example:
+ To fully understand what is meant by this, consider the following example:
 \end_layout
 
 \begin_layout Standard
@@ -363,9 +398,9 @@ A standard menu bar.
 \begin_layout Standard
 To open a menu, the user need to drag the mouse and click on one menu he
  or she wishes to open.
- However in this case many would confuse this to be the task of the controller.
- It is not since the changes done are only performed on the views own state
- and not the model of the program, thus it allowed to be its own controller.
+ Many would see this as a task of the controller.
+ This is not the case, however, since the changes done are only performed
+ on the view's own state and not the model of the program.
 \end_layout
 
 \begin_layout Subsubsection
@@ -373,31 +408,33 @@ Controller
 \end_layout
 
 \begin_layout Standard
-The controller is link between the model and the user, by convention all
- changes the user wish to do on the model should be done through controller.
- Like the view it can take many shapes, to name a few be that the controller
- directs the input from a mouse in a way that affect the model, however
- it could also be a controller that controls how a network data stream has
- effect on the model.
+The controller is the link between the model and the user.
+ By convention, all changes the user wishes to perform on the model should
+ be done through the controller.
+ Like the view, it can take many shapes, like an object that transforms
+ input from the mouse into changes to the model, or an object controlling
+ how a network data stream effects on the model.
  
 \end_layout
 
 \begin_layout Standard
 In a well-designed program the controller should never have to interact
- with the view, however this can be practically impossible on larger projects
- unless carefully planned and as such the controller by convention is allowed
+ with the view.
+ However, this can be practically impossible on larger projects unless they
+ are carefully planned, and as such the controller by convention is allowed
  to know of both the view and the model.
 \end_layout
 
 \begin_layout Standard
 A common mistake when designing the controller is to mistake the unit which
  the controller gets input from as the actual controller.
- In many cases the keyboard is the device from which input is transformed
- into state changes to the model, however that does not mean that the controller
- should be the only unit interacting with the keyboard.
- Going back to the example used to understand the view, the reason why controlle
-r should not deal with opening a menu bar on the view is because the controller
- is not responsible on the state of the view.
+ In many cases, the keyboard is the device from which input is transformed
+ into state changes to the model.
+ However, that does not mean that the controller should be the only unit
+ interacting with the keyboard.
+ Going back to the example used to understand the view, the reason why the
+ controller should not deal with opening a menu bar on the view is because
+ the controller is not responsible of the state of the view.
  The controller is only responsible for the state of the model; the only
  case in which it is allowed for the controller to interfere with the view
  is in the case that the model was unsuccessful in properly informing about
@@ -412,8 +449,9 @@ The reasoning for why the controller is normally mistaken to be responsible
  for handling changes to the state of the view is because it is mistakenly
  thought of as a controller for the entire program and not the model, a
  view may contain its own controller which should not be mistaken from the
- other controller, to fully understand this imagine that the view in itself
- also contains a MVC inside itself (see fig.
+ other controller.
+ To fully understand this, imagine that the view in itself also contains
+ a MVC inside itself (see fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -460,26 +498,45 @@ A view with a MVC inside of it.
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-The model of a view such as a menu bar would contain data about the names
+The model of a view (such as a menu bar) would contain data about the names
  of the menus and it would be responsible for ordering and accessing information
  as to what each menu contains.
  Its view would be that of a drawing board responsible for properly drawing
  the menu bars.
- Luckily most views are simple so one does not need to make an entire MVC
- design, but for graphical user interface used in most operating system
+ Luckily, most views are simple, so one does not need to make an entire
+ MVC design, but for graphical user interface used in most operating system
  it is very important to understand that a view can be an entire MVC setup
- in itself, this is why most operating system comes with libraries to easily
- design GUI.
+ in itself.
+ This is why most operating system comes with libraries to easily design
+ GUI.
+\end_layout
+
+\begin_layout Subsection
+Factory Design Pattern
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
+\begin_layout Subsection
+Test Driven Development
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
 \end_layout
 
 \begin_layout Section
@@ -624,9 +681,9 @@ Overview
 
 \begin_layout Standard
 The goal of the engine is to allow for simulation of a world where agents
- within are allowed to act, as such what is important for this is that it
- can accurately model a state-machine.
- To model a state-machine one must have the ability to save a state and
+ within are allowed to act.
+ As such, it is important that it can accurately model a state-machine.
+ To model a state-machine, one must have the ability to save a state and
  perform actions to change the current state.
  
 \end_layout
@@ -636,7 +693,7 @@ State
 \end_layout
 
 \begin_layout Standard
-In our domain model we have state stored in three object types:
+In our domain model, we have state stored in three object types:
 \end_layout
 
 \begin_layout Itemize
@@ -656,10 +713,18 @@ World
 \end_layout
 
 \begin_layout Standard
-The world is the place where all entities are meant to inhabit as either
- agents of the world or simply objects for the entities to interact with.
- The world is not defined by us as shown on the domain uml it is an abstract
- class meaning it is the developer using our engine that defines the world.
+The world is the place all entities are meant to inhabit as either agents
+ of the world or simply objects for the entities to interact with.
+ The world is not defined by the engine.
+ As shown in fig.
+ 
+\family typewriter
+\emph on
+[DomainUmlDiagram]
+\family default
+\emph default
+, it is an abstract class, meaning it is the developer using our engine
+ that defines the world.
  As such the world can be any type of world needed, it could be a 3-d world,
  a 2-d world, a world based on tiles or hexagons or simply be nodes with
  an undefined number of edges connecting each other.
@@ -670,16 +735,16 @@ Entities
 \end_layout
 
 \begin_layout Standard
-The world is empty without anything inside it as such we have the entities
- which are meant to model the objects one would have the world to contain.
+The world is empty without anything inside it, as such we have the entities
+ which are meant to model the objects one would have the world contain.
  For example in our reference implementation using our engine, we have a
- maze with packages scattered about.
+ world with packages scattered about a maze.
  It is then the task of the agents to collect these packages; the entities
- here are not only the walls of the maze and the packages but also the agents
- since they inhabit the world as well.
- The agents are different from entities in the way that they all have a
- name this name is unique and is meant to be a way of distinguishing the
- agents from one another.
+ here are not only the walls of the maze and the packages, but also the
+ agents since they inhabit the world as well.
+ The agents are different from entities in that they all have a name.
+ This name is unique and is meant to be a way of distinguishing the agents
+ from one another.
  
 \end_layout
 
@@ -693,8 +758,11 @@ The modules can be viewed as the constraints and as the abilities of all
  For instance if you wanted to constrain entities from moving into each
  other than you would create a Movement blocking module, this module would
  then contain information on whether or not a given entities is allowed
- to pass it.
+ to pass through it.
  
+\family typewriter
+\emph on
+[Rewrite?]
 \end_layout
 
 \begin_layout Subsubsection
@@ -704,12 +772,12 @@ Actions
 \begin_layout Standard
 A world is static and unexciting if one is not allowed to perform any changes
  to it, for this we have what we have chosen to name actions.
- There are two different kinds of action types there are environment actions
- and there are entity actions the core difference between them is that entity
- actions are meant as actions a single entity performs such as moving the
- entity or having the entity pick up another object.
+ There are two different types of actions: environment actions entity actions.
+ The core difference between them is that entity actions are meant as actions
+ performed by a single entity, such as moving the entity or having the entity
+ pick up another object.
  Environment actions are actions that affect the entire world.
- In our domain model we have chosen to add two actions that are built into
+ In our domain model, we have chosen to add two actions that are built into
  the engine, the first is an entity action that gets all the percepts for
  a given entity called 
 \family typewriter
@@ -739,9 +807,9 @@ The engine relies heavily upon events, this means that all actions performed
 \begin_layout Standard
 In order to listen to the events, a trigger need to be created with all
  the events it listens to registered to it.
- Furthermore a trigger needs a condition and an action, the condition is
- a predicate that determines whether the trigger is fired, the action is
- the function that is fired.
+ Furthermore, a trigger needs a condition and an action.
+ The condition is a predicate that determines whether the trigger is fired,
+ and the action is the function that is excuted when the trigger is fired.
 \end_layout
 
 \begin_layout Subsection
@@ -803,27 +871,13 @@ name "sub:SysFeatEntities"
 Entities are the objects inhabiting the world.
  They are very basic objects, equipped with no definitions of how they are
  represented in the world or how they can be interacted with, save for allowing
- other objects to subscribe to events propagated 
-\family typewriter
-\emph on
-[fired?]
-\family default
-\emph default
- by the entity.
+ other objects to subscribe to events fired by the entity.
  All this is instead handled by 
 \emph on
 entity modules
 \emph default
 , which each entity contains a set of.
  These modules can be queried and called by other objects.
-\end_layout
-
-\begin_layout Standard
-In our reference implementation, package grabber agents have the 
-\emph on
-package
-\emph default
- module keeping track of whether or not they hold a package.
 \end_layout
 
 \begin_layout Standard
@@ -858,7 +912,11 @@ module type
 
 .
  If several effects are applied to a property, this would function like
- a chain 
+ a chain.
+ 
+\family typewriter
+\emph on
+[Elaborate, illustrate]
 \end_layout
 
 \begin_layout Standard
@@ -892,11 +950,10 @@ Concept
 \end_layout
 
 \begin_layout Standard
-In this part the concept and idea of both events and triggers.
- We will go through their intention and how to use them when using the engine,
- furthermore a couple of example will be shown in order to give the general
- idea of what they can be used for.
- 
+In the natural world all actions have a reaction, these reactions could
+ be thought of as events meant to trigger when such actions are performed.
+ Thus an engine for modeling a virtual environment must provide as many
+ features as those of the real world environment.
 \end_layout
 
 \begin_layout Paragraph*
@@ -1425,7 +1482,19 @@ name "fig:MoveEntityActionExample"
 
 \end_inset
 
- MOAR TEEEXT!
+ Illustrating the inheritance of the newly created 
+\family typewriter
+EntityAction
+\family default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+MoveEntityAction
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1560,6 +1629,512 @@ converters
  A converter is, as the name implies, a class that takes objects of a foreign
  type and map them to internal types or vice versa.
  
+\family typewriter
+\emph on
+[Expand]
+\end_layout
+
+\begin_layout Subsection
+Agent Controllers
+\end_layout
+
+\begin_layout Standard
+Being able to control any of the agents inside the engine, is what the purpose
+ of this engine is.
+ This Section will cover how we thought the design of an agent controller
+ should look like.
+ To get an overview of the classes used for the 
+\family typewriter
+AgentController
+\family default
+, look at fig.
+ 
+\family typewriter
+\emph on
+[Domain model figure]
+\family default
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename SystemFeatureAgentControllerSequenceDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This sequence diagram shows the process of an AP taking control of agent
+ through the 
+\family typewriter
+AgentManager
+\family default
+, and commanding it through the 
+\family typewriter
+AgentController
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:APConnectingToAndControllingAC"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Concept
+\end_layout
+
+\begin_layout Standard
+The engine is designed to support the ability to be adapted for all APL
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Agent Programming Language
+\end_layout
+
+\end_inset
+
+ types, this means that the engine itself does not support all APL but instead
+ provides a framework for quickly design of an interface between the engine
+ and the APL.
+ There are two classes that one must use in order to properly design the
+ interface:
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+
+\family typewriter
+AgentManager
+\family default
+ has the duty of speaking directly with the agent language it attempts to
+ interface with, its job is to arrange it so that all agents the APL wishes
+ to take control of is done so through it, it should do so by spawning 
+\family typewriter
+AgentControllers
+\family default
+ to all newly controlled agents.
+ The 
+\family typewriter
+AgentManager
+\family default
+ is in that sense much akin to an Abstract Factory which according to the
+ design pattern requires that an abstract class has a method generates a
+ certain type of what object but not exactly which object.
+ The idea is of course that if you have an 
+\family typewriter
+GoalAgentManager
+\family default
+ then the controller it constructs would be 
+\family typewriter
+GoalAgentController
+\family default
+.
+ By making it an abstract method we ensure at compile time that the engine
+ framework is properly used which is very good for the user.
+ 
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+
+\family typewriter
+AgentController
+\family default
+ is the link between a single agent and the AP 
+\begin_inset Foot
+status open
+
+\begin_layout Description
+Agent Program
+\end_layout
+
+\end_inset
+
+, this means its job is to take all commands directed to it and transform
+ them into actions understood by the engine, and apply them to the agent
+ that it controls.
+\end_layout
+
+\begin_layout Standard
+To simplify the 
+\family typewriter
+AgentController
+\family default
+ design we provide a method on it called 
+\family typewriter
+PerformAction
+\family default
+, this method purpose is to make it very easy for executing actions on the
+ agent it controls.
+ Basically when the 
+\family typewriter
+PerformAction
+\family default
+ is called the 
+\family typewriter
+AgentController
+\family default
+ queues the action given through the method.
+ Then puts the 
+\family typewriter
+AgentController
+\family default
+’s thread to sleep, once the action has been executed by the engine.
+ The 
+\family typewriter
+AgentController
+\family default
+ is woken up and returns from the 
+\family typewriter
+performAction
+\family default
+ method.
+ All percepts received by the 
+\family typewriter
+AgentController
+\family default
+ during this time is stored on the 
+\family typewriter
+AgentController
+\family default
+ and can be easily accessed by the actual 
+\family typewriter
+AgentController
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The process of an AP taking control of an agent can be seen on fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:APConnectingToAndControllingAC"
+
+\end_inset
+
+, basically the AP calls the 
+\family typewriter
+AgentManager
+\family default
+ to locate the agent it wishes to assume control of.
+ The agent is located through a string which is unique to it and ensures
+ only one agent is taken.
+ When the 
+\family typewriter
+AgentManager
+\family default
+ finds the given agent it will immediately generate a new 
+\family typewriter
+AgentController
+\family default
+, the AP will not gain access to the agent but instead it will gain access
+ to the 
+\family typewriter
+AgentController
+\family default
+.
+ Now that the AP possesses the 
+\family typewriter
+AgentController
+\family default
+ it will have the ability to send the 
+\family typewriter
+AgentController
+\family default
+ commands, these commands might not be understood by the engine if the APL
+ is foreign enough to the engine’s own language and as such it is the duty
+ of the 
+\family typewriter
+AgentController
+\family default
+ to convert these commands into actual actions which the engine can understand.
+\end_layout
+
+\begin_layout Standard
+As this project is about working with goal in particular we have created
+ an extension for the AgentController designed specially to work with goal,
+ therefor any example shown here would be incomplete compared to the EIS/Goal
+ implementation we have made.
+ As such go to Section: GOAL/EIS Extension for a proper example of how to
+ use the AgentController.
+\end_layout
+
+\begin_layout Subsubsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+The agent controller is designed very lightweight the reason for this is
+ we do not wish to impose any restrictions that might limit an APL which
+ we know nothing about, as such the 
+\family typewriter
+AgentController
+\family default
+ is more akin to a convention or a design pattern for how interfacing with
+ agents should occur.
+ It provides the skeleton of how a link might be designed but does not impose
+ any restriction of how should link should be setup.
+\end_layout
+
+\begin_layout Subsection
+View
+\end_layout
+
+\begin_layout Standard
+The engine is designed to assist the user in all parts of the process when
+ making an environment, this also extends to the visualization of said environme
+nt, however since our goal is to have as few restrictions on the model our
+ knowledge of how that view’s form is shaped is very limited.
+\end_layout
+
+\begin_layout Subsubsection
+Concept
+\end_layout
+
+\begin_layout Standard
+The view API which the engine provides is exactly four abstract classes
+ that are meant to be implemented by the user.
+ The four classes can be seen on fig.
+ 
+\family typewriter
+\emph on
+[DomainUMLView]
+\family default
+\emph default
+, we will go through each class and explain how they are meant to be implemented.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+XmasView
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+XmasView
+\family default
+ class is very simple it only provides a single method that is required
+ to be implemented, when the engine starts the view up it generates a thread
+ for the view and the 
+\family typewriter
+Start
+\family default
+ method is the first method to be executed inside that thread.
+ The start method should contain an endless loop that on a time interval
+ updates the view.
+ Another task of the implemented view is also to update its 
+\family typewriter
+ThreadSafeEventManager
+\family default
+, the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ ensures that events that are sent from model thread of the engine is not
+ immediately executed instead they lie dormant in the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ until the view thread is ready to execute them.
+ How many events that one wish to trigger is up to the user, We also provide
+ the appropriate methods so that the user can say exactly how long he wishes
+ to wait for the next event, or if it should timeout.
+ The 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ is very important to the view as without it designing view code comes complicat
+ed as one need to constantly ensure that no concurrent bugs has been applied
+ to the system.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+WorldView
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+WorldView
+\family default
+ class is added because of the long term benefits, as of now it provides
+ nothing for the designer, however if we found benefits to add to the class,
+ making it ahead of time even if it is empty can have many benefits as the
+ project expands.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+EntityView
+\end_layout
+
+\begin_layout Standard
+Much like the 
+\family typewriter
+WorldView
+\family default
+ class the 
+\family typewriter
+EntityView
+\family default
+ is also very minimal however, it enforces certain things that the user
+ of the engine should take care off.
+ First off it automatic makes an 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ from the entity and attaches that 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ to the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ which should be provided by the 
+\family typewriter
+XmasView
+\family default
+.
+ The idea is that all events the 
+\family typewriter
+XmasView 
+\family default
+wishes to listen to should be done by registering its triggers to the 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+.
+ This will ensure that when the view updates the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ all events pertaining to the specific entity is also updated on the 
+\family typewriter
+EntityView
+\family default
+’s triggers, but done so on the view thread instead of the model thread
+ separating the two threads completely.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+ViewFactory
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+ViewFactory
+\family default
+ is meant to include all objects with low life cycle used by the view, it
+ is also designed specifically to construct new 
+\family typewriter
+EntityViews
+\family default
+ during runtime of the engine.
+ In order to know which 
+\family typewriter
+EntityView
+\family default
+ belongs to which 
+\family typewriter
+XmasEntity
+\family default
+ one is required to register all types of 
+\family typewriter
+XmasEntities
+\family default
+ and link it to its counterpart 
+\family typewriter
+EntityView
+\family default
+.
+ For instance assume you have a class inheriting 
+\family typewriter
+XmasEntity
+\family default
+ called 
+\family typewriter
+Wall
+\family default
+, and the 
+\family typewriter
+Wall
+\family default
+’s representation called 
+\family typewriter
+WallView
+\family default
+, then you need to manually register inside the 
+\family typewriter
+ViewFactory
+\family default
+ that 
+\family typewriter
+Wall
+\family default
+ is represented by 
+\family typewriter
+WallView
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+The view framework provides four classes each with their own advantages;
+ they each represent a part of the model of engine.
+ They are designed to assist the user in keeping his code threadsafe so
+ that as few problems as possible arise.
 \end_layout
 
 \begin_layout Subsection
@@ -1649,6 +2224,10 @@ speed
 \emph default
  module defines how long it takes for the entity to move to an adjacent
  square.
+ 
+\family typewriter
+\emph on
+[Rewrite]
 \end_layout
 
 \begin_layout Paragraph*
@@ -1745,10 +2324,13 @@ connects
 \end_inset
 
 , and as such not connect.
- 
+\end_layout
+
+\begin_layout Standard
+
 \family typewriter
 \emph on
-[expand]
+[expand, add image]
 \end_layout
 
 \begin_layout Standard
@@ -1810,7 +2392,13 @@ iilang
  objects.
  Furthermore, we have implemented special package streaming objects in both
  C# and Java, which sends the size of a payload before the actual data when
- streaming XML over sockets.
+ streaming XML over sockets
+\family typewriter
+\emph on
+[Elaborate]
+\family default
+\emph default
+.
  This allows us to detect when an XML message has been completely received.
  This means that designers wanting to use EIS with our engine should implement
  our accompanying Java libraries, as well as the EIS engine extension.
@@ -1934,6 +2522,10 @@ To remedy this, the system could be designed such that the controller instead
  This would allow them to communicate the offenders position to nearby agents,
  or simply give the AP a chance to preemptively figure out what the best
  possible action would be to execute next.
+ 
+\family typewriter
+\emph on
+[Move to Implementation]
 \end_layout
 
 \begin_layout Standard
@@ -1974,8 +2566,30 @@ EIS and Tile Extension
 [Converters and actions for working with EIS in a tile based environment]
 \end_layout
 
+\begin_layout Subsection
+Usage Example (reference implementation)
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
 \begin_layout Section
 Implementation
+\end_layout
+
+\begin_layout Subsection
+Architecture
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
 \end_layout
 
 \begin_layout Subsection
@@ -2551,9 +3165,13 @@ MoveAction
 \end_layout
 
 \begin_layout Standard
-As one can see the problems in this design is the redundancy created by
- having to call a method on each execute, this might not seem like a problem
- however it is problematic in a few ways.
+As one can see, the problem in this design is the redundancy created by
+ having to call the method 
+\family typewriter
+Completed 
+\family default
+on each execution.
+ This might not seem like a problem however it is problematic in a few ways.
  First and foremost it adds complexity in usage of the engine, a person
  with no knowledge of using the engine would not have a way in realizing
  the correct way to make and use actions.
@@ -2620,6 +3238,358 @@ A lot of the considerations when designing the action all comes down to
  This is also why this design method was chosen as our philosophy in the
  engine design was to minimize limitations as much as possible while still
  providing the features we thought necessary to fulfill the engines goal.
+\end_layout
+
+\begin_layout Subsection
+Agent Controller
+\end_layout
+
+\begin_layout Standard
+The agent controller is designed specifically to be able to accommodate
+ all types of APL, this meant that a lot of special care had to be taken
+ in order for us to impose as few restrictions as possible.
+ This section will focus on the different designs we went through and why
+ we eventually landed on the design we have now.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ImplementationAgentControllerSequenceDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This image details exactly how an 
+\family typewriter
+AgentManager
+\family default
+ Processes incoming requests from an outside AP 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ImplementationAgentControllerSequenceDiagram"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Explanation
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+AgentManager
+\family default
+ is designed to run separately from the engine’s model thread, which means
+ it has the ability to take all the time needed to properly connect to an
+ outside AP, same goes for the 
+\family typewriter
+AgentController
+\family default
+.
+ This means that when an 
+\family typewriter
+AgentManager
+\family default
+ generates a new 
+\family typewriter
+AgentController
+\family default
+ to be used by the AP.
+ It also generates a new thread which the 
+\family typewriter
+AgentController
+\family default
+ is executed on.
+ In the System features we covered how 
+\family typewriter
+AgentController
+\family default
+’s in order to give an idea of how to use them, however we did not fully
+ explain everything, on fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ImplementationAgentControllerSequenceDiagram"
+
+\end_inset
+
+, a sequence diagram is shown that looks familiar to the one shown in the
+ system features.
+ However there are a few key differences first off this sequence diagram
+ shows the complete life cycle of an 
+\family typewriter
+AgentManager
+\family default
+, since the 
+\family typewriter
+AgentManager
+\family default
+ is running on its own thread it does not care about blocking until work
+ needs to be done and the only kind of work it is responsible for is ensure
+ that 
+\family typewriter
+AgentController
+\family default
+s are generated for APs in need of the.
+ Secondly it also details that 
+\family typewriter
+AgentController
+\family default
+s do in fact get generated by the 
+\family typewriter
+AgentManager
+\family default
+ with its own thread.
+\end_layout
+
+\begin_layout Subsubsection*
+Considerations
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+AgentManager
+\family default
+, went through many design iterations in order to fully, originally the
+ 
+\family typewriter
+AgentManager
+\family default
+ was called 
+\family typewriter
+AgentServer
+\family default
+ the reason for this is that for another language to interface with the
+ language of the engine which is C# there must be universal way of connecting
+ the two languages.
+ A way in which practically no languages was prohibited from interacting,
+ and as we thought such a way could only be achieved through a TCP connecting
+ since the protocol for TPC connections is very old and as such is universally
+ by almost any language.
+ While it is true that probably almost all languages do require a TCP connecting
+ in order for them to work with our engine.
+ It is not true for languages that the engine understand, considering that
+ all the .NET platform languages works together very well.
+ The most obvious language to use would of course be F# since it is a functional
+ language.
+ As such if we imposed that all 
+\family typewriter
+AgentManager
+\family default
+s are 
+\family typewriter
+AgentServer
+\family default
+s
+\family typewriter
+ 
+\family default
+then it would be required to setup a server just for using a language which
+ the engine already understands.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+AgentManager
+\family default
+ and 
+\family typewriter
+AgentController
+\family default
+ is designed as a framework for making an interface between an APL and the
+ engine, they are intentionally made very lightweight so that they do not
+ prohibit the any special requirements of any given APL.
+\end_layout
+
+\begin_layout Subsection
+View
+\end_layout
+
+\begin_layout Standard
+As the view our engine provides is only a framework for making an actual
+ view, it limits what can be said about its implementation.
+ However what this section will focus on is why we chose to design the view
+ in this manner and how we provide ways to ensure that the view can be executed
+ on a different thread while not being affected by its problems.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ViewImpThreadSafeSequenceDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Sequence diagram show how events triggered on the model is stored and put
+ on hold until the view thread is able to take care of them
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ThreadSafeSequenceDiagram"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Design
+\end_layout
+
+\begin_layout Standard
+The view design for the engine was never meant to be an actual view, this
+ would limit the potential of what could be done so we are rather content
+ with not providing more than the skeleton for making a proper view.
+ The idea is that the actual implementation of a view should be part of
+ some extension to make a view that displays graphics or a view that shows
+ a console, it should never be a core part of the engine.
+ The core engine should only provide what all views need, this means that
+ if just a single view is restricted by our design then our design is flawed.
+\end_layout
+
+\begin_layout Subsubsection
+Thread Safety
+\end_layout
+
+\begin_layout Standard
+One thing all view has in common is the dangers of having not thread-safe
+ code, by having two threads run through the same address space at the same
+ time the guarantee of a race condition or a deadlock is almost 100%.
+ This makes programming a view rather difficult, to combat this problem
+ we came up with the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ and the 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+.
+ These classes both assists on ensuring that the model thread is never involved
+ in the view thread’s business.
+ The way the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ works is by storing all events triggered by the EventManager of the model,
+ the events data are all kept safe and the order in which the events was
+ triggered is also kept.
+ The idea is that when the view thread is not performing any actions, such
+ as when it is in sleep mode between a draw update, instead of sleeping
+ it will call the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ and tell it to begin executing.
+ The process works by running the 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ that had one of its events trigger and tell it to execute.
+ When all 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ are empty then that mean that there are no longer any events waiting to
+ be executed on the view thread.
+ Since views are only interested in seeing the changes to the world and
+ not how the changes came about, then that means that the views only need
+ access to the events and not the actions.
+ To see a sequence diagram of this process look at fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ThreadSafeSequenceDiagram"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Summary
+\end_layout
+
+\begin_layout Standard
+The view design is mostly focused on ensure that that the user of the engine
+ should deal with as few threading problems as possible as such we have
+ developed two classes 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ and 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ these both make it possible for the view to trigger events when the thread
+ is free from other duties, instead of relying on the model thread to also
+ handle view event updates.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -2739,6 +3709,22 @@ The interesting part of the algorithm is this: how do we find all the tiles
 \family typewriter
 \emph on
 [Explain that it is similar to that other algorithm (name?)]
+\end_layout
+
+\begin_layout Section
+Unit Testing
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Section
+Perspectivation
+\end_layout
+
+\begin_layout Section
+Conclusion
 \end_layout
 
 \begin_layout Section
