@@ -685,7 +685,14 @@ The goal of the engine is to allow for simulation of a world where agents
  As such, it is important that it can accurately model a state-machine.
  To model a state-machine, one must have the ability to save a state and
  perform actions to change the current state.
- 
+ A complete UML Domain model diagram is provided in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Domain-Model-UML"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -718,11 +725,12 @@ The world is the place all entities are meant to inhabit as either agents
  The world is not defined by the engine.
  As shown in fig.
  
-\family typewriter
-\emph on
-[DomainUmlDiagram]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:DomainModelDiagramXMAS"
+
+\end_inset
+
 , it is an abstract class, meaning it is the developer using our engine
  that defines the world.
  As such the world can be any type of world needed, it could be a 3-d world,
@@ -1649,11 +1657,12 @@ AgentController
 \family default
 , look at fig.
  
-\family typewriter
-\emph on
-[Domain model figure]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AgentControllerDomainModel"
+
+\end_inset
+
 .
 \end_layout
 
@@ -1666,7 +1675,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename SystemFeatureAgentControllerSequenceDiagram.png
+	filename AgentControllerDomainUML.png
 	width 70text%
 
 \end_inset
@@ -1678,17 +1687,10 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-This sequence diagram shows the process of an AP taking control of agent
- through the 
-\family typewriter
-AgentManager
-\family default
-, and commanding it through the 
-\family typewriter
-AgentController
+Domain model for Agent Controller
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:APConnectingToAndControllingAC"
+name "fig:AgentControllerDomainModel"
 
 \end_inset
 
@@ -1842,6 +1844,54 @@ AgentController
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename SystemFeatureAgentControllerSequenceDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This sequence diagram shows the process of an AP taking control of agent
+ through the 
+\family typewriter
+AgentManager
+\family default
+, and commanding it through the 
+\family typewriter
+AgentController
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:APConnectingToAndControllingAC"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The process of an AP taking control of an agent can be seen on fig.
  
 \begin_inset CommandInset ref
@@ -1934,12 +1984,58 @@ The view API which the engine provides is exactly four abstract classes
  that are meant to be implemented by the user.
  The four classes can be seen on fig.
  
-\family typewriter
-\emph on
-[DomainUMLView]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ViewUMLView"
+
+\end_inset
+
 , we will go through each class and explain how they are meant to be implemented.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ViewUmlDomainDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+UML diagram of the view
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ViewUMLView"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Paragraph*
@@ -3711,24 +3807,126 @@ The interesting part of the algorithm is this: how do we find all the tiles
 [Explain that it is similar to that other algorithm (name?)]
 \end_layout
 
+\begin_layout Subsection
+Reference Implementation
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
 \begin_layout Section
+Testing
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
+\begin_layout Subsection
 Unit Testing
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
 \end_layout
 
 \begin_layout Section
 Discussion
 \end_layout
 
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
 \begin_layout Section
 Perspectivation
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
 \end_layout
 
 \begin_layout Section
 Conclusion
 \end_layout
 
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Missing]
+\end_layout
+
 \begin_layout Section
 \start_of_appendix
+Domain Model UML Diagram for XMAS Model
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Domain-Model-UML"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename xmas_domain_model_uml.png
+	width 120col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:DomainModelDiagramXMAS"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 iiLang (and xml serialization/deserialization?)
 \begin_inset CommandInset label
 LatexCommand label
