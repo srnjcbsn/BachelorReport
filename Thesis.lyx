@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\usepackage{alltt}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -787,6 +790,13 @@ ions of the graph as seen from different nodes.
 
 \begin_layout Subsubsection
 Entities, Agents and Entity Modules
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:SysFeatEntities"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1444,12 +1454,16 @@ status open
 
 
 \backslash
-begin{verbatim}
+begin{alltt}
 \end_layout
 
 \begin_layout Plain Layout
 
-method Execute returns nothing 
+
+\backslash
+textit{method} Execute 
+\backslash
+textit{returns} nothing 
 \end_layout
 
 \begin_layout Plain Layout
@@ -1469,14 +1483,16 @@ method Execute returns nothing
 
 \begin_layout Plain Layout
 
-EndMethod
+
+\backslash
+textit{EndMethod}
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-end{verbatim}
+end{alltt}
 \end_layout
 
 \end_inset
@@ -1516,6 +1532,34 @@ The idea of actions is fairly simple to use and it is there to hide the
  makes it possible to make tools for simplifying the process of making actions.
  As well it gives the ability to differentiate between different action
  types and even create new action type if one wishes to.
+\end_layout
+
+\begin_layout Subsection
+Converting Actions and Percepts
+\end_layout
+
+\begin_layout Standard
+Both actions and percepts are very abstract objects, and the XMAS engine
+ can not how they are represented in different APLs.
+ This means that the system designer needs a way to translate actions from
+ foreign types into 
+\family typewriter
+XmasAction
+\family default
+s, and 
+\family typewriter
+XmasPercept
+\family default
+s into percepts of foreign types.
+ We have provided the base necessities for implementing this functionality
+ with 
+\emph on
+converters
+\emph default
+.
+ A converter is, as the name implies, a class that takes objects of a foreign
+ type and map them to internal types or vice versa.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1580,7 +1624,9 @@ This extension represents the world as a two-dimensional array of tiles
  
 \family typewriter
 \emph on
-[Figure?]
+[Explain that it is relevant in eg.
+ vision.
+ Figure?]
 \end_layout
 
 \begin_layout Standard
@@ -1714,6 +1760,13 @@ connects
 
 \begin_layout Subsubsection
 EIS Extension
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:EIS-Extension"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1724,10 +1777,9 @@ The EIS extension provides means for communicating with an EIS instance
 iilang
 \family default
  format.
-\end_layout
-
-\begin_layout Paragraph*
-Communicating with EIS
+ The extension features custom a custom agent controller and manager, which
+ have been developed to work well with EIS.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1762,6 +1814,164 @@ iilang
  This allows us to detect when an XML message has been completely received.
  This means that designers wanting to use EIS with our engine should implement
  our accompanying Java libraries, as well as the EIS engine extension.
+\end_layout
+
+\begin_layout Standard
+In order for an EIS instance to connect to an agent controller, it must
+ connect to a socket which is known by both the EIS instance and the engine
+ at runtime.
+ The agent manager listens to this socket and accepts the connection.
+ As the EIS instance connects, it receives a new socket which can be used
+ to communicate with the agent controller.
+ It now sends an XML message with the name of the agent on this socket,
+ and the agent manager constructs an agent controller tied to this name
+ and socket.
+ The controller and the EIS instance now have their own private socket connectio
+n to communicate on, and the agent manager proceeds to listen for other
+ APL instances requesting an agent controller.
+\end_layout
+
+\begin_layout Standard
+The EIS instance can now proceed to send actions to be executed to the agent
+ controller.
+ When such an action is received, the controller enqueues it, and sleeps
+ till it is finished, at which point it resumes listening for actions on
+ the socket.
+ The request to return all percepts is just an action with the name 
+\family typewriter
+getAllPercepts
+\family default
+, which causes the controller to gather all available percepts from the
+ attached agent and sent them to the EIS instance via the socket.
+ Note that by default, this is the only way perepts are sent; percepts are
+ returned in response to no other actions.
+ Since the agent controller effectively blocks on actions, the EIS instance
+ can not have the controller queue other actions or return percepts when
+ it is executing an action that takes time, such as the tile extension's
+ move action (this is a restriction imposed by the agent controller base
+ class as described in section 
+\family typewriter
+\emph on
+[insert section number]
+\family default
+\emph default
+, as it is the default behaviour of the 
+\family typewriter
+performAction
+\family default
+ method).
+ This execution sequence is very simple, but has some downsides.
+ Consider, for example, that two agents wish to communicate with each other
+ through the engine via a 
+\family typewriter
+talk
+\family default
+ action.
+ It could be that agent 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ wanted to ask agent 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ whether a certain tile was a desirable place to go.
+ In that case, 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+'s APL would have the action queued in the engine, which would execute it
+ and place the question in 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+'s mailbox.
+ If, however, 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ had just started a lenghty action, such as moving, its APL would not get
+ notified that it had been asked a question until the move was complete,
+ and the controller could respond to the 
+\family typewriter
+getAllPercepts
+\family default
+ action.
+ This introduces quite some delay in performing such actions, which are
+ rather important in a multi-agent system.
+ 
+\end_layout
+
+\begin_layout Standard
+To remedy this, the system could be designed such that the controller instead
+ blocked on the call to return all percepts until the agent had some new
+ percepts available.
+ In the communication example described above, 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ would immediately perceive that 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ had asked it a question, which would cause its controller to send all 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+'s percepts (including the question) to the waiting EIS instance.
+ Assuming that the corresponding AP prioritizes answering the question,
+ 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ would have its answer in the shortest possible amount of time.
+ In general, allowing agents to perform multiple actions at the same time
+ makes the world more responsible in a number of ways.
+ As another example, agents in a tile based world (or any world that allows
+ vision) could subscribe to events on tiles they could see, and be able
+ to respond when eg.
+ an enemy moved into one of them.
+ This would allow them to communicate the offenders position to nearby agents,
+ or simply give the AP a chance to preemptively figure out what the best
+ possible action would be to execute next.
+\end_layout
+
+\begin_layout Standard
+This method does have some problems.
+ How, for example, does 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+'s AP know that it should prioritize answering the question, and not, say,
+ command the agent to begin a new move action? Since 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ is already in the middle of a move, it would most likely break the rules
+ of the environment.
+ To remedy this, the agents need to return the action(s) they are currently
+ executing as percepts, and the AP would have to consider these when choosing
+ actions.
+ For larger environments and agent programs, this would complicate the agent
+ logic and percept pool.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Actions and conversion]
+\end_layout
+
+\begin_layout Paragraph*
+EIS and Tile Extension
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Converters and actions for working with EIS in a tile based environment]
 \end_layout
 
 \begin_layout Section
@@ -1915,6 +2125,49 @@ OnRemoveEntity
 \family typewriter
 \emph on
 [abstract methods in System Features?]
+\end_layout
+
+\begin_layout Subsubsection
+Entities and Entity Modules
+\end_layout
+
+\begin_layout Standard
+When designing the 
+\family typewriter
+Entity
+\family default
+ class, we wanted to detach the properties and behaviour of entities from
+ the class itself, and segmentize them into smaller, succinct objects.
+ In essence, we wanted to be able to construct an entity that could, for
+ example, move and speak by assembling it from a movement object and a speaking
+ object.
+ In object oriented programming languages such as C#, problems like this
+ are typically accomplished by means of inheritance.
+ It would indeed make sense to let a 
+\family typewriter
+MovingAndSpeakingAgent
+\family default
+ class inherit from the 
+\family typewriter
+MovingAgent
+\family default
+ and 
+\family typewriter
+SpeakingAgent
+\family default
+ classes, which would then provide the desired behaviour.
+ Unfortunately, C# does not support multiple inheritance; a class can not
+ directly inherit from more than one class, although it can inherit multiple
+ interfaces.
+ Instead of using inheritance, we designed the module system described in
+ section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:SysFeatEntities"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2369,6 +2622,125 @@ A lot of the considerations when designing the action all comes down to
  providing the features we thought necessary to fulfill the engines goal.
 \end_layout
 
+\begin_layout Subsection
+Engine Extensions
+\end_layout
+
+\begin_layout Subsubsection
+Tile Extension
+\end_layout
+
+\begin_layout Paragraph*
+Vision
+\end_layout
+
+\begin_layout Standard
+As the basic rules for which tiles can be seen from where have been explained
+ in the System Features section, we will now turn our attention to how corners
+ are connected with each other.
+ 
+\end_layout
+
+\begin_layout Standard
+Recall that a corner 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ on a tile 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ connects to a corner 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ of another tile 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ if a straight line can be traced from 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ to 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ without intersecting with a tile that is blocking the line.
+ In the tile extension, a tile is blocking the line if it contains an entity
+ that is movement blocking with respect to the entity looking from 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+.
+ Additionally, the tile 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ is visible from 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ if at least one corner of 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ connects to at least three corners of 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ is vision blocking, only two corners of 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ need be connected to.
+ In its most simple form, the algorithm iterates over all the tiles in the
+ agent's visible range, and returns a collection containing just those satisfyin
+g the above condition.
+ 
+\end_layout
+
+\begin_layout Standard
+The interesting part of the algorithm is this: how do we find all the tiles
+ a line from one corner to another passes through? 
+\family typewriter
+\emph on
+[Figure]
+\family default
+\emph default
+ To accomplish this, we find the slope of the line as 
+\begin_inset Formula $\left|\frac{v_{x}}{v_{y}}\right|$
+\end_inset
+
+, where 
+\begin_inset Formula $v$
+\end_inset
+
+ is the vector describing the line.
+ If either 
+\begin_inset Formula $v_{x}$
+\end_inset
+
+ or 
+\begin_inset Formula $v_{y}$
+\end_inset
+
+ is zero, the line only passes between tiles, and it is handled as a special
+ case.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Explain that it is similar to that other algorithm (name?)]
+\end_layout
+
 \begin_layout Section
 \start_of_appendix
 iiLang (and xml serialization/deserialization?)
@@ -2386,14 +2758,7 @@ Network Streaming
 \end_layout
 
 \begin_layout Section
-Vision
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:VisionAppendix"
-
-\end_inset
-
-
+Source code excerpts
 \end_layout
 
 \end_body

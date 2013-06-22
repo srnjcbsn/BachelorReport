@@ -124,10 +124,6 @@ Model-View-Controller
 Test Driven Development
 \end_layout
 
-\begin_layout Subsubsection
-Parallelism (?)
-\end_layout
-
 \begin_layout Section
 System Design Patterns (?)
 \end_layout
@@ -161,10 +157,6 @@ Entity Modules
 \end_layout
 
 \begin_layout Subsection
-Percepts
-\end_layout
-
-\begin_layout Subsection
 Interacting with the world
 \end_layout
 
@@ -182,10 +174,6 @@ Agent Controllers
 
 \begin_layout Section
 Views
-\end_layout
-
-\begin_layout Section
-Execution Protocol
 \end_layout
 
 \begin_layout Section
@@ -234,10 +222,6 @@ Controllers
 
 \begin_layout Section
 Views
-\end_layout
-
-\begin_layout Section
-Execution Protocol
 \end_layout
 
 \begin_layout Section
