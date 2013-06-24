@@ -83,13 +83,6 @@ LatexCommand tableofcontents
 Introduction
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[Missing]
-\end_layout
-
 \begin_layout Subsection
 Motivation
 \end_layout
@@ -886,6 +879,14 @@ entity modules
 \emph default
 , which each entity contains a set of.
  These modules can be queried and called by other objects.
+ An entity could, for example, have a 
+\emph on
+speed
+\emph default
+ module -- as is the case in the tile extension -- specifying how long it
+ takes to move from one position to another.
+ In the package grabber scenario, grabber agents have a module spedifying
+ whether or not they are holding a package.
 \end_layout
 
 \begin_layout Standard
@@ -895,36 +896,263 @@ When modules are asked to identify themselves, they do so by means of a
 module type
 \emph default
 .
- It is perfectly legal (and sometimes recommended) for a module to identify
- itself by another type.
- If an effect would, for example, reduce an entity's movement speed by 
-\begin_inset Formula $50\%$
+ Two modules are identical -- from the viewpoint of an entity -- if their
+ module types are identical.
+ As such, only one occurrence of any module type can exist in a set of modules.
+ and a module of type 
+\begin_inset Formula $t$
 \end_inset
 
-, it is recommended practice to register a new module to the entity, which
- identifies itself as a speed module.
- Since the entity contains a set of modules, there would be no ambiguity,
- as the new module would replace the original.
+ on an entity 
+\begin_inset Formula $e$
+\end_inset
+
+ can unambiguously be reffered to as 
+\begin_inset Formula $e.M_{t}$
+\end_inset
+
+, where 
+\begin_inset Formula $M$
+\end_inset
+
+ is 
+\begin_inset Formula $e$
+\end_inset
+
+'s module set.
+ 
+\end_layout
+
+\begin_layout Standard
+It is perfectly legal (and sometimes recommended) for a module to identify
+ itself by another type.
+ This means that if a module 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ of type 
+\begin_inset Formula $t$
+\end_inset
+
+ is registered to an entity 
+\begin_inset Formula $e$
+\end_inset
+
+, which already has a module 
+\begin_inset Formula $m_{0}$
+\end_inset
+
+ of type 
+\begin_inset Formula $t$
+\end_inset
+
+ attached (such that 
+\begin_inset Formula $e.M_{t}=m_{0}$
+\end_inset
+
+), 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ replaces 
+\begin_inset Formula $m_{0}$
+\end_inset
+
+ in the set, and 
+\begin_inset Formula $e.M_{t}=m_{1}$
+\end_inset
+
+.
  Additionally, when the new module is registered to the entity, it checks
  to see if any modules with the same type is already attached.
  If that is the case, it stores a reference to the original, and re-attaches
  it when it is itself detached.
- This allows for using filter modules, which could -- in the speed modification
- example -- query the stored module for its speed value 
-\begin_inset Formula $s$
-\end_inset
+ This allows for using filter modules, which can use the functionality of
+ the module they have replaced to produce a modified output.
+\end_layout
 
-, and then return 
-\begin_inset Formula $\tfrac{s}{2}$
+\begin_layout Standard
+As an example, consider an entity 
+\emph on
+e
+\emph default
+ with a 
+\emph on
+speed
+\emph default
+ type module 
+\begin_inset Formula $s_{0}$
 \end_inset
 
 .
- If several effects are applied to a property, this would function like
- a chain.
+ Assume that 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ has a method 
+\emph on
+Speed
+\emph default
+, such that 
+\begin_inset Formula $s_{0}.Speed$
+\end_inset
+
+ returns the speed of 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ If it is for some reason desired to change the movement speed of entity
  
+\emph on
+e
+\emph default
+ by 50%, it is recommended practice to register a new module 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ to the entity, which identifies itself as a 
+\emph on
+speed
+\emph default
+ type module, and likewise has a method 
+\emph on
+Speed
+\emph default
+.
+ As 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ is registered to the 
+\begin_inset Formula $e$
+\end_inset
+
+, it stores a reference to 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+, and replaces it so that 
+\begin_inset Formula $e.M_{speed}=s_{1}$
+\end_inset
+
+.
+ Now 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+'s 
+\emph on
+Speed
+\emph default
+ method can be defined such that it returns half the value 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ would, so that 
+\begin_inset Formula $e.M_{speed}.Speed=s_{1}.Speed=\frac{s_{0.Speed}}{2}$
+\end_inset
+
+.
+ If at some point this effect is no longer desired, 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ can be deregistered from 
+\begin_inset Formula $e$
+\end_inset
+
+, which causes 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ to be reattached and 
+\begin_inset Formula $e.M_{speed}=s_{0}$
+\end_inset
+
+ once again.
+\end_layout
+
+\begin_layout Standard
+Note that this 
+\begin_inset Quotes eld
+\end_inset
+
+chaining
+\begin_inset Quotes erd
+\end_inset
+
+ of modules can be applied indefinetely, allowing several modules to affect
+ a single property of the agent.
+ However, the module methods are called as a stack, which means that the
+ method of the module inserted last is the first to be called.
+ This imposes somewhat of a limit, and may not work as desired in all cases.
 \family typewriter
 \emph on
-[Elaborate, illustrate]
+[Example? vision?]
+\family default
+\emph default
+ 
+\family typewriter
+[Consider again the example stated above, with a third 
+\emph on
+speed
+\emph default
+ type module 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+ introduced, whose 
+\emph on
+Speed
+\emph default
+ method returns 
+\begin_inset Formula $x$
+\end_inset
+
+ regardless of what modules it replaces.
+ If 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+ was to be registered to 
+\begin_inset Formula $e$
+\end_inset
+
+ after 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $e.M_{speed}Speed$
+\end_inset
+
+ would return 
+\begin_inset Formula $x$
+\end_inset
+
+ without 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+ consulting 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+.
+ If it was inserted before 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $e.M_{speed}.Speed$
+\end_inset
+
+ would return 
+\begin_inset Formula $\frac{x}{2}$
+\end_inset
+
+.]
 \end_layout
 
 \begin_layout Standard
@@ -4229,6 +4457,10 @@ name "fig:DomainModelDiagramXMAS"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Usage Example / Hello World! / Vacuum World
 \end_layout
 
 \begin_layout Section
