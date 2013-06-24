@@ -885,8 +885,6 @@ speed
 \emph default
  module -- as is the case in the tile extension -- specifying how long it
  takes to move from one position to another.
- In the package grabber scenario, grabber agents have a module spedifying
- whether or not they are holding a package.
 \end_layout
 
 \begin_layout Standard
@@ -1074,6 +1072,87 @@ Speed
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ModulesChainingExample.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+A 
+\emph on
+speed
+\emph default
+ module 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ has replaced another (
+\begin_inset Formula $s_{0}$
+\end_inset
+
+) of the same type on entity 
+\emph on
+e
+\emph default
+.
+
+\emph on
+ 
+\emph default
+Some object requests the speed of entity 
+\begin_inset Formula $e$
+\end_inset
+
+ by querying its 
+\emph on
+speed
+\emph default
+ module 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ then queries the 
+\emph on
+speed
+\emph default
+ module it replaced, and returns half its value.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Note that this 
 \begin_inset Quotes eld
 \end_inset
@@ -1083,76 +1162,70 @@ chaining
 \end_inset
 
  of modules can be applied indefinetely, allowing several modules to affect
- a single property of the agent.
+ a single property of the entity.
  However, the module methods are called as a stack, which means that the
  method of the module inserted last is the first to be called.
  This imposes somewhat of a limit, and may not work as desired in all cases.
-\family typewriter
-\emph on
-[Example? vision?]
-\family default
-\emph default
- 
-\family typewriter
-[Consider again the example stated above, with a third 
-\emph on
-speed
-\emph default
- type module 
-\begin_inset Formula $s_{2}$
+ Consider a stack of 
+\begin_inset Formula $n$
 \end_inset
 
- introduced, whose 
-\emph on
-Speed
-\emph default
- method returns 
+ modules, where module 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ has been pushed first, followed by 
+\begin_inset Formula $m_{2}$
+\end_inset
+
+ and so on, so that 
+\begin_inset Formula $m_{n}$
+\end_inset
+
+ is at the top of the stack.
+ Then a module 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ can not directly alter the way modules 
+\begin_inset Formula $m_{i+1}\dots m_{n}$
+\end_inset
+
+ changes it output.
+ This may or may not be desirable, depending on the situation.
+ It is not possible, for example, to apply an effect causing an agent's
+ speed to be set to 
 \begin_inset Formula $x$
 \end_inset
 
- regardless of what modules it replaces.
- If 
-\begin_inset Formula $s_{2}$
+, no matter what happens, using this method.
+\end_layout
+
+\begin_layout Standard
+Another issue the designer should be aware of is that it is possible to
+ create a module 
+\begin_inset Formula $m_{1}$
 \end_inset
 
- was to be registered to 
-\begin_inset Formula $e$
+ of type 
+\begin_inset Formula $t$
 \end_inset
 
- after 
-\begin_inset Formula $s_{1}$
+, intented to replace another module 
+\begin_inset Formula $m_{0}$
 \end_inset
 
-, 
-\begin_inset Formula $e.M_{speed}Speed$
+ (as in the above example), and not implementing the same public methods
+ in 
+\begin_inset Formula $m_{1}$
 \end_inset
 
- would return 
-\begin_inset Formula $x$
-\end_inset
-
- without 
-\begin_inset Formula $s_{2}$
-\end_inset
-
- consulting 
-\begin_inset Formula $s_{1}$
+ as in 
+\begin_inset Formula $m_{0}$
 \end_inset
 
 .
- If it was inserted before 
-\begin_inset Formula $s_{1}$
-\end_inset
-
-, 
-\begin_inset Formula $e.M_{speed}.Speed$
-\end_inset
-
- would return 
-\begin_inset Formula $\frac{x}{2}$
-\end_inset
-
-.]
+ Doing this will cause a runtime exception.
 \end_layout
 
 \begin_layout Standard
