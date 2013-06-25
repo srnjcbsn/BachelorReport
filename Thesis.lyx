@@ -86,7 +86,7 @@ Introduction
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis - Introduction.lyx"
+filename "Thesis_Introduction.lyx"
 
 \end_inset
 
@@ -107,7 +107,7 @@ Theory
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis - Theory - MAS.lyx"
+filename "Thesis_Theory_MAS.lyx"
 
 \end_inset
 
@@ -117,7 +117,7 @@ filename "Thesis - Theory - MAS.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Theory - MVC.lyx"
+filename "Thesis_Theory_MVC.lyx"
 
 \end_inset
 
@@ -127,7 +127,7 @@ filename "Thesis - Theory - MVC.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Theory - Factory Design.lyx"
+filename "Thesis_Theory_Factory_Design.lyx"
 
 \end_inset
 
@@ -137,7 +137,7 @@ filename "Thesis - Theory - Factory Design.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Theory - TDD.lyx"
+filename "Thesis_Theory_TDD.lyx"
 
 \end_inset
 
@@ -158,7 +158,7 @@ Reference Implementation
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis - Reference Implementation.lyx"
+filename "Thesis_Reference_Implementation.lyx"
 
 \end_inset
 
@@ -179,24 +179,14 @@ System Features
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis -  System Features - Overview.lyx"
+filename "Thesis_System_Features_Overview.lyx"
 
 \end_inset
 
 
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis -  System Features - Virtual World.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "Thesis -  System Features - Events and Triggers.lyx"
+filename "Thesis_System_Features_Virtual_World.lyx"
 
 \end_inset
 
@@ -206,7 +196,7 @@ filename "Thesis -  System Features - Events and Triggers.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis -  System Features - Actions.lyx"
+filename "Thesis_System_Features_Events_and_Triggers.lyx"
 
 \end_inset
 
@@ -216,7 +206,7 @@ filename "Thesis -  System Features - Actions.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis -  System Features - Converters.lyx"
+filename "Thesis_System_Features_Actions.lyx"
 
 \end_inset
 
@@ -226,7 +216,7 @@ filename "Thesis -  System Features - Converters.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis -  System Features - Agent Controllers.lyx"
+filename "Thesis_System_Features_Converters.lyx"
 
 \end_inset
 
@@ -236,7 +226,7 @@ filename "Thesis -  System Features - Agent Controllers.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis -  System Features - Views.lyx"
+filename "Thesis_System_Features_Agent_Controllers.lyx"
 
 \end_inset
 
@@ -246,7 +236,17 @@ filename "Thesis -  System Features - Views.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis -  System Features - Engine Extensions.lyx"
+filename "Thesis_System_Features_Views.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Engine_Extensions.lyx"
 
 \end_inset
 
@@ -267,7 +267,7 @@ Implementation
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis - Implementation - Architecture.lyx"
+filename "Thesis_Implementation_Architecture.lyx"
 
 \end_inset
 
@@ -277,7 +277,7 @@ filename "Thesis - Implementation - Architecture.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Implementation - Model.lyx"
+filename "Thesis_Implementation_Model.lyx"
 
 \end_inset
 
@@ -287,7 +287,7 @@ filename "Thesis - Implementation - Model.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Implementation - Agent Controllers.lyx"
+filename "Thesis_Implementation_Agent_Controllers.lyx"
 
 \end_inset
 
@@ -297,7 +297,7 @@ filename "Thesis - Implementation - Agent Controllers.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Implementation - Views.lyx"
+filename "Thesis_Implementation_Views.lyx"
 
 \end_inset
 
@@ -307,7 +307,7 @@ filename "Thesis - Implementation - Views.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Implementation - Engine Extensions.lyx"
+filename "Thesis_Implementation_Engine_Extensions.lyx"
 
 \end_inset
 
@@ -317,7 +317,7 @@ filename "Thesis - Implementation - Engine Extensions.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "Thesis - Implementation - Reference Implementation.lyx"
+filename "Thesis_Implementation_Reference_Implementation.lyx"
 
 \end_inset
 
@@ -338,7 +338,7 @@ Testing
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis -  Testing.lyx"
+filename "Thesis_Testing.lyx"
 
 \end_inset
 
@@ -359,7 +359,7 @@ Discussion
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis - Discussion.lyx"
+filename "Thesis_Discussion.lyx"
 
 \end_inset
 
@@ -383,7 +383,7 @@ Conclusion
 \emph on
 \begin_inset CommandInset include
 LatexCommand input
-filename "Thesis - Conclusion.lyx"
+filename "Thesis_Conclusion.lyx"
 
 \end_inset
 
