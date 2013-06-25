@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Virtual World
 \end_layout
 
@@ -104,7 +104,7 @@ ions of the graph as seen from different nodes.
 [More detailed usage examples?, Tile Extension]
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Entities, Agents and Entity Modules
 \begin_inset CommandInset label
 LatexCommand label

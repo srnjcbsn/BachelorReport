@@ -66,7 +66,7 @@ In this section we will discuss the major considerations we faced during
  and how we could have otherwise reached them.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Generality of the engine
 \end_layout
 
@@ -104,7 +104,7 @@ In many cases, the shortest path to a general system is removing restrictions.
  Thus, it is often åa trade-off between features and generality.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Model
 \end_layout
 
@@ -150,7 +150,7 @@ on of any given world.
  and instead rely on the use of extensions to model environments.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Interfacing with APLs
 \end_layout
 
@@ -184,7 +184,7 @@ It could be argued that using the notions of percepts and actions serves
  in all agent programming languages we are aware of.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 View
 \end_layout
 
@@ -204,7 +204,7 @@ ent .However this also poses a potential problem in that it is so minimalistic
  task of making the view by themself.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Solving the Problems of Generality
 \end_layout
 
@@ -229,7 +229,7 @@ t it themself.
  if possible.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Model View Controller Design Pattern
 \end_layout
 
@@ -262,15 +262,15 @@ The model view controller design pattern is one of the older design patterns
 [rewrite sentence?]
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Test Driven Development
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Choice of Technologies
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 The XMAS Engine
 \end_layout
 
@@ -298,7 +298,7 @@ We have chosen to implement the engine in C#, which runs on the .NET platform.
  
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Reference Implementation
 \end_layout
 
@@ -318,7 +318,7 @@ As our reference implementation was developed to showcase and test our engine,
  This difficulty is important to face, since 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Comparison to other Environment Construction Tools
 \end_layout
 

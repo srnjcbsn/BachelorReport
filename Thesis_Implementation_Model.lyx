@@ -60,11 +60,11 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Model
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 World
 \end_layout
 
@@ -209,7 +209,7 @@ OnRemoveEntity
 [abstract methods in System Features?]
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Entities and Entity Modules
 \end_layout
 
@@ -252,7 +252,7 @@ reference "sub:SysFeatEntities"
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Events and Triggers
 \end_layout
 
@@ -263,7 +263,7 @@ This section will cover the inner workings of how events and triggers are
  any confusion there might be as to what happens inside the engine.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Explanation
 \end_layout
 
@@ -335,7 +335,7 @@ EventManager
  entity is involved.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Considerations
 \end_layout
 
@@ -345,7 +345,7 @@ As there were many considerations that went through our design process,
  we designed it as we did.
 \end_layout
 
-\begin_layout Subparagraph*
+\begin_layout Paragraph*
 Problems of C# events and why we chose to design our own events
 \end_layout
 
@@ -387,7 +387,7 @@ To give an idea of what sort of problems that would arise from using C#
 [Explain in detail / rewrite paragraph]
 \end_layout
 
-\begin_layout Subparagraph*
+\begin_layout Paragraph*
 Improvements of events
 \end_layout
 
@@ -420,7 +420,7 @@ AddedEntityToEngineEvent
  that was worth looking into.
 \end_layout
 
-\begin_layout Subparagraph*
+\begin_layout Paragraph*
 Triggers
 \end_layout
 
@@ -452,7 +452,7 @@ In short, triggers are a simple design that gives the engine logic a lot
  
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Summary
 \end_layout
 
@@ -465,7 +465,7 @@ Events and triggers might be a hassle to setup and design, but in return
  the engine more error-prone.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Actions
 \end_layout
 
@@ -475,7 +475,7 @@ As we already went through what actions can be used for, this section will
  It will furthermore cover the entire life span of an action object.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Explanation
 \end_layout
 
@@ -588,7 +588,7 @@ XmasModel
  queue; this prevents it from busy waiting when no actions are to be executed.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Considerations
 \end_layout
 
@@ -706,7 +706,7 @@ Complete
  
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Summary
 \end_layout
 

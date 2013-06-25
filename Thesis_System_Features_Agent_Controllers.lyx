@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Agent Controllers
 \end_layout
 
@@ -124,7 +124,7 @@ name "fig:AgentControllerDomainModel"
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Concept
 \end_layout
 
@@ -375,7 +375,7 @@ AgentController
 [Remove paragraph?]
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Summary
 \end_layout
 

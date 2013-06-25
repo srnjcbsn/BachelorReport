@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Events and Triggers
 \end_layout
 
@@ -73,7 +73,7 @@ In this part the concepts and ideas of both events and triggers will be
  
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Concept
 \end_layout
 
@@ -215,7 +215,7 @@ Action of a trigger is the part that performs the work, it is a method which
  be placed.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Entities and 
 \family typewriter
 EventManager
@@ -383,7 +383,7 @@ moved: In this case, only
  is triggered, for the reasons stated above.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Example of making and using an 
 \family typewriter
 Event
@@ -443,7 +443,7 @@ RaiseEvent
  would need to be called on the entity that is being moved.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Summary
 \end_layout
 

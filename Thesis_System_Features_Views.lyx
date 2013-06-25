@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 View
 \end_layout
 
@@ -72,7 +72,7 @@ nt.
  possible, our knowledge of that view’s representation is very limited.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Concept
 \end_layout
 
@@ -319,7 +319,7 @@ WallView
  
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Summary
 \end_layout
 

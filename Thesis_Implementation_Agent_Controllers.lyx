@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Agent Controller
 \end_layout
 
@@ -118,7 +118,7 @@ name "fig:ImplementationAgentControllerSequenceDiagram"
 
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Explanation
 \end_layout
 
@@ -190,7 +190,7 @@ AgentManager
  with its own thread.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Considerations
 \end_layout
 
@@ -239,7 +239,7 @@ s, it would be required to setup a server just for using a language which
  general, less restrictive than AgentServer]
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Summary
 \end_layout
 

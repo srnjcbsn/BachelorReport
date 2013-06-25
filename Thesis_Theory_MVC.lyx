@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Model View Controller
 \end_layout
 
@@ -133,7 +133,7 @@ This image shows how the three components are connected to each other; the
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Model
 \end_layout
 
@@ -177,7 +177,7 @@ If such features are not built into the model then it would require the
  any changes.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 View
 \end_layout
 
@@ -271,7 +271,7 @@ To open a menu, the user need to drag the mouse and click on one menu he
  on the view's own state and not the model of the program.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Controller
 \end_layout
 

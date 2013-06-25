@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 Engine Extensions
 \end_layout
 
@@ -70,7 +70,7 @@ Since most of the engine is very abstract in functionality, we have made
  and communicating with EIS.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Tile Extension
 \end_layout
 
@@ -153,7 +153,7 @@ speed
 [Rewrite]
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsubsection*
 Vision
 \end_layout
 
@@ -263,7 +263,7 @@ connects
 [move action, move event]
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 EIS Extension
 \begin_inset CommandInset label
 LatexCommand label
@@ -478,7 +478,7 @@ This method does have some problems.
 [Actions and conversion]
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Subsection
 EIS and Tile Extension
 \end_layout
 

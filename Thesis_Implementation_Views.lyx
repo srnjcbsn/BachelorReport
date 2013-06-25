@@ -60,7 +60,7 @@
 
 \begin_body
 
-\begin_layout Subsection
+\begin_layout Section
 View
 \end_layout
 
@@ -114,7 +114,7 @@ name "fig:ThreadSafeSequenceDiagram"
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection*
 Design
 \end_layout
 
@@ -129,7 +129,7 @@ The view design for the engine was never meant to be an actual view, this
  if just a single view is restricted by our design then our design is flawed.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection*
 Thread Safety
 \end_layout
 
@@ -189,7 +189,7 @@ reference "fig:ThreadSafeSequenceDiagram"
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection*
 Summary
 \end_layout
 
