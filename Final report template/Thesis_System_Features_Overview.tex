@@ -1,5 +1,5 @@
 
-\subsection{Overview}
+\section{Overview}
 
 The goal of the engine is to allow for simulation of a world where
 agents within are allowed to act. As such, it is important that it
@@ -9,7 +9,7 @@ the current state. A complete UML Domain model diagram is provided
 in appendix \ref{sec:Domain-Model-UML}.
 
 
-\subsubsection{State}
+\subsection{State}
 
 In our domain model, we have state stored in three object types:
 \begin{itemize}
@@ -52,7 +52,7 @@ module, this module would then contain information on whether or not
 a given entities is allowed to pass through it. \texttt{\emph{{[}Rewrite?{]}}}
 
 
-\subsubsection{Actions}
+\subsection{Actions}
 
 A world is static and unexciting if one is not allowed to perform
 any changes to it, for this we have what we have chosen to name actions.
@@ -67,7 +67,7 @@ called \texttt{GetallPerceptsAction} and the other is an environment
 action that can shut down the engine called \texttt{CloseEngineAction}. 
 
 
-\subsubsection{Events and Triggers}
+\subsection{Events and Triggers}
 
 The engine relies heavily upon events, this means that all actions
 performed within the engine is meant to trigger events in responds.

@@ -1,5 +1,5 @@
 
-\subsection{Agent Controller}
+\section{Agent Controller}
 
 The agent controller is designed specifically to be able to accommodate
 all types of APL. This means that a lot of special care had to be
@@ -18,7 +18,7 @@ incoming requests from an outside AP \label{fig:ImplementationAgentControllerSeq
 
 
 
-\subsubsection*{Explanation}
+\subsection*{Explanation}
 
 The \texttt{AgentManager} is designed to run separately from the engine\textquoteright{}s
 model thread, which means it has the ability to take all the time
@@ -38,7 +38,7 @@ are generated for APs in need of them. Second, it also details that
 with its own thread.
 
 
-\subsubsection*{Considerations}
+\subsection*{Considerations}
 
 The \texttt{AgentManager} went through many design iterations in order
 to arrive at its present state. Originally, the \texttt{AgentManager}
@@ -61,7 +61,7 @@ from another standpoint: AgentManager is more general, less restrictive
 than AgentServer{]}}}
 
 
-\subsubsection*{Summary}
+\subsection*{Summary}
 
 \texttt{AgentManager} and \texttt{AgentController} is designed as
 a framework for making an interface between an APL and the engine.

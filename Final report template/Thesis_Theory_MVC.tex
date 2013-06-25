@@ -1,5 +1,5 @@
 
-\subsection{Model View Controller}
+\section{Model View Controller}
 
 To ensure that code is correctly decoupled from one another, strict
 design patterns are necessary, as these allow developing complex projects
@@ -26,7 +26,7 @@ is listening to the component the arrow is originating from. }
 
 
 
-\subsubsection{Model}
+\subsection{Model}
 
 The model is the core of the program. It is why the program functions
 as it does, it contains all information of the data, and it is here
@@ -51,7 +51,7 @@ model and can be completely avoided if the model simply has the ability
 to inform its listeners of any changes.
 
 
-\subsubsection{View}
+\subsection{View}
 
 The view is a way to visualize what is currently occurring inside
 model by visualizing it to the user. A view may take many shapes depending
@@ -92,7 +92,7 @@ This is not the case, however, since the changes done are only performed
 on the view's own state and not the model of the program.
 
 
-\subsubsection{Controller}
+\subsection{Controller}
 
 The controller is the link between the model and the user. By convention,
 all changes the user wishes to perform on the model should be done

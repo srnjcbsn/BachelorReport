@@ -1,12 +1,12 @@
 
-\subsection{Engine Extensions}
+\section{Engine Extensions}
 
 Since most of the engine is very abstract in functionality, we have
 made three extensions, which makes it easy to implement a tile based
 environment and communicating with EIS.
 
 
-\subsubsection{Tile Extension}
+\subsection{Tile Extension}
 
 This extension represents the world as a two-dimensional array of
 tiles using what we will call a tile map. \texttt{\emph{{[}Elaborate
@@ -35,7 +35,7 @@ movement or vision, respectively. The \emph{speed} module defines
 how long it takes for the entity to move to an adjacent square. \texttt{\emph{{[}Rewrite{]}}}
 
 
-\paragraph*{Vision}
+\subsubsection*{Vision}
 
 The tile extension also provides means for seeing tiles around an
 entity via the \texttt{Vision} module. All entities that are able
@@ -62,7 +62,7 @@ through $t$, and as such not connect.
 \texttt{\emph{{[}move action, move event{]}}}
 
 
-\subsubsection{EIS Extension\label{sub:EIS-Extension}}
+\subsection{EIS Extension\label{sub:EIS-Extension}}
 
 The EIS extension provides means for communicating with an EIS instance
 over a socket, as well as serializing and deserializing percepts and
@@ -155,7 +155,7 @@ pool.
 \texttt{\emph{{[}Actions and conversion{]}}}
 
 
-\paragraph*{EIS and Tile Extension}
+\subsection{EIS and Tile Extension}
 
 \texttt{\emph{{[}Converters and actions for working with EIS in a
 tile based environment{]}}}

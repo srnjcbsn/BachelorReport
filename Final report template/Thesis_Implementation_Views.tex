@@ -1,5 +1,5 @@
 
-\subsection{View}
+\section{View}
 
 As the view our engine provides is only a framework for making an
 actual view, it limits what can be said about its implementation.
@@ -19,7 +19,7 @@ and put on hold until the view thread is able to process them\label{fig:ThreadSa
 
 
 
-\subsubsection{Design}
+\subsection*{Design}
 
 The view design for the engine was never meant to be an actual view,
 this would limit the potential of what could be done so we are rather
@@ -32,7 +32,7 @@ means that if just a single view is restricted by our design then
 our design is flawed.
 
 
-\subsubsection{Thread Safety}
+\subsection*{Thread Safety}
 
 One thing all views have in common is the dangers of having code that
 is not thread safe, by having two threads run through the same address
@@ -57,7 +57,7 @@ only need access to the events and not the actions. To see a sequence
 diagram of this process look at fig. \ref{fig:ThreadSafeSequenceDiagram}.
 
 
-\subsubsection{Summary}
+\subsection*{Summary}
 
 The view design is mostly focused on ensuring that the user of the
 engine should deal with as few threading problems as possible as such

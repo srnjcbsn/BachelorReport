@@ -1,8 +1,8 @@
 
-\subsection{Model}
+\section{Model}
 
 
-\subsubsection{World}
+\subsection{World}
 
 To be able to unambiguously reference an entity, they are assigned
 an \texttt{id} (represented as a number) in the engine. This is relevant
@@ -54,7 +54,7 @@ Similarly to the \texttt{AddEntity} method, it calls the user-supplied
 \texttt{\emph{{[}abstract methods in System Features?{]}}}
 
 
-\subsubsection{Entities and Entity Modules}
+\subsection{Entities and Entity Modules}
 
 When designing the \texttt{Entity} class, we wanted to detach the
 properties and behaviour of entities from the class itself, and segmentize
@@ -72,7 +72,7 @@ Instead of using inheritance, we designed the module system described
 in section \ref{sub:SysFeatEntities}.
 
 
-\subsubsection{Events and Triggers}
+\subsection{Events and Triggers}
 
 This section will cover the inner workings of how events and triggers
 are connected, as well as detail why we designed it the way we did.
@@ -81,7 +81,7 @@ defuse any confusion there might be as to what happens inside the
 engine.
 
 
-\paragraph*{Explanation}
+\subsubsection*{Explanation}
 
 By themselves, events are not particularly complicated since they
 are essentially just data structures that are transferred to all its
@@ -115,14 +115,14 @@ the process is exactly the same as above, except that no particular
 entity is involved.
 
 
-\paragraph*{Considerations}
+\subsubsection*{Considerations}
 
 As there were many considerations that went through our design process,
 we will take each component of this area and break down why exactly
 why we designed it as we did.
 
 
-\subparagraph*{Problems of C\# events and why we chose to design our own events}
+\paragraph*{Problems of C\# events and why we chose to design our own events}
 
 The language which our engine is written in is C\#, one of the fantastic
 things about C\# is that events is built into the language. As such
@@ -154,7 +154,7 @@ the design would be practically hardcoded into it. \texttt{\emph{{[}Explain
 in detail / rewrite paragraph{]}}}
 
 
-\subparagraph*{Improvements of events}
+\paragraph*{Improvements of events}
 
 As of now, our events are not tied to being \texttt{EntityEvent}s
 or \texttt{EnvironmentEvent}s like actions are, however this might
@@ -170,7 +170,7 @@ was to make improvements to the event design this would be one change
 that was worth looking into.
 
 
-\subparagraph*{Triggers}
+\paragraph*{Triggers}
 
 The trigger design came about as a necessity for providing a way for
 the user to easily design reactions to a given event. The trigger
@@ -191,7 +191,7 @@ In short, triggers are a simple design that gives the engine logic
 a lot of flexibility. 
 
 
-\paragraph*{Summary}
+\subsubsection*{Summary}
 
 Events and triggers might be a hassle to setup and design, but in
 return they provide the engine with a lot of flexibility. Without
@@ -200,7 +200,7 @@ to be bogged down with a lot of extra logic. This would not only remove
 the modularity of the engine but also make using the engine more error-prone.
 
 
-\subsubsection{Actions}
+\subsection{Actions}
 
 As we already went through what actions can be used for, this section
 will instead focus on the idea behind actions, and how we implemented
@@ -208,7 +208,7 @@ them. It will furthermore cover the entire life span of an action
 object.
 
 
-\paragraph*{Explanation}
+\subsubsection*{Explanation}
 
 An action -- or \texttt{XmasAction,} as it is called in our engine\texttt{
 }-- is a class which provides an API for performing state changes
@@ -242,7 +242,7 @@ queue; this prevents it from busy waiting when no actions are to be
 executed.
 
 
-\paragraph*{Considerations}
+\subsubsection*{Considerations}
 
 The way that action completion is designed might seem tedious in that
 it has to call the special method \texttt{Completed} on each action.
@@ -299,7 +299,7 @@ to study the consequences of this design would reveal whether or not
 this is a better design. 
 
 
-\paragraph*{Summary}
+\subsubsection*{Summary}
 
 A lot of the considerations when designing the action all comes down
 to the reliance on user to clean up the Action, which is generally

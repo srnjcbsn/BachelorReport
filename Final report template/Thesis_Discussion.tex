@@ -3,7 +3,7 @@ during the project, as well as the choices we took in accomplishing
 our goals, and how we could have otherwise reached them.
 
 
-\subsection{Generality of the engine}
+\section{Generality of the engine}
 
 One of the major goals of this project was to make the engine as general
 as possible. This includes the ability for the designer to implement
@@ -31,7 +31,7 @@ general system of all is one that is completely featureless. Thus,
 it is often åa trade-off between features and generality.
 
 
-\subsubsection*{Model}
+\subsection*{Model}
 
 For the model to be general, it should be capable of representing
 a world as any possible data structure. Additionally, the objects
@@ -58,7 +58,7 @@ chose to impose no restrictions on the data structure used, and instead
 rely on the use of extensions to model environments.
 
 
-\subsubsection*{Interfacing with APLs}
+\subsection*{Interfacing with APLs}
 
 One of the major problems in designing an interface that works with
 different APLs is that the order in which they queue actions and queries
@@ -79,7 +79,7 @@ are essential to interacting with an agent, and incorporated in all
 agent programming languages we are aware of.
 
 
-\subsubsection*{View}
+\subsection*{View}
 
 For the view to be considered general it is paramount that the design
 of the view is not being restricted in anyway, this is done by keeping
@@ -95,7 +95,7 @@ in that it is so minimalistic that we barely provide anything for
 the user, and leave the user to the task of making the view by themself.
 
 
-\subsubsection*{Solving the Problems of Generality}
+\subsection*{Solving the Problems of Generality}
 
 As evident when discussing how to make the engine general and how
 to make it work with as many situations as possible, the problem arises
@@ -115,7 +115,7 @@ extensions we have are those needed for the reference implementation,
 but our long term plan would be to add more extensions if possible.
 
 
-\subsection{Model View Controller Design Pattern}
+\section{Model View Controller Design Pattern}
 
 The model view controller design pattern is one of the older design
 patterns within software design; its purpose is to ensure that the
@@ -139,13 +139,13 @@ we hopefully reduce the number of times they are made by making bad
 decisions harder. \texttt{\emph{{[}rewrite sentence?{]}}}
 
 
-\subsection{Test Driven Development}
+\section{Test Driven Development}
 
 
-\subsection{Choice of Technologies}
+\section{Choice of Technologies}
 
 
-\subsubsection*{The XMAS Engine}
+\subsection*{The XMAS Engine}
 
 We have chosen to implement the engine in C\#, which runs on the .NET
 platform. While Java has a strong presence in multi-agent system development
@@ -163,7 +163,7 @@ to test how well our engine interfaced with programs not written in
 the same language. 
 
 
-\subsubsection*{Reference Implementation}
+\subsection*{Reference Implementation}
 
 As our reference implementation was developed to showcase and test
 our engine, we aimed to implement it using the most commonly used
@@ -178,6 +178,6 @@ with an entirely different platform. This difficulty is important
 to face, since 
 
 
-\subsection{Comparison to other Environment Construction Tools}
+\section{Comparison to other Environment Construction Tools}
 
 Comparison to JaCaMo, EIS
