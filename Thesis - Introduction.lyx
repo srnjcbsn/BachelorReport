@@ -1,0 +1,147 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Motivation
+\end_layout
+
+\begin_layout Standard
+There are many complications when developing multi agent systems, our goal
+ with this project was to lessen one of these by designing an engine with
+ the specific purpose to develop multi agent environments.
+ What these environments can be is left to the developer, however almost
+ everything in the engine is modular and interchangeable, ensuring that
+ all types of multi agent environments are possible.
+ 
+\end_layout
+
+\begin_layout Standard
+What the types of projects can be is manyfold but here are some possible
+ examples:
+\end_layout
+
+\begin_layout Paragraph*
+Agent comparison software 
+\end_layout
+
+\begin_layout Standard
+There are many different languages in which it is possible to write agent
+ programs, some are specifically designed for it others are powerful enough
+ to accommodate the possibility of agent programming.
+ Our engine is designed with support for multiple languages at once which
+ makes this engine a perfect candidate for designing a comparator program.
+ 
+\end_layout
+
+\begin_layout Standard
+For instance, if two groups wanted to test their agent programs against
+ each other, this engine would make it possible for them to easily design
+ a world in which this test could occur.
+\end_layout
+
+\begin_layout Paragraph*
+Agent testing/Simulation software
+\end_layout
+
+\begin_layout Standard
+Testing agent software can be complicated.
+ Being able to rapidly create an environment and visualize it can be important
+ to the project, as it ensure basic mistakes are ironed out before larger
+ scale implementation.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Agent teaching tools
+\end_layout
+
+\begin_layout Standard
+Teaching agent languages can be tough without proper exercises; however,
+ the time spent on designing these exercises can prove too exhausting for
+ the teacher to develop.
+ In this case the teacher can rapidly design the world he had in mind for
+ his exercise instead of designing every integral part of the multi agent
+ system himself.
+ This is because our engine provides all the basic features of a multi agent
+ system, so that the time can be spent more productively on designing how
+ a given exercise should play out, showcasing the problem the students are
+ supposed to deal with.
+\end_layout
+
+\begin_layout Paragraph*
+Computer games
+\end_layout
+
+\begin_layout Standard
+In theory most computer games are just multi agent programs where one of
+ the agents is controlled by the player.
+ Our engine should make it fairly easy for setting up a framework for creating
+ rules inside a given world and ensure that the agents of the world follow
+ said rules.
+ 
+\family typewriter
+\emph on
+[Expand]
+\end_layout
+
+\end_body
+\end_document

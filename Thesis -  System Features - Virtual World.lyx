@@ -1,0 +1,489 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Virtual World
+\end_layout
+
+\begin_layout Standard
+The object used to keep track of all entities in the environment is called
+ the 
+\emph on
+world
+\emph default
+.
+ This object is also used to model the structure of the environment; eg.
+ whether it is tile based, graph based or something else entirely.
+ The only restriction imposed on the structure of the environment is that
+ all entities have an associated 
+\emph on
+position
+\emph default
+ in it, fitting the data structure describing the environment.
+ This is a pretty loose requirement, considering that it can effectively
+ be ignored 
+\family typewriter
+\emph on
+[could any meaningful environment be constructed where position doesn't
+ matter?]
+\end_layout
+
+\begin_layout Standard
+In a tile based environment, for example, the world could consist of a two
+ dimensional array containing lists of entities, with each field representing
+ a tile, and positions represented as 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ coordinates.
+ In a graph based environment, the world would contain some structural represent
+ation of a graph, and the positions could be references to nodes, or representat
+ions of the graph as seen from different nodes.
+ 
+\family typewriter
+\emph on
+[More detailed usage examples?, Tile Extension]
+\end_layout
+
+\begin_layout Subsubsection
+Entities, Agents and Entity Modules
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:SysFeatEntities"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Entities are the objects inhabiting the world.
+ They are very basic objects, equipped with no definitions of how they are
+ represented in the world or how they can be interacted with, save for allowing
+ other objects to subscribe to events fired by the entity.
+ All this is instead handled by 
+\emph on
+entity modules
+\emph default
+, which each entity contains a set of.
+ These modules can be queried and called by other objects.
+ An entity could, for example, have a 
+\emph on
+speed
+\emph default
+ module -- as is the case in the tile extension -- specifying how long it
+ takes to move from one position to another.
+\end_layout
+
+\begin_layout Standard
+When modules are asked to identify themselves, they do so by means of a
+ 
+\emph on
+module type
+\emph default
+.
+ Two modules are identical -- from the viewpoint of an entity -- if their
+ module types are identical.
+ As such, only one occurrence of any module type can exist in a set of modules.
+ and a module of type 
+\begin_inset Formula $t$
+\end_inset
+
+ on an entity 
+\begin_inset Formula $e$
+\end_inset
+
+ can unambiguously be reffered to as 
+\begin_inset Formula $e.M_{t}$
+\end_inset
+
+, where 
+\begin_inset Formula $M$
+\end_inset
+
+ is 
+\begin_inset Formula $e$
+\end_inset
+
+'s module set.
+ 
+\end_layout
+
+\begin_layout Standard
+It is perfectly legal (and sometimes recommended) for a module to identify
+ itself by another type.
+ This means that if a module 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ of type 
+\begin_inset Formula $t$
+\end_inset
+
+ is registered to an entity 
+\begin_inset Formula $e$
+\end_inset
+
+, which already has a module 
+\begin_inset Formula $m_{0}$
+\end_inset
+
+ of type 
+\begin_inset Formula $t$
+\end_inset
+
+ attached (such that 
+\begin_inset Formula $e.M_{t}=m_{0}$
+\end_inset
+
+), 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ replaces 
+\begin_inset Formula $m_{0}$
+\end_inset
+
+ in the set, and 
+\begin_inset Formula $e.M_{t}=m_{1}$
+\end_inset
+
+.
+ Additionally, when the new module is registered to the entity, it checks
+ to see if any modules with the same type is already attached.
+ If that is the case, it stores a reference to the original, and re-attaches
+ it when it is itself detached.
+ This allows for using filter modules, which can use the functionality of
+ the module they have replaced to produce a modified output.
+\end_layout
+
+\begin_layout Standard
+As an example, consider an entity 
+\emph on
+e
+\emph default
+ with a 
+\emph on
+speed
+\emph default
+ type module 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+.
+ Assume that 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ has a method 
+\emph on
+Speed
+\emph default
+, such that 
+\begin_inset Formula $s_{0}.Speed$
+\end_inset
+
+ returns the speed of 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ If it is for some reason desired to change the movement speed of entity
+ 
+\emph on
+e
+\emph default
+ by 50%, it is recommended practice to register a new module 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ to the entity, which identifies itself as a 
+\emph on
+speed
+\emph default
+ type module, and likewise has a method 
+\emph on
+Speed
+\emph default
+.
+ As 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ is registered to the 
+\begin_inset Formula $e$
+\end_inset
+
+, it stores a reference to 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+, and replaces it so that 
+\begin_inset Formula $e.M_{speed}=s_{1}$
+\end_inset
+
+.
+ Now 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+'s 
+\emph on
+Speed
+\emph default
+ method can be defined such that it returns half the value 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ would, so that 
+\begin_inset Formula $e.M_{speed}.Speed=s_{1}.Speed=\frac{s_{0.Speed}}{2}$
+\end_inset
+
+.
+ If at some point this effect is no longer desired, 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ can be deregistered from 
+\begin_inset Formula $e$
+\end_inset
+
+, which causes 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ to be reattached and 
+\begin_inset Formula $e.M_{speed}=s_{0}$
+\end_inset
+
+ once again.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ModulesChainingExample.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+A 
+\emph on
+speed
+\emph default
+ module 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ has replaced another (
+\begin_inset Formula $s_{0}$
+\end_inset
+
+) of the same type on entity 
+\emph on
+e
+\emph default
+.
+
+\emph on
+ 
+\emph default
+Some object requests the speed of entity 
+\begin_inset Formula $e$
+\end_inset
+
+ by querying its 
+\emph on
+speed
+\emph default
+ module 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ then queries the 
+\emph on
+speed
+\emph default
+ module it replaced, and returns half its value.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that this 
+\begin_inset Quotes eld
+\end_inset
+
+chaining
+\begin_inset Quotes erd
+\end_inset
+
+ of modules can be applied indefinetely, allowing several modules to affect
+ a single property of the entity.
+ However, the module methods are called as a stack, which means that the
+ method of the module inserted last is the first to be called.
+ This imposes somewhat of a limit, and may not work as desired in all cases.
+ Consider a stack of 
+\begin_inset Formula $n$
+\end_inset
+
+ modules, where module 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ has been pushed first, followed by 
+\begin_inset Formula $m_{2}$
+\end_inset
+
+ and so on, so that 
+\begin_inset Formula $m_{n}$
+\end_inset
+
+ is at the top of the stack.
+ Then a module 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ can not directly alter the way modules 
+\begin_inset Formula $m_{i+1}\dots m_{n}$
+\end_inset
+
+ changes it output.
+ This may or may not be desirable, depending on the situation.
+ It is not possible, for example, to apply an effect causing an agent's
+ speed to be set to 
+\begin_inset Formula $x$
+\end_inset
+
+, no matter what happens, using this method.
+\end_layout
+
+\begin_layout Standard
+Another issue the designer should be aware of is that it is possible to
+ create a module 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ of type 
+\begin_inset Formula $t$
+\end_inset
+
+, intented to replace another module 
+\begin_inset Formula $m_{0}$
+\end_inset
+
+ (as in the above example), and not implementing the same public methods
+ in 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ as in 
+\begin_inset Formula $m_{0}$
+\end_inset
+
+.
+ Doing this will cause a runtime exception.
+\end_layout
+
+\begin_layout Standard
+An 
+\emph on
+agent
+\emph default
+ is a special entity which have a unique name and can collect percepts.
+ When an agent is asked to return all of its percepts, it queries each module
+ for any available percepts, and returns those as a collection.
+ 
+\family typewriter
+\emph on
+[move this paragraph up (and rewrite?)]
+\end_layout
+
+\end_body
+\end_document

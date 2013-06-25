@@ -1,0 +1,460 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Events and Triggers
+\end_layout
+
+\begin_layout Standard
+In this part the concepts and ideas of both events and triggers will be
+ explained.
+ We will go through their intention and how to use them with the engine.
+ Furthermore, a couple of examples will be provided to give the general
+ idea of what they can be used for.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Concept
+\end_layout
+
+\begin_layout Standard
+In the natural world, all actions have a reaction, these reactions could
+ be thought of as events meant to trigger when such actions are performed.
+ Thus an engine for modeling a virtual environment must provide as many
+ features as those of the real world environment.
+\end_layout
+
+\begin_layout Paragraph*
+Events
+\end_layout
+
+\begin_layout Standard
+To be clear, an event in the context of this engine is the occurrence of
+ something, for instance an event could be that “an Agent has moved”, or
+ “an Agent has picked up an item”.
+ Furthermore, an event also has the duty of providing necessary information
+ for the listener, giving the listener a correct idea of the meaning behind
+ an event.
+ In the case of the event which signified the movement of an agent, it is
+ necessary to provide the listener 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Listeners refer to the object which is listening to the occurrence of an
+ event, with the intent of reacting to it
+\end_layout
+
+\end_inset
+
+ with information of which direction the agent moved, where its starting
+ position is and how far it has moved.
+ Since a listener might be operating in a different thread, the listener
+ is completely dependent on this information, as it might no longer be retrievab
+le at the time the event is being analyzed.
+ For instance, if an agent moved and then was killed and removed from the
+ world, its position would no longer be stored in the world.
+ As such, the listener would have no way to determine where the move had
+ ended if this information was not provided in the event.
+\end_layout
+
+\begin_layout Paragraph*
+Triggers
+\end_layout
+
+\begin_layout Standard
+Triggers in our engine are the means to which listeners gain access to events.
+ A trigger in our engine is the combination of three different parts.
+\end_layout
+
+\begin_layout Itemize
+Events
+\end_layout
+
+\begin_layout Itemize
+Condition
+\end_layout
+
+\begin_layout Itemize
+Action
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+events are what the trigger is listening for.
+ These can be any type of event, and a trigger can be registered to any
+ number of events.
+ But only one event is required to “trigger” a Trigger.
+ For instance, if a Trigger is listening on both the events “10 seconds
+ passed” and “Agent has moved”, then the Trigger will be “triggered” when
+ either of these events occur.
+ However it will be triggered each and every time such event has occurred
+ and is not limited to just one occurrence.
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+Condition is a built in predicate for the trigger to check if it is willing
+ to respond to the event.
+ If the condition is satisfied, the trigger’s action is fired.
+ A condition should only be used in cases that is not covered by another
+ event.
+ For instance, say you have the event “An agent has moved”.
+ Let us call the agent that moved 
+\begin_inset Formula $a_{m}$
+\end_inset
+
+ and the agent whose movement you are interested in 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+.
+ The condition on the trigger would then be: 
+\begin_inset Formula 
+\[
+\textrm{\textbf{is }}a_{m}=a_{i}\textbf{ ?}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+As we can see the condition narrows the range of events that are responded
+ to at the cost of added calculations.
+ In this case it would be much better to subscribe to the event “Agent 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ has moved”.
+ This is purely an example as events should of course not be tied to specific
+ objects.
+ 
+\family typewriter
+\emph on
+[Make better example, explain why it is not feasible tie events to specific
+ objects]
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+Action of a trigger is the part that performs the work, it is a method which
+ is executed once an event has been raised and the condition is satisfied.
+ For instance if a trigger is meant to write a message when a specific event
+ has occurred, then this is where the action of writing such a message should
+ be placed.
+\end_layout
+
+\begin_layout Subsubsection
+Entities and 
+\family typewriter
+EventManager
+\end_layout
+
+\begin_layout Standard
+For triggers to become part of the engine it is required that the trigger
+ is registered to the engine, however it is of crucial importance what one
+ registers the trigger to.
+ A trigger can be registered to either a specific entity or the 
+\family typewriter
+EventManager
+\family default
+.
+ A Trigger registered to the 
+\family typewriter
+EventManager
+\family default
+ will be triggered each time an 
+\family typewriter
+Event
+\family default
+ that it is listening to is fired.
+ However a 
+\family typewriter
+Trigger
+\family default
+ registered to a specific entity will only be informed of events raised
+ on the specific entity instead of when the event is raised for every single
+ entity.
+ 
+\end_layout
+
+\begin_layout Standard
+An example of this would be: assume you have a Trigger 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{1}}$
+\end_inset
+
+
+\family default
+ with the event “An agent has moved”, and 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{1}}$
+\end_inset
+
+
+\family default
+ is registered to Agent 
+\family typewriter
+A
+\family default
+.
+ Additionally, you have a Trigger 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{2}}$
+\end_inset
+
+
+\family default
+ with same event as 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{1}}$
+\end_inset
+
+,
+\family default
+ but this trigger is registered to the EventManager.
+ To give a complete picture, also assume there is an Agent 
+\family typewriter
+B
+\family default
+ which has no Triggers registered to it.
+\end_layout
+
+\begin_layout Standard
+This provides us with two scenarios:
+\end_layout
+
+\begin_layout Description
+Agent
+\begin_inset space ~
+\end_inset
+
+
+\family typewriter
+A
+\family default
+
+\begin_inset space ~
+\end_inset
+
+has
+\begin_inset space ~
+\end_inset
+
+moved: In this case, both 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{1}}$
+\end_inset
+
+
+\family default
+ and 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{2}}$
+\end_inset
+
+
+\family default
+ is triggered, since 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{1}}$
+\end_inset
+
+
+\family default
+ listens on Agent 
+\family typewriter
+A
+\family default
+ and 
+\family typewriter
+
+\begin_inset Formula $\mathtt{T_{2}}$
+\end_inset
+
+
+\family default
+ listens on any
+\family typewriter
+ 
+\family default
+agent moving.
+\end_layout
+
+\begin_layout Description
+Agent
+\begin_inset space ~
+\end_inset
+
+
+\family typewriter
+B
+\family default
+
+\begin_inset space ~
+\end_inset
+
+has
+\begin_inset space ~
+\end_inset
+
+moved: In this case, only 
+\begin_inset Formula $\mathtt{T_{2}}$
+\end_inset
+
+ is triggered, for the reasons stated above.
+\end_layout
+
+\begin_layout Subsubsection
+Example of making and using an 
+\family typewriter
+Event
+\end_layout
+
+\begin_layout Standard
+Let’s assume one was to make an event which was fired each time an agent
+ had moved, let us name this Event: 
+\family typewriter
+AgentMoved
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+First, make a class extending the 
+\family typewriter
+XmasEvent
+\family default
+ class as shown below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename XmasEventCreationStepOne.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, add all the necessary data fields on the newly created event class.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename XmasEventCreationStepTwo.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To utilize the newly created event, it must be raised when appropriate.
+ In this case, the appropriate place would be to raise it during a move
+ action.
+\end_layout
+
+\begin_layout Standard
+In this action, after the movement of the agent had been performed, the
+ method 
+\family typewriter
+RaiseEvent
+\family default
+ would need to be called on the entity that is being moved.
+\end_layout
+
+\begin_layout Subsubsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+Events are what provides the engine flexibility and allows making reactions
+ to others actions.
+ Events are designed for ease of use and are meant to be used as much as
+ possible.
+ Triggers are used as a way to interface with events and they are the only
+ way to connect an object to the event it wishes to listen to.
+\end_layout
+
+\end_body
+\end_document

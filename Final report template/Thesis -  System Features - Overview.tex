@@ -1,0 +1,81 @@
+
+\subsection{Overview}
+
+The goal of the engine is to allow for simulation of a world where
+agents within are allowed to act. As such, it is important that it
+can accurately model a state-machine. To model a state-machine, one
+must have the ability to save a state and perform actions to change
+the current state. A complete UML Domain model diagram is provided
+in appendix \ref{sec:Domain-Model-UML}.
+
+
+\subsubsection{State}
+
+In our domain model, we have state stored in three object types:
+\begin{itemize}
+\item World
+\item Entities
+\item Modules
+\end{itemize}
+
+\paragraph*{World}
+
+The world is the place all entities are meant to inhabit as either
+agents of the world or simply objects for the entities to interact
+with. The world is not defined by the engine. As shown in fig. \ref{fig:DomainModelDiagramXMAS},
+it is an abstract class, meaning it is the developer using our engine
+that defines the world. As such the world can be any type of world
+needed, it could be a 3-d world, a 2-d world, a world based on tiles
+or hexagons or simply be nodes with an undefined number of edges connecting
+each other.
+
+
+\paragraph*{Entities}
+
+The world is empty without anything inside it, as such we have the
+entities which are meant to model the objects one would have the world
+contain. For example in our reference implementation using our engine,
+we have a world with packages scattered about a maze. It is then the
+task of the agents to collect these packages; the entities here are
+not only the walls of the maze and the packages, but also the agents
+since they inhabit the world as well. The agents are different from
+entities in that they all have a name. This name is unique and is
+meant to be a way of distinguishing the agents from one another. 
+
+
+\paragraph*{Modules}
+
+The modules can be viewed as the constraints and as the abilities
+of all entities. For instance if you wanted to constrain entities
+from moving into each other than you would create a Movement blocking
+module, this module would then contain information on whether or not
+a given entities is allowed to pass through it. \texttt{\emph{{[}Rewrite?{]}}}
+
+
+\subsubsection{Actions}
+
+A world is static and unexciting if one is not allowed to perform
+any changes to it, for this we have what we have chosen to name actions.
+There are two different types of actions: environment actions entity
+actions. The core difference between them is that entity actions are
+meant as actions performed by a single entity, such as moving the
+entity or having the entity pick up another object. Environment actions
+are actions that affect the entire world. In our domain model, we
+have chosen to add two actions that are built into the engine, the
+first is an entity action that gets all the percepts for a given entity
+called \texttt{GetallPerceptsAction} and the other is an environment
+action that can shut down the engine called \texttt{CloseEngineAction}. 
+
+
+\subsubsection{Events and Triggers}
+
+The engine relies heavily upon events, this means that all actions
+performed within the engine is meant to trigger events in responds.
+This can be used to either activate new actions within the engine,
+or be meant to transfer data to the views listening. 
+
+In order to listen to the events, a trigger need to be created with
+all the events it listens to registered to it. Furthermore, a trigger
+needs a condition and an action. The condition is a predicate that
+determines whether the trigger is fired, and the action is the function
+that is excuted when the trigger is fired.

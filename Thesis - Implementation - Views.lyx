@@ -1,0 +1,214 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+View
+\end_layout
+
+\begin_layout Standard
+As the view our engine provides is only a framework for making an actual
+ view, it limits what can be said about its implementation.
+ What this section will focus on is why we chose to design the view in this
+ manner and how we provide ways to ensure that the view can be executed
+ on a different thread while not being affected by its problems.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ViewImpThreadSafeSequenceDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Sequence diagram show how events triggered on the model is stored and put
+ on hold until the view thread is able to process them
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ThreadSafeSequenceDiagram"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Design
+\end_layout
+
+\begin_layout Standard
+The view design for the engine was never meant to be an actual view, this
+ would limit the potential of what could be done so we are rather content
+ with not providing more than the skeleton for making a proper view.
+ The idea is that the actual implementation of a view should be part of
+ some extension to make a view that displays graphics or a view that shows
+ a console, it should never be a core part of the engine.
+ The core engine should only provide what all views need, this means that
+ if just a single view is restricted by our design then our design is flawed.
+\end_layout
+
+\begin_layout Subsubsection
+Thread Safety
+\end_layout
+
+\begin_layout Standard
+One thing all views have in common is the dangers of having code that is
+ not thread safe, by having two threads run through the same address space
+ at the same time, the guarantee of a race condition or deadlock is very
+ high.
+ This makes programming a view rather difficult.
+ To combat this problem, we came up with the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ and the 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+.
+ These classes both assist with ensuring that the model thread is never
+ involved in the view thread’s business.
+ The way the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ works is by storing all events triggered by the EventManager of the model,
+ the events data are all kept safe and the order in which the events was
+ triggered is also kept.
+ The idea is that when the view thread is not performing any actions, such
+ as when it is in sleep mode between a draw update, instead of sleeping
+ it will call the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ and tell it to begin executing.
+ The process works by running the 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ that had one of its events trigger and tell it to execute.
+ When all 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ are empty then that mean that there are no longer any events waiting to
+ be executed on the view thread.
+ Since views are only interested in seeing the changes to the world and
+ not how the changes came about, then that means that the views only need
+ access to the events and not the actions.
+ To see a sequence diagram of this process look at fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ThreadSafeSequenceDiagram"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Summary
+\end_layout
+
+\begin_layout Standard
+The view design is mostly focused on ensuring that the user of the engine
+ should deal with as few threading problems as possible as such we have
+ developed two classes 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ and 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ these both make it possible for the view to trigger events when the thread
+ is free from other duties, instead of relying on the model thread to also
+ handle view event updates.
+ 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,363 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Actions
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+XmasAction
+\family default
+s in the UML Domain model diagram in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Domain-Model-UML"
+
+\end_inset
+
+ refers to the object type that performs actions inside the engine.
+ The reasoning behind these actions being its own class is to ensure only
+ one action at a time is being performed.
+ This is because there are many separate threads operating on the model
+ code at once and as such, there must be a way to active only one action
+ at a time.
+\end_layout
+
+\begin_layout Standard
+For the task of executing the actions we have the 
+\family typewriter
+ActionManager
+\family default
+.
+ Its job is to take in one action at a time and place them in a queue (see
+ fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ActionQueuing"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ActionQueuing.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ActionQueuing"
+
+\end_inset
+
+Sequence diagram illustrating how a 
+\family typewriter
+MoveEntityAction
+\family default
+ is processed.
+ The idea is that a controller, such as keyboard input or an agent language,
+ queues an action such as moving an entity on the action manager.
+ The action manager will then execute the action as soon as it is ready.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Action Types
+\end_layout
+
+\begin_layout Standard
+The engine is equipped with two different action types.
+ One of them is the 
+\family typewriter
+EnvironmentAction
+\family default
+, which are actions that perform changes on the entire environment.
+ Examples of such actions are closing this engine or adding/removing entities
+ from the world.
+\end_layout
+
+\begin_layout Standard
+The other action type is the 
+\family typewriter
+EntityAction
+\family default
+.
+ This action type is meant as an action that a single entity performs; ideally
+ the actions should be as atomic as possible.
+ In our reference implementation we have given some ideas how these actions
+ work, such as 
+\family typewriter
+grab
+\family default
+, which is an action that grabs a package from the tile the executing agent
+ is standing on.
+\end_layout
+
+\begin_layout Subsubsection
+Example -- Move Entity Action
+\end_layout
+
+\begin_layout Standard
+Here we will show how an entity action is constructed by inheriting the
+ 
+\family typewriter
+EntityAction
+\family default
+ class.
+ As shown in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:MoveEntityActionExample"
+
+\end_inset
+
+, we have created a 
+\family typewriter
+MoveEntityAction
+\family default
+ class with one field containing the direction of the move.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename MoveEntityActionExample.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:MoveEntityActionExample"
+
+\end_inset
+
+ Illustrating the inheritance of the newly created 
+\family typewriter
+EntityAction
+\family default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+MoveEntityAction
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To have the action actually perform something, it is required that an abstract
+ method 
+\family typewriter
+Execute
+\family default
+ is implemented.
+ This execute method is the method that is executed by the action manager.
+ The implementation of the execute action could then look something like
+ the following pseudo code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{method} Execute 
+\backslash
+textit{returns} nothing 
+\end_layout
+
+\begin_layout Plain Layout
+
+    NewPosition = GetPositionOf(World, This.getSource()) + Direction 
+\end_layout
+
+\begin_layout Plain Layout
+
+    Wait(MOVE_TIME) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    SetPositionOf(World,This.getSource(), NewPosition) 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{EndMethod}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As one can see, the idea is that you find the position of the source of
+ the 
+\family typewriter
+EntityAction
+\family default
+ and use that to generate the new position, which is its old position incremente
+d by its direction vector.
+ The wait is there to give the move a speed, as it would otherwise be an
+ instant movement.
+\end_layout
+
+\begin_layout Subsubsection
+Summary
+\end_layout
+
+\begin_layout Standard
+Using actions is fairly simple and serves to shield the user from the tedious
+ and error prone workings that takes place behind the scenes.
+ It is meant to ensure thread safety and allow multiple threads working
+ with the engine at once.
+ These were the exact reasons we chose this design, as we ourselves had
+ to deal with the problem of interference from multiple concurrent threads.
+ Furthermore, it will also reduce code redundancy as generic actions can
+ be reused by other actions.
+ The problem with this design is that it in a sense remakes what is already
+ implemented in a programming language.
+ After all, running procedural code is what programming languages are meant
+ to do.
+ However, in return it provides a lot of utility and makes it possible to
+ make tools for simplifying the process of making actions.
+ It also gives the ability to differentiate between different action types
+ and even create new action types if one wishes so.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,166 @@
+%==================================================================================================
+%   LUKES THESIS TEMPLATE 1.2
+%   -------------------------
+%   This template is based upon the offcial IMM PhD Thesis template, it is enhanced with a number
+%   of new features and a number of errors have fixed. This template is intended to be complied to
+%   PDF using PDFLATEX and is tested using the MiKTeX 2.9 LaTeX distribution.
+%   It is based on the official DTU-IMM Thesis template by Finn Kuno Christensen in 2009.
+%   Small bugfixes by Kasper Laursen in 2012.
+%   -------------------------
+%   Last Updated: 2012-09-19
+%   Contact: lthhe@imm.dtu.dk
+%==================================================================================================
+%
+%==================================================================================================
+% DOCUMENT SETUP
+%==================================================================================================
+\documentclass[10pt,twoside]{book}                  %Official DTU-IMM Thesis document setup
+%
+%Set to 'print' for printed version, use 'net' for online version
+\def\thesisversion{print}
+%
+%==================================================================================================
+% PACKAGES
+%==================================================================================================
+\usepackage{LukeThesis}                             %Import Thesis base style
+%input{PhDMacros}                                   %Thesis specific macros
+%
+%==================================================================================================
+% THESIS PROPERTIES (Modifiy these fields with your details)
+%==================================================================================================
+\def\thesisauthor{Luke Herbert}                     %Author
+\def\thesistitle{Something something}               %Title
+\def\thesishandin{01-January}                       %Submission date (Day-Month}
+\def\thesisdegree{PhD}                              %Degree ('B.Eng', 'B.Sc.', 'M.Sc.' or 'PhD')
+\def\thesisyear{2012}                               %Submission year
+\def\thesisnumber{????}                             %DTU-IMM Serial number (do not include year)
+\def\thesisISSN{0000-0000}                          %ISSN number
+\def\thesiskeywords{Keywords are, comma separated}  %PDF keywords
+\derivethesisprops                                  %Derive dependent properties
+%
+%==================================================================================================
+% SECTION NUMBERING SETUP
+%==================================================================================================
+\setcounter{tocdepth}{2}                            %2 adds sections up to subsections
+\setcounter{secnumdepth}{3}                         %Subsubsections get a number when this is 3
+%
+%==================================================================================================
+% THESIS STRUCTURE  (Modifiy to include more chapters etc)
+%==================================================================================================
+\begin{document}
+%------------------------
+%Pre-frontmatter material
+%------------------------
+\prefrontmatter
+%--------------------
+%Frontmatter material
+%--------------------
+\frontmatter
+\pagenumbering{roman}                               %Set frontmatter numbering style
+\input{SummaryUK}                                   %English summary of Thesis
+\markboth{}{}                                       %Set headings (left)(right)
+\input{SummaryDK}                                   %Danish summary of Thesis
+\markboth{}{}                                       %Set headings (left)(right)
+\input{Preface}                                     %Preface
+\markboth{}{}                                       %Set headings (left)(right)
+\input{Acknowledgements}                            %Acknowledgements
+\markboth{}{}                                       %Set headings (left)(right)
+%------------------
+% Table of contents
+%------------------
+\newpage\mbox{}\newpage
+\chaptermark{Contents}
+\pdfbookmark{\contentsname}{toc}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\sectionmark{Contents}
+\addtolength{\parskip}{-\baselineskip}
+\tableofcontents
+\addtolength{\parskip}{\baselineskip}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+%-------------
+% Main content
+%-------------
+\mainmatter
+\pagebreak{}
+
+
+\chapter{Introduction}
+
+\include{\string"Thesis - Introduction\string"}
+
+
+\chapter{Theory}
+
+\include{\string"Thesis - Theory - MAS\string"}
+
+\include{\string"Thesis - Theory - MVC\string"}
+
+\include{\string"Thesis - Theory - Factory Design\string"}
+
+\include{\string"Thesis - Theory - TDD\string"}
+
+
+\chapter{Reference Implementation}
+
+\include{\string"Thesis - Reference Implementation\string"}
+
+
+\chapter{System Features}
+
+\include{\string"Thesis -  System Features - Overview\string"}\include{\string"Thesis -  System Features - Virtual World\string"}
+
+\include{\string"Thesis -  System Features - Events and Triggers\string"}
+
+\include{\string"Thesis -  System Features - Actions\string"}
+
+\include{\string"Thesis -  System Features - Converters\string"}
+
+\include{\string"Thesis -  System Features - Agent Controllers\string"}
+
+\include{\string"Thesis -  System Features - Views\string"}
+
+\include{\string"Thesis -  System Features - Engine Extensions\string"}
+
+
+\chapter{Implementation}
+
+\include{\string"Thesis - Implementation - Architecture\string"}
+
+\include{\string"Thesis - Implementation - Model\string"}
+
+\include{\string"Thesis - Implementation - Agent Controllers\string"}
+
+\include{\string"Thesis - Implementation - Views\string"}
+
+\include{\string"Thesis - Implementation - Engine Extensions\string"}
+
+\include{\string"Thesis - Implementation - Reference Implementation\string"}
+
+
+\chapter{Testing}
+
+\include{\string"Thesis -  Testing\string"}
+
+
+\chapter{Discussion}
+
+\include{\string"Thesis - Discussion\string"}
+
+
+\chapter{Conclusion}
+
+\texttt{\emph{\include{\string"Thesis - Conclusion\string"}}}
+\appendix
+\include{Appendix1}                                 %Appendix A
+%-----------
+% Backmatter
+%-----------
+\backmatter
+\chaptermark{Bibliography}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\sectionmark{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}        %Force addition of Bibliography to TOC
+\bibliographystyle{alpha}                           %Use alpha codes for references
+\bibliography{References}                           %Bibliography file called
+\end{document}
+% % % EOF % % %

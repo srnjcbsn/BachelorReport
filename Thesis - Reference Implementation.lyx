@@ -1,0 +1,192 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+To showcase and test our engine, we have used it to create a simple environment
+ with a tile based world.
+ In this world, agents are tasked with finding packages in a maze and dropping
+ them at a tile containing a 
+\family typewriter
+dropzone
+\family default
+ (see figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:maze-scrot"
+
+\end_inset
+
+).
+ Agents are controlled by separate GOAL instances with an EIS environment,
+ which communicates with the XMAS engine via XML messages passed over sockets.
+ The agent programs catalogue the tiles they can see and uses A* search
+ to find paths to packages and the dropzone.
+ The actions available to an agent are listed below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename TileWorldColoredScrot.png
+	width 20text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+An initial configuration of the package grabber scenario.
+ 
+\family typewriter
+D
+\family default
+ (red) marks the dropzone, 
+\family typewriter
+X
+\family default
+s (green) are packages, 
+\family typewriter
+A
+\family default
+s (black) are agents and 
+\family typewriter
+W
+\family default
+s (grey) are walls
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:maze-scrot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family typewriter
+move(
+\emph on
+Direction
+\emph default
+)
+\family default
+ moves the agent one tile in the specified 
+\family typewriter
+\emph on
+Direction
+\family default
+\emph default
+.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family typewriter
+grab
+\family default
+ removes the package in the same tile as the agent (if any) from the world,
+ and marks the agent as carrying a package.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family typewriter
+drop
+\family default
+ adds a package to the world in the same tile as the agent (if it is carrying
+ a package) and marks the agent as not carrying a package.
+\end_layout
+
+\begin_layout Standard
+Additionally, we plan to implement a messaging action, allowing the agents
+ to communicate with each other.
+ This is particularly necessary when using GOAL, as the GOAL instances have
+ no knowledge of each other and thus cannot use the messaging system built
+ into GOAL.
+\end_layout
+
+\end_body
+\end_document

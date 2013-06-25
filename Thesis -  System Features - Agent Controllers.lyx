@@ -1,0 +1,397 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Agent Controllers
+\end_layout
+
+\begin_layout Standard
+The purpose of the agent controllers is to be able to control agents in
+ the engine from outside.
+ This section will cover our design of an agent controller.
+ To get an overview of the classes used for the 
+\family typewriter
+AgentController
+\family default
+, look at fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:AgentControllerDomainModel"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename AgentControllerDomainUML.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Domain model for Agent Controller
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:AgentControllerDomainModel"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Concept
+\end_layout
+
+\begin_layout Standard
+The engine is designed to support the ability to be adapted for all APL
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Agent Programming Language
+\end_layout
+
+\end_inset
+
+ types, this means that the engine itself does not support all APLs but
+ instead provides a framework for quickly designing interfaces between the
+ engine and any APL.
+ There are two classes that one must use in order to properly design the
+ interface:
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+
+\family typewriter
+AgentManager
+\family default
+ has the duty of speaking directly with the agent language it attempts to
+ interface with.
+ Its job is to spawn an 
+\family typewriter
+AgentController
+\family default
+ for each agent the AP wishes to take control of.
+ The 
+\family typewriter
+AgentManager
+\family default
+ is in that sense much akin to an Abstract Factory, which according to the
+ design pattern requires that an abstract class has a method generating
+ a certain type of what object but not exactly which object
+\family typewriter
+\emph on
+ [rewrite sentence]
+\family default
+\emph default
+.
+ The idea is of course that if you have a 
+\family typewriter
+GoalAgentManager
+\family default
+ then the controller it constructs would be 
+\family typewriter
+GoalAgentController
+\family default
+.
+ By making it an abstract method, we ensure at compile time that the engine
+ framework is properly used which is very good for the user.
+ 
+\family typewriter
+\emph on
+[Explain]
+\end_layout
+
+\begin_layout Description
+The
+\begin_inset space ~
+\end_inset
+
+
+\family typewriter
+AgentController
+\family default
+ is the link between a single agent and the AP 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Agent Program
+\end_layout
+
+\end_inset
+
+.
+ Its job is to take all commands directed to it and transform them into
+ actions understood by the engine, and apply them to the agent that it controls.
+\end_layout
+
+\begin_layout Standard
+To simplify the 
+\family typewriter
+AgentController
+\family default
+ design, it provides the method 
+\family typewriter
+PerformAction
+\family default
+, which makes it easy to execute actions on the agent it controls.
+ When the 
+\family typewriter
+PerformAction
+\family default
+ is called, the 
+\family typewriter
+AgentController
+\family default
+ queues the action given through the method and puts the 
+\family typewriter
+AgentController
+\family default
+’s thread to sleep.
+ Once the action has been executed by the engine, the 
+\family typewriter
+AgentController
+\family default
+ is woken up and returns from the 
+\family typewriter
+performAction
+\family default
+ method.
+ All percepts received by the 
+\family typewriter
+AgentController
+\family default
+ during this time is stored on the 
+\family typewriter
+AgentController
+\family default
+ and can be easily accessed by the actual 
+\family typewriter
+AgentController
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename SystemFeatureAgentControllerSequenceDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This sequence diagram shows the process of an AP taking control of agent
+ through the 
+\family typewriter
+AgentManager
+\family default
+, and commanding it through the 
+\family typewriter
+AgentController
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:APConnectingToAndControllingAC"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The process of an AP taking control of an agent is illustrated in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:APConnectingToAndControllingAC"
+
+\end_inset
+
+.
+ The AP calls the 
+\family typewriter
+AgentManager
+\family default
+ to locate the agent it wishes to assume control of.
+ The agent is located through a string (its name) which is unique to it
+ and ensures only one agent is taken.
+ When the 
+\family typewriter
+AgentManager
+\family default
+ finds the correct agent, it will immediately generate a new 
+\family typewriter
+AgentController
+\family default
+.
+ The AP will not gain access to the agent but instead it will gain access
+ to the 
+\family typewriter
+AgentController
+\family default
+.
+ Now that the AP possesses the 
+\family typewriter
+AgentController
+\family default
+, it will have the ability to send the 
+\family typewriter
+AgentController
+\family default
+ commands.
+ These commands might not be understood by the engine if the APL is foreign
+ enough to the engine’s own language and as such it is the duty of the 
+\family typewriter
+AgentController
+\family default
+ to convert these commands into actual actions which the engine can understand.
+\end_layout
+
+\begin_layout Standard
+As this project is about working with GOAL in particular, we have created
+ an extension for the 
+\family typewriter
+AgentController
+\family default
+ designed specifically to work with GOAL.
+ Therefore any example shown here would be incomplete compared to the EIS/Goal
+ implementation we have made.
+ 
+\family typewriter
+\emph on
+[Remove paragraph?]
+\end_layout
+
+\begin_layout Subsubsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+The agent controller is designed to be very lightweight, since we do not
+ want to impose any restrictions that might limit an APL which we know nothing
+ about.
+ As such, the 
+\family typewriter
+AgentController
+\family default
+ is more akin to a convention or a design pattern for how interfacing with
+ agents should occur.
+ It provides the skeleton of how a link might be designed but does not impose
+ any restriction of how should link should be setup.
+\end_layout
+
+\end_body
+\end_document

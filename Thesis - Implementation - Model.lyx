@@ -1,0 +1,728 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout Subsubsection
+World
+\end_layout
+
+\begin_layout Standard
+To be able to unambiguously reference an entity, they are assigned an 
+\family typewriter
+id
+\family default
+ (represented as a number) in the engine.
+ This is relevant when, for example, a backend APL such as GOAL executes
+ an action involving other entities than the agent it is controlling.
+ In this case, the entity's position can be amiguous, since several agents
+ may very well occupy the same spot in the world.
+\end_layout
+
+\begin_layout Standard
+To hold references to all entities in the environment, the 
+\family typewriter
+XmasWorld
+\family default
+ class contains a set of mappings (a C# 
+\family typewriter
+Dictionary
+\family default
+) from 
+\family typewriter
+id
+\family default
+s to entities.
+ Since all agents have a name, it also contains mappings from names to agents.
+ 
+\end_layout
+
+\begin_layout Standard
+When an entity is added to the world, the variable holding the last used
+ 
+\family typewriter
+id
+\family default
+ is increased by one, and the entity is associated with this number.
+ This ensures unambiguity, since no number can be used twice.
+ However, it does impose a limit on the number of entities that can be added
+ to the world.
+ We have represented the 
+\family typewriter
+id
+\family default
+ as a 64 bit unsigned integer (C#
+\family typewriter
+ ulong
+\family default
+ type), so it supports adding more than 
+\begin_inset Formula $1.8\times10^{19}$
+\end_inset
+
+ entities.
+ In an environment that is meant to run indefinetely, and where entities
+ are added and removed often (such as a server based website indexing tool),
+ this limit may be a concern.
+ 
+\end_layout
+
+\begin_layout Standard
+The process of assigning 
+\family typewriter
+id
+\family default
+s to entities is handled in the 
+\family typewriter
+AddEntity
+\family default
+ method, which takes as arguments the entity to be added and an 
+\family typewriter
+EntitySpawnInformation 
+\family default
+object, containing the desired position of the entity in the world, and
+ any other relevant information, such as initial state.
+ However, this only occurs after the user-implemented method 
+\family typewriter
+OnAddEntity
+\family default
+ is called with the entity and spawn information as arguments, and has returned
+ success.
+ This method is overridable by the designer, and can be used to ensure that
+ entities are added properly to the custom world, or not at all.
+ For example, if the world has the restriction that no two entitites can
+ start in the same position, 
+\family typewriter
+OnAddEntity
+\family default
+ can be implemented so as to return failure when an the entity in question
+ would be spawned in an occupied position.
+ Alternatively, it may correct the error, for example by placing the entity
+ in an adjacent, unoccupied square and return success.
+ In any case, the 
+\family typewriter
+AddEntity
+\family default
+ method propagates the return value from 
+\family typewriter
+OnAddEntity
+\family default
+ to its caller when it returns.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+RemoveEntity
+\family default
+ method dereferences the entity by removing itself and its 
+\family typewriter
+id
+\family default
+ from the previously mentioned set of mappings.
+ Similarly to the 
+\family typewriter
+AddEntity
+\family default
+ method, it calls the user-supplied 
+\family typewriter
+OnRemoveEntity
+\family default
+ method, and returns its return value.
+ 
+\family typewriter
+\emph on
+[entity.OnLeaveWorld?]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[pseudo code for AddEntity, RemoveEntity?]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[abstract methods in System Features?]
+\end_layout
+
+\begin_layout Subsubsection
+Entities and Entity Modules
+\end_layout
+
+\begin_layout Standard
+When designing the 
+\family typewriter
+Entity
+\family default
+ class, we wanted to detach the properties and behaviour of entities from
+ the class itself, and segmentize them into smaller, succinct objects.
+ In essence, we wanted to be able to construct an entity that could, for
+ example, move and speak by assembling it from a movement object and a speaking
+ object.
+ In object oriented programming languages such as C#, problems like this
+ are typically accomplished by means of inheritance.
+ It would indeed make sense to let a 
+\family typewriter
+MovingAndSpeakingAgent
+\family default
+ class inherit from the 
+\family typewriter
+MovingAgent
+\family default
+ and 
+\family typewriter
+SpeakingAgent
+\family default
+ classes, which would then provide the desired behaviour.
+ Unfortunately, C# does not support multiple inheritance; a class can not
+ directly inherit from more than one class, although it can inherit multiple
+ interfaces.
+ Instead of using inheritance, we designed the module system described in
+ section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:SysFeatEntities"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Events and Triggers
+\end_layout
+
+\begin_layout Standard
+This section will cover the inner workings of how events and triggers are
+ connected, as well as detail why we designed it the way we did.
+ We will also cover the exact procedure when an event is raised, to defuse
+ any confusion there might be as to what happens inside the engine.
+\end_layout
+
+\begin_layout Paragraph*
+Explanation
+\end_layout
+
+\begin_layout Standard
+By themselves, events are not particularly complicated since they are essentiall
+y just data structures that are transferred to all its listeners upon triggering.
+ As such we shall do a close examination of how exactly the
+\family typewriter
+ EventManager 
+\family default
+works.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+EventManager
+\family default
+ is tethered through the engine to all entities that are inside.
+ Whenever an entity has an event raised on it, it is copied to the event
+ manager which also raises the event.
+ The intent is to minimize the number of events needed to cover a single
+ case.
+ To be clear on how exactly this transpires, we have drawn a sequence diagram.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[SHOW Sequence diagram of an event being raised on an entity and then transferre
+d to the event manager]
+\end_layout
+
+\begin_layout Standard
+As shown on this sequence diagram, an action -- in this case a move action
+ -- raises an 
+\family typewriter
+EntityMovedEvent
+\family default
+ on a given entity.
+ The entity then calls all triggers registered to it, where the trigger
+ also contain the event being raised.
+ After this, the entity informs the 
+\family typewriter
+EventManager
+\family default
+ that an event has been raised on it, which causes the 
+\family typewriter
+EventManager
+\family default
+ to also call all its registered Triggers with the given Event.
+ Once all relevant triggers have been informed of the Event being raised,
+ the procedure is complete and the 
+\family typewriter
+EventManager
+\family default
+ returns to its dormant state.
+\end_layout
+
+\begin_layout Standard
+In the case of events that are not linkable to a specific entity such as
+ an “Engine Close Event”, the event is raised purely on the 
+\family typewriter
+EventManager
+\family default
+ itself.
+ Otherwise, the process is exactly the same as above, except that no particular
+ entity is involved.
+\end_layout
+
+\begin_layout Paragraph*
+Considerations
+\end_layout
+
+\begin_layout Standard
+As there were many considerations that went through our design process,
+ we will take each component of this area and break down why exactly why
+ we designed it as we did.
+\end_layout
+
+\begin_layout Subparagraph*
+Problems of C# events and why we chose to design our own events
+\end_layout
+
+\begin_layout Standard
+The language which our engine is written in is C#, one of the fantastic
+ things about C# is that events is built into the language.
+ As such it may come as a surprise that we have chosen to re-implement events
+ ourselves.
+ However, while the name be the same, the intent between C# events and our
+ events is so different that it is impossible to compare the two.
+ The intent behind C# events is to keep maintenance on single objects, so
+ that changes to a given object can affect its linked objects without having
+ to be designed specifically to do so.
+ This allows for really decoupled projects and is what makes object maintenance
+ in C# quite easy.
+ However our events are not meant for such low-level tasks.
+ Instead they are meant to allow reactions to occur in response to other
+ actions.
+ Furthermore, C# actions are bound to a specific class, and can only be
+ fired inside methods of an instantiation of the specific class.
+ The events we have designed are meant to be raised by all types of class
+ that wish to signal such an event has occurred.
+\end_layout
+
+\begin_layout Standard
+To give an idea of what sort of problems that would arise from using C#
+ events, one need only look at how global events would have to be implemented.
+ Since Events using C# are linked to a specific class, which would essentially
+ mean that the EventManager class would need to be setup for every single
+ event the engine is capable of running.
+ What this basically has accomplished is to couple a single class into the
+ entire workings of an engine, this makes for poor programming design in
+ more than one way and greatly reduces productivity.
+ It also makes the engine difficult to extend and modify at a later time
+ since the design would be practically hardcoded into it.
+ 
+\family typewriter
+\emph on
+[Explain in detail / rewrite paragraph]
+\end_layout
+
+\begin_layout Subparagraph*
+Improvements of events
+\end_layout
+
+\begin_layout Standard
+As of now, our events are not tied to being 
+\family typewriter
+EntityEvent
+\family default
+s or 
+\family typewriter
+EnvironmentEvent
+\family default
+s like actions are, however this might have been a wrong move on our part.
+ The problem is that the user of the engine might be unclear as to which
+ is what, currently the difference lies in the name convention used for
+ events.
+ For instance, it is clear from the name that the 
+\family typewriter
+EntityMovedEvent
+\family default
+ can be tied to a specific entity.
+ In the case of the 
+\family typewriter
+AddedEntityToEngineEvent
+\family default
+, however, there is some ambiguity, as the event is clearly speaking about
+ a single entity, but as the entity is only just added it would have been
+ impossible for any trigger to be registered to it.
+ If one was to make improvements to the event design this would be one change
+ that was worth looking into.
+\end_layout
+
+\begin_layout Subparagraph*
+Triggers
+\end_layout
+
+\begin_layout Standard
+The trigger design came about as a necessity for providing a way for the
+ user to easily design reactions to a given event.
+ The trigger design is very minimalistic except for the fact that it has
+ a condition.
+ We designed it with the condition because we wanted it to be obvious how
+ unwanted events should be handled.
+ Furthermore it also helps to split up the code containing if the action
+ should be executed away from the action itself allowing for more readable
+ code.
+ 
+\end_layout
+
+\begin_layout Standard
+Another way the triggers could have been designed would be if the user simply
+ registered lambda functions (anonymous function), this would help reduce
+ the amount of classes a user should know and understand.
+ However we preferred to encapsulate this into what we call the Trigger,
+ since we wanted to have the ability to expand the capability of the trigger
+ at a later time.
+\end_layout
+
+\begin_layout Standard
+In short, triggers are a simple design that gives the engine logic a lot
+ of flexibility.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Summary
+\end_layout
+
+\begin_layout Standard
+Events and triggers might be a hassle to setup and design, but in return
+ they provide the engine with a lot of flexibility.
+ Without Events the engine would suffer greatly and all actions would be
+ required to be bogged down with a lot of extra logic.
+ This would not only remove the modularity of the engine but also make using
+ the engine more error-prone.
+\end_layout
+
+\begin_layout Subsubsection
+Actions
+\end_layout
+
+\begin_layout Standard
+As we already went through what actions can be used for, this section will
+ instead focus on the idea behind actions, and how we implemented them.
+ It will furthermore cover the entire life span of an action object.
+\end_layout
+
+\begin_layout Paragraph*
+Explanation
+\end_layout
+
+\begin_layout Standard
+An action -- or 
+\family typewriter
+XmasAction,
+\family default
+ as it is called in our engine
+\family typewriter
+ 
+\family default
+-- is a class which provides an API for performing state changes inside
+ the engine, while also ensuring that only one action at a time is being
+ executed.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ImplementationActionQueuingExplanation.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ImplementationActionQueuingExplanation"
+
+\end_inset
+
+A sequence diagram describing the execution of an action.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As can be seen in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ImplementationActionQueuingExplanation"
+
+\end_inset
+
+ it starts with the 
+\family typewriter
+XmasModel
+\family default
+ running an endless loop that tells the 
+\family typewriter
+ActionManager
+\family default
+ to execute all newly queued actions.
+ The 
+\family typewriter
+ActionManager
+\family default
+ then takes all the actions from a thread safe list and places them in a
+ local list.
+ After this, each action is executed individually, putting the action that
+ is being executed in a running state, this state will not change before
+ the actions 
+\family typewriter
+Completed
+\family default
+ method is called.
+ Once an action has been properly executed, it will be changed to a completed
+ state and will be properly disposed of.
+ When the last action has been executed by the 
+\family typewriter
+ActionManager
+\family default
+, the call to 
+\family typewriter
+ExecuteActions
+\family default
+ returns and 
+\family typewriter
+XmasModel
+\family default
+ will put the thread in a waiting state.
+ The 
+\family typewriter
+XmasModel
+\family default
+ will remain in a waiting state until a new action has been placed on the
+ queue; this prevents it from busy waiting when no actions are to be executed.
+\end_layout
+
+\begin_layout Paragraph*
+Considerations
+\end_layout
+
+\begin_layout Standard
+The way that action completion is designed might seem tedious in that it
+ has to call the special method 
+\family typewriter
+Completed
+\family default
+ on each action.
+ However it is quite necessary as the completion of the execute method call
+ does not guarantee that a method is completed, for instance in the case
+ of non-instantanious actions, as explained in the example below.
+ 
+\end_layout
+
+\begin_layout Standard
+Consider the action of moving from one place to another.
+ In this case the move action would need to create a timer to give the idea
+ that the move action had a speed.
+ As we can’t halt other actions during this time it is paramount that the
+ 
+\family typewriter
+Execute
+\family default
+ method is released so that other actions can be executed during this period.
+ 
+\end_layout
+
+\begin_layout Standard
+This is also how the move action is designed in our reference implementation,
+ the algorithm is as follows
+\end_layout
+
+\begin_layout Enumerate
+The move action is put on the queue 
+\end_layout
+
+\begin_layout Enumerate
+The move action sets up a timer on a different thread and finishes its execution
+\end_layout
+
+\begin_layout Enumerate
+The timer is fired after a given time, and places a new action on the queue
+\end_layout
+
+\begin_layout Enumerate
+The new action performs the actual move, and calls the 
+\family typewriter
+Completed
+\family default
+ method of its parent Action (the 
+\family typewriter
+MoveAction
+\family default
+)
+\end_layout
+
+\begin_layout Standard
+As one can see, the problem in this design is the redundancy created by
+ having to call the method 
+\family typewriter
+Completed 
+\family default
+on each execution.
+ This might not seem like a problem but it is problematic in a few ways.
+ First and foremost it adds complexity in usage of the engine, a person
+ with no knowledge of using the engine would not intuitively deduce the
+ correct way to make and use actions.
+ Thus it creates a second problem: there is no way to determine if an action
+ is correctly constructed during compile time.
+ This means bugs will naturally accumulate during extended use, even if
+ a user has experience and foreknowledge forgetting even for a single action
+ can be crucial.
+ This is because running actions use resources and if never completed the
+ resources of the actions are never released.
+ For instance let us assume the 
+\family typewriter
+MoveAction
+\family default
+ 
+\family typewriter
+Completed
+\family default
+ method is never called, the result of this is that it is stored in the
+ 
+\family typewriter
+ActionManager
+\family default
+ as 
+\family typewriter
+Running
+\family default
+.
+ Now let us assume that this move action is continuously being executed
+ by hundreds if not thousands of agents.
+ As each action is never released the memory stored for each action is never
+ released and an unintentional memory leak is thus created.
+\end_layout
+
+\begin_layout Standard
+Another way we could have chosen to implement the action completion process,
+ is the usage of child action.
+ Imagine if an action could generate new actions that were linked with it,
+ thus the completion of an action would be tied to the fact that all its
+ child actions had been executed and not the arbitrary call of a 
+\family typewriter
+Complete
+\family default
+ method.
+ This could undoubtedly provide new problems to overcome and as such we
+ have not fully followed this path, however given more time to study the
+ consequences of this design would reveal whether or not this is a better
+ design.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Summary
+\end_layout
+
+\begin_layout Standard
+A lot of the considerations when designing the action all comes down to
+ the reliance on user to clean up the Action, which is generally not good
+ from a design perspective; it is always preferable that used data is cleaned
+ up automatically when it is out of scope.
+ However it is not all bad as this design does guarantee a flexible usage
+ of the actions; it provides more control to the user which might give the
+ user abilities to do certain things which would otherwise be denied within
+ the engine.
+ This is also why this design method was chosen as our philosophy in the
+ engine design was to minimize limitations as much as possible while still
+ providing the features we thought necessary to fulfill the engine's goal.
+\end_layout
+
+\end_body
+\end_document
