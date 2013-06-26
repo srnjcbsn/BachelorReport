@@ -1,0 +1,11 @@
+
+\section{Converting Actions and Percepts}
+
+Both actions and percepts are very abstract objects, and the XMAS
+engine can not how they are represented in different APLs. This means
+that the system designer needs a way to translate actions from foreign
+types into \texttt{XmasAction}s, and \texttt{XmasPercept}s into percepts
+of foreign types. We have provided the base necessities for implementing
+this functionality with \emph{converters}. A converter is, as the
+name implies, a class that takes objects of a foreign type and map
+them to internal types or vice versa. \texttt{\emph{{[}Expand{]}}}

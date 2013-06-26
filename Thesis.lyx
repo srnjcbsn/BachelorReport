@@ -2,7 +2,10 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass article
+\textclass report
+\begin_preamble
+\usepackage{alltt}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -25,6 +28,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -42,8 +46,8 @@
 \shortcut idx
 \color #008000
 \end_index
-\secnumdepth 3
-\tocdepth 3
+\secnumdepth 4
+\tocdepth 4
 \paragraph_separation indent
 \paragraph_indentation default
 \quotes_language english
@@ -68,130 +72,292 @@ LatexCommand tableofcontents
 
 \end_layout
 
+\begin_layout Chapter
+Introduction
+\end_layout
+
 \begin_layout Standard
-\begin_inset Newpage pagebreak
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Introduction.lyx"
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-Motivation
+\begin_layout Chapter
+Theory
 \end_layout
 
 \begin_layout Standard
-There are many complications when developing multi agent systems, our goal
- with this project was to lessen one of these by designing an engine with
- the specific purpose to develop multi agent environments.
- What these environments can be is left to the developer, however almost
- everything in the engine is modular and interchangeable ensuring that all
- types of multi agent environments are possible.
- 
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Theory_MAS.lyx"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-What the types of projects can be is manifold but here are some possible
- examples
-\end_layout
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Theory_MVC.lyx"
 
-\begin_layout Subsubsection*
-Agent comparison software 
-\end_layout
+\end_inset
 
-\begin_layout Standard
-There are many complications when developing multi agent systems, our goal
- with this project was to lessen one of these by designing an engine with
- the specific purpose to develop multi agent environments.
- What these environments can be is left to the developer, however almost
- everything in the engine is modular and interchangeable ensuring that all
- types of multi agent environments are possible.What the types of projects
- can be is manifold but here are some possible examples
+
 \end_layout
 
 \begin_layout Standard
-For instance if two groups wanted to test their agent programs against each
- other this engine would make it possible for them to easily design a world
- in which this test could occur.
-\end_layout
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Theory_Factory_Design.lyx"
 
-\begin_layout Subsubsection*
-Agent testing/Simulation software
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Testing agent software can be complicated being able to rapidly create an
- environment and visualize it can be important to the project as it ensure
- basic mistakes are ironed out before larger scale implementation.
- 
-\end_layout
 
-\begin_layout Subsubsection*
-Agent teaching tools
 \end_layout
 
 \begin_layout Standard
-Teaching agent languages can be tough without proper exercises; however
- the time spent on designing these exercises can prove too exhausting for
- the teacher to develop.
- In this case the teacher can rapidly design the world he had in mind for
- his exercise instead of designing every integral part of the multi agent
- system himself.
- This is because our engine provides all the basic features of a multi agent
- system, so that the time can be spent more productively on designing how
- a given exercise should play out, show casing the problem the students
- are supposed to deal with.
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Theory_TDD.lyx"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
-Computer games
-\end_layout
-
-\begin_layout Standard
-In theory most computer games are just multi agent programs where one of
- the agents is controlled by the player.
- Our engine should make it fairly easy for setting up a framework for creating
- rules inside a given world and ensure that the agents of the world follow
- said rules.
-\end_layout
-
-\begin_layout Section
+\begin_layout Chapter
 Reference Implementation
 \end_layout
 
 \begin_layout Standard
-To showcase and test our engine, we have used it to create a simple environment
- with a tile based world.
- In this world, agents are tasked with finding packages in a maze and dropping
- them at a tile containing a 
-\family typewriter
-dropzone
-\family default
- (see figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:maze-scrot"
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Reference_Implementation.lyx"
 
 \end_inset
 
-).
- Agents are controlled by separate GOAL instances with an EIS environment,
- which communicates with the XMAS engine via XML messages passed over sockets.
- The agent programs catalogue the tiles they can see and uses A* search
- to find paths to packages and the dropzone.
- The actions available to an agent are listed below.
+
+\end_layout
+
+\begin_layout Chapter
+System Features
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_System_Features_Overview.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Virtual_World.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Events_and_Triggers.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Actions.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Converters.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Agent_Controllers.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Views.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_System_Features_Engine_Extensions.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Implementation_Architecture.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Implementation_Model.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Implementation_Agent_Controllers.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Implementation_Views.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Implementation_Engine_Extensions.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "Thesis_Implementation_Reference_Implementation.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Testing
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Testing.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Discussion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Conclusion
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Conclusion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+\start_of_appendix
+Domain Model UML Diagram for XMAS Model 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Domain-Model-UML"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename TileWorldColoredScrot.png
-	width 20text%
+	filename xmas_domain_model_uml.png
+	width 120col%
 
 \end_inset
 
@@ -202,27 +368,9 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-An initial configuration of the package grabber scenario.
- 
-\family typewriter
-D
-\family default
- (red) marks the dropzone, 
-\family typewriter
-X
-\family default
-s (green) are packages, 
-\family typewriter
-A
-\family default
-s (black) are agents and 
-\family typewriter
-W
-\family default
-s (grey) are walls
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:maze-scrot"
+name "fig:DomainModelDiagramXMAS"
 
 \end_inset
 
@@ -239,196 +387,27 @@ name "fig:maze-scrot"
 
 \end_layout
 
-\begin_layout Labeling
-\labelwidthstring 00.00.0000
-
-\family typewriter
-move(
-\emph on
-Direction
-\emph default
-)
-\family default
- moves the agent one tile in the specified 
-\family typewriter
-\emph on
-Direction
-\family default
-\emph default
-.
+\begin_layout Chapter
+Usage Example / Hello World! / Vacuum World
 \end_layout
 
-\begin_layout Labeling
-\labelwidthstring 00.00.0000
+\begin_layout Chapter
+iiLang (and xml serialization/deserialization?)
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:iiLang"
 
-\family typewriter
-grab
-\family default
- removes the package in the same tile as the agent (if any) from the world,
- and marks the agent as carrying a package.
-\end_layout
-
-\begin_layout Labeling
-\labelwidthstring 00.00.0000
-
-\family typewriter
-drop
-\family default
- adds a package to the world in the same tile as the agent (if it is carrying
- a package) and marks the agent as not carrying a package.
-\end_layout
-
-\begin_layout Standard
-Additionally, we plan to implement a messaging action, allowing the agents
- to communicate with each other.
- This is particularly necessary when using GOAL, as the GOAL instances have
- no knowledge of each other and thus cannot use the messaging system built
- into GOAL.
-\end_layout
-
-\begin_layout Part
-System Features
-\end_layout
-
-\begin_layout Section
-Overview
-\end_layout
-
-\begin_layout Section
-Virtual World
-\end_layout
-
-\begin_layout Standard
-The object used to keep track of all entities in the environment is called
- the 
-\emph on
-world
-\emph default
-.
- This object is also used to model the structure of the environment; eg.
- whether it is tile based, graph based or something else entirely.
- The only restriction imposed on the structure of the environment is that
- all entities have an associated 
-\emph on
-position
-\emph default
- in it, fitting the data structure describing the environment.
- This is a pretty loose requirement, considering that it can effectively
- be ignored 
-\family typewriter
-\emph on
-[could any meaningful environment be constructed where position doesn't
- matter?]
-\end_layout
-
-\begin_layout Standard
-In a tile based environment, for example, the world could consist of a two
- dimensional array containing lists of entities, with each field representing
- a tile, and positions represented as 
-\begin_inset Formula $(x,y)$
 \end_inset
 
- coordinates.
- In a graph based environment, the world would contain some structural represent
-ation of a graph, and the positions could be references to nodes, or representat
-ions of the graph as seen from different nodes.
- 
-\family typewriter
-\emph on
-[More detailed usage examples?, Tile Extension]
+
 \end_layout
 
-\begin_layout Subsection
-Entities, Agents and Entity Modules
+\begin_layout Chapter
+Network Streaming
 \end_layout
 
-\begin_layout Standard
-Entities are the objects inhabiting the world.
- They are very basic objects, equipped with no definitions of how they are
- represented in the world or how they can be interacted with, save for allowing
- other objects to subscribe to events propagated 
-\family typewriter
-\emph on
-[fired?]
-\family default
-\emph default
- by the entity.
- All this is instead handled by 
-\emph on
-entity modules
-\emph default
-, which each entity contains a set of.
- These modules can be queried and called by other objects.
-\end_layout
-
-\begin_layout Standard
-In the tile extension, we have provided several modules that can be equipped
- to agents to make them better suited for inhabiting a tile based environment.
- For example, the 
-\emph on
-movement blocking-
-\emph default
- and 
-\emph on
-vision blocking
-\emph default
- modules apply to all entities with a physical presence in the environment;
- given another entity, they specify whether the entity they are attached
- to blocks the aforementioned entity's movement or vision, respectively.
- In our reference implementation, package grabber agents have the 
-\emph on
-package
-\emph default
- module keeping track of whether or not they hold a package.
-\end_layout
-
-\begin_layout Standard
-When modules are asked to identify themselves, they do so by means of a
- 
-\emph on
-module type
-\emph default
-.
- It is perfectly legal (and sometimes recommended) for a module to identify
- itself by another type.
- If an effect would, for example, reduce an entity's movement speed by 
-\begin_inset Formula $50\%$
-\end_inset
-
-, it is recommended practice to register a new module to the entity, which
- identifies itself as a speed module.
- Since the entity contains a set of modules, there would be no ambiguity,
- as the new module would replace the original.
- Additionally, when the new module is registered to the entity, it checks
- to see if any modules with the same type is already attached.
- If that is the case, it stores a reference to the original, and re-attaches
- it when it is itself detached.
- This allows for using filter modules, which could -- in the speed modification
- example -- query the stored module for its speed value 
-\begin_inset Formula $s$
-\end_inset
-
-, and then return 
-\begin_inset Formula $\tfrac{s}{2}$
-\end_inset
-
-.
- If several effects are applied to a property, this would function like
- a chain 
-\end_layout
-
-\begin_layout Standard
-An 
-\emph on
-agent
-\emph default
- is a special entity which have a unique name and can collect percepts.
- When an agent is asked to return all of its percepts, it queries each module
- for any available percepts, and returns those as a collection.
- 
-\family typewriter
-\emph on
-[move this paragraph up (and rewrite?)]
+\begin_layout Chapter
+Source code excerpts
 \end_layout
 
 \end_body

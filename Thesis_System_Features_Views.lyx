@@ -1,0 +1,334 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+View
+\end_layout
+
+\begin_layout Standard
+The engine is designed to assist the user in all parts of the process when
+ making an environment, this also extends to the visualization of said environme
+nt.
+ However, since our goal is to have as few restrictions on the model as
+ possible, our knowledge of that view’s representation is very limited.
+\end_layout
+
+\begin_layout Subsection
+Concept
+\end_layout
+
+\begin_layout Standard
+The view API which the engine provides consists of four abstract classes
+ that are meant to be implemented by the user.
+ The four classes can be seen in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ViewUMLView"
+
+\end_inset
+
+.
+ We will go through each class and explain how they are meant to be implemented.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ViewUmlDomainDiagram.png
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+UML diagram of the view
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ViewUMLView"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+XmasView
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+XmasView
+\family default
+ class is very simple; it only provides a single method that is required
+ to be implemented.
+ When the engine starts the view up it generates a thread for the view and
+ the 
+\family typewriter
+Start
+\family default
+ method is the first method to be executed inside that thread.
+ The start method should contain an endless loop that on a time interval
+ updates the view.
+ Another task of the implemented view is also to update its 
+\family typewriter
+ThreadSafeEventManager.
+
+\family default
+ The 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ ensures that events sent from the model thread of the engine is not immediately
+ executed, but instead lie dormant in the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ until the view thread is ready to execute them.
+ How many events that one wishes to trigger is up to the user.
+ We also provide the appropriate methods for the user to specify exactly
+ how long he wishes to wait for the next event, or if it should timeout.
+ The 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ is very important to the view as without it, designing view code becomes
+ complicated as one need to constantly ensure that no concurrency bugs has
+ been applied to the system.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+WorldView
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+WorldView
+\family default
+ class is added because of the long term benefits, as of now it provides
+ nothing for the designer.
+ However if we found benefits to add to the class, making it ahead of time,
+ even if it is initially empty, can have many benefits as the project expands.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+EntityView
+\end_layout
+
+\begin_layout Standard
+Much like the 
+\family typewriter
+WorldView
+\family default
+ class, the 
+\family typewriter
+EntityView
+\family default
+ is also very minimal.
+ However, it enforces certain things that the user of the engine should
+ take care of.
+ First, it automatically makes a 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ from the entity and attaches that 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+ to the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ which should be provided by the 
+\family typewriter
+XmasView
+\family default
+.
+ The idea is that all events the 
+\family typewriter
+XmasView 
+\family default
+wishes to listen on should be done by registering its triggers to the 
+\family typewriter
+ThreadSafeEventQueue
+\family default
+.
+ This will ensure that when the view updates the 
+\family typewriter
+ThreadSafeEventManager
+\family default
+ all events pertaining to the specific entity is also updated on the 
+\family typewriter
+EntityView
+\family default
+’s triggers, but done so on the view thread instead of the model thread,
+ separating the two threads completely.
+\end_layout
+
+\begin_layout Paragraph*
+
+\family typewriter
+ViewFactory
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+ViewFactory
+\family default
+ is meant to include all objects with low life cycle used by the view, it
+ is also designed specifically to construct new 
+\family typewriter
+EntityViews
+\family default
+ during runtime of the engine.
+ In order to know which 
+\family typewriter
+EntityView
+\family default
+ belongs to which 
+\family typewriter
+XmasEntity
+\family default
+ one is required to register all types of 
+\family typewriter
+XmasEntities
+\family default
+ and link it to its counterpart 
+\family typewriter
+EntityView
+\family default
+.
+ For instance, assume you have a class inheriting 
+\family typewriter
+XmasEntity
+\family default
+ called 
+\family typewriter
+Wall
+\family default
+, and the 
+\family typewriter
+Wall
+\family default
+’s representation called 
+\family typewriter
+WallView
+\family default
+, then you need to manually register inside the 
+\family typewriter
+ViewFactory
+\family default
+ that 
+\family typewriter
+Wall
+\family default
+ is represented by 
+\family typewriter
+WallView
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+The view framework provides four classes each with their own advantages;
+ they each represent a part of the model of engine.
+ They are designed to assist the user in keeping his code threadsafe so
+ that as few problems as possible arise.
+\end_layout
+
+\end_body
+\end_document

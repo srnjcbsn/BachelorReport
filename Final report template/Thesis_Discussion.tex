@@ -1,0 +1,183 @@
+In this section we will discuss the major considerations we faced
+during the project, as well as the choices we took in accomplishing
+our goals, and how we could have otherwise reached them.
+
+
+\section{Generality of the engine}
+
+One of the major goals of this project was to make the engine as general
+as possible. This includes the ability for the designer to implement
+any kind of environment, displayed any way he wants, and controlled
+by whatever APL he would like to use. In this section we will discuss
+how these three vital parts of our engine lives up to this goal.
+
+For the engine to be general means it has the ability to adapt to
+any needed situation. The only restriction is that these situations
+are based on Multi agent Environment, other than that nearly any situation
+should be coverable by the engine. For instance if one wishes to use
+the engine to make a computer game, then the view must be able to
+support a graphical display and the world of the engine must have
+the ability to be changed to a 3d-world. But if instead one wishes
+to make an engine for searching documents for spelling errors, then
+the world should be extendable to a text-document. Furthermore to
+be general also means that the engine should be used to work with
+any other APL, so regardless if the APL is goal, Jason or F\# the
+engine should have the ability to be adapted into working with either
+of those languages.
+
+In many cases, the shortest path to a general system is removing restrictions.
+Unfortunately, features are often restrictive in nature; the most
+general system of all is one that is completely featureless. Thus,
+it is often åa trade-off between features and generality.
+
+
+\subsection*{Model}
+
+For the model to be general, it should be capable of representing
+a world as any possible data structure. Additionally, the objects
+inhabiting it should be as general as possible, allowing them to be
+defined in a way that makes sense in the context of the world. 
+
+We have accomplished this by imposing as few restrictions as possible
+on these objects. For example, as described in section \texttt{\emph{{[}System
+Features.World{]}}}, a world in the engine has no data associated
+with it by default, leaving the modelling of it completely in the
+hands of the designer. The only restriction on the world is the idea
+that all entities should have a postition in it, although the position
+object is completely general itself. \texttt{\emph{{[}Environments
+where postition does not matter?{]}}}
+
+Initially, we toyed with the idea of equipping the world with a graph
+as the default representation of the environment, since it is a very
+general data structure in the sense that it can be used to describe
+other data structures. The problem with this approach is that a graph
+may not be the best representation of any given world. In the case
+of a tile based world, for example, a two dimensional array is more
+feasible, since this is its natural representation. Ultimately, we
+chose to impose no restrictions on the data structure used, and instead
+rely on the use of extensions to model environments.
+
+
+\subsection*{Interfacing with APLs}
+
+One of the major problems in designing an interface that works with
+different APLs is that the order in which they queue actions and queries
+percepts may be different from APL to APL. In effect, they do not
+share a common execution protocol. This means that we cannot provide
+a general method for communicating with any AP. Instead, as with other
+parts of the engine, the intent is to allow for extensions capaple
+of interfacing with different APLs in any way they see fit.
+
+It could be argued that using the notions of percepts and actions
+serves to limit the universality of the engine. These are, however,
+general concepts for interacting with an intelligent agent. They are
+basically the input and output of the agent; it perceives the state
+of the world, and produces an action based on this information. \texttt{\emph{{[}Explain
+why the functions of an agent can not be reduced any further (why
+they are the basis for an agent), refer to AIMA{]}}} As such, they
+are essential to interacting with an agent, and incorporated in all
+agent programming languages we are aware of.
+
+
+\subsection*{View}
+
+For the view to be considered general it is paramount that the design
+of the view is not being restricted in anyway, this is done by keeping
+anything in the view very minimalistic. By minimalistic we mean that
+the view only provides about four classes and they only provide a
+little about of business logic. If we had narrowed down how exactly
+a view should be designed such as requiring a frame for which the
+view is projected on. This might have made implementations of the
+view easier as tools to draw on frames could be pre-implemented into
+the engine. We did not want to do this since we think that restrictions
+should be non-existent .However this also poses a potential problem
+in that it is so minimalistic that we barely provide anything for
+the user, and leave the user to the task of making the view by themself.
+
+
+\subsection*{Solving the Problems of Generality}
+
+As evident when discussing how to make the engine general and how
+to make it work with as many situations as possible, the problem arises
+that the workload for the user gets increased. This is because whenever
+we remove something from the engine in order to ensure that we impose
+no restrictions, we run the risk of removing something that made the
+life of the user easier, since they would not have to re-implement
+it themself. To combat this problem we moved everything that added
+value to the engine but imposed a restriction to the Engine Extensions
+project. The idea would be that while the extensions was not part
+of the core engine, they would be part of what we delivered with the
+engine. We saw this as the best of both worlds, not only do we ensure
+that the engine is not being restricted, but at the same time if the
+user did not mind some restrictions, then they would be able to find
+a suitable extension among the ones we provide. As of now the only
+extensions we have are those needed for the reference implementation,
+but our long term plan would be to add more extensions if possible.
+
+
+\section{Model View Controller Design Pattern}
+
+The model view controller design pattern is one of the older design
+patterns within software design; its purpose is to ensure that the
+developer does not deal with multiple issues at once, and instead
+is able to focus on one task of the project at a time. We chose to
+base our engine on the MVC pattern because we also do not want the
+user of the engine to be tasked with multiple issues at once. Without
+the MVC pattern, the user could be confused about how for instance
+they should design a controller for an APL, and perhaps they would
+mistakenly design it tailored to specific actions. If the user did
+this, they would have to write new actions to perform the same task
+for each new APL they encountered, which would increase code redundancy.
+As the designers of this engine we wanted to ensure those kinds of
+mistakes do not happen. The way we enforce this is by forcing the
+MVC pattern. Since by forcing the MVC pattern we force the user to
+think about how they should construct the implementation of the engine\textquoteright{}s
+abstract classes. However since it is only a pattern, the user can
+still make bad design decisions as we impose no restrictions. As most
+bad design decisions comes from making an easy implementation of something,
+we hopefully reduce the number of times they are made by making bad
+decisions harder. \texttt{\emph{{[}rewrite sentence?{]}}}
+
+
+\section{Test Driven Development}
+
+
+\section{Choice of Technologies}
+
+
+\subsection*{The XMAS Engine}
+
+We have chosen to implement the engine in C\#, which runs on the .NET
+platform. While Java has a strong presence in multi-agent system development
+-- as it is used by established APLs such as Jason, as well as the
+EIS standard -- we have a subjective preference for C\#. In general,
+C\# is a newer and more modern programming language with better facilities
+for writing comprehensive and maintainable code, and provides some
+features usually only found in functional programming languages. Additionally,
+.NET code can be executed across platforms, thanks to the Mono project
+\texttt{\emph{{[}Link to Mono{]}}}, although the newest version of
+.NET (v4.5) has not been ported at the time of this writing. Although
+developing our reference implementation would have been simpler had
+we used Java, opting out of this in favor of C\# gave us the opportunity
+to test how well our engine interfaced with programs not written in
+the same language. 
+
+
+\subsection*{Reference Implementation}
+
+As our reference implementation was developed to showcase and test
+our engine, we aimed to implement it using the most commonly used
+agent programming language. Since EIS can be interfaced with many
+different APLs, this seemed like the obvious choice. If the engine
+could be shown to work with EIS, any APL supported by EIS would work
+by extension. Initially, we considered writing a J\# (.NET bindings
+for the Java Language) module, which would work natively with both
+our engine written in C\#, and the EIS implementation written in Java.
+However, we felt that this would remove the difficulties of communicating
+with an entirely different platform. This difficulty is important
+to face, since 
+
+
+\section{Comparison to other Environment Construction Tools}
+
+Comparison to JaCaMo, EIS

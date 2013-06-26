@@ -1,0 +1,493 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Engine Extensions
+\end_layout
+
+\begin_layout Standard
+Since most of the engine is very abstract in functionality, we have made
+ three extensions, which makes it easy to implement a tile based environment
+ and communicating with EIS.
+\end_layout
+
+\begin_layout Subsection
+Tile Extension
+\end_layout
+
+\begin_layout Standard
+This extension represents the world as a two-dimensional array of tiles
+ using what we will call a tile map.
+ 
+\family typewriter
+\emph on
+[Elaborate on tile, that entities can move]
+\family default
+\emph default
+ We have implemented it so that the tile in the center has the position
+ 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ This means that all positions are given relative to the origo tile at 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ As a consequence of this, a tile map must have odd dimensions, as it would
+ otherwise not have a center tile.
+ If the user tries to access a tile that is out of bounds (for example the
+ tile at position 
+\begin_inset Formula $(0,n+1)$
+\end_inset
+
+ in a 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ tile map), a tile containing a special entity signaling that the tile is
+ not part of the world is returned.
+ This ensures that querying the tile map for a tile at any position will
+ never fail and always return a valid value.
+ As well as accessing tiles at arbitrary positions, the tile map can be
+ queried with a position and a range 
+\begin_inset Formula $r$
+\end_inset
+
+, in which case a two dimensional array of size 
+\begin_inset Formula $(2r+1)\times(2r+1)$
+\end_inset
+
+ is returned, containing the tiles in that square.
+ 
+\family typewriter
+\emph on
+[Explain that it is relevant in eg.
+ vision.
+ Figure?]
+\end_layout
+
+\begin_layout Standard
+In the tile extension, we have provided several modules that can be equipped
+ to agents to make them better suited for inhabiting a tile based environment.
+ For example, the 
+\emph on
+movement blocking-
+\emph default
+ and 
+\emph on
+vision blocking
+\emph default
+ modules apply to all entities with a physical presence in the environment;
+ given another entity, they specify whether the entity they are attached
+ to blocks the aforementioned entity's movement or vision, respectively.
+ The 
+\emph on
+speed
+\emph default
+ module defines how long it takes for the entity to move to an adjacent
+ square.
+ 
+\family typewriter
+\emph on
+[Rewrite]
+\end_layout
+
+\begin_layout Subsubsection*
+Vision
+\end_layout
+
+\begin_layout Standard
+The tile extension also provides means for seeing tiles around an entity
+ via the 
+\family typewriter
+Vision
+\family default
+ module.
+ All entities that are able to sense their surroundings also have a 
+\family typewriter
+VisionRange
+\family default
+ module which -- as the name implies -- defines how far (in tiles) the entity
+ can see.
+\end_layout
+
+\begin_layout Standard
+When the vision module is asked to return its percepts, it asks the world
+ to build it a 
+\family typewriter
+Vision
+\family default
+ object, which it returns.
+ The 
+\family typewriter
+Vision
+\family default
+ object uses an algorithm described in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:VisionAppendix"
+
+\end_inset
+
+ to assemble a set of mappings from positions (relative to the entity) to
+ tile references.
+ To determine whether a tile 
+\begin_inset Formula $t$
+\end_inset
+
+ is visible to an entity 
+\begin_inset Formula $e$
+\end_inset
+
+, we draw straight lines from each corner of 
+\begin_inset Formula $e$
+\end_inset
+
+'s tile to the corners of 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ If such a line does not intersect with a tile that is vision blocking with
+ respect to 
+\begin_inset Formula $e$
+\end_inset
+
+, we say that the line 
+\emph on
+connects
+\emph default
+.
+ If 
+\begin_inset Formula $e$
+\end_inset
+
+'s tile has any corner from which we can connect lines to all corners of
+ 
+\begin_inset Formula $t$
+\end_inset
+
+, then 
+\begin_inset Formula $t$
+\end_inset
+
+ is visible to 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ If, however, 
+\begin_inset Formula $t$
+\end_inset
+
+ is itself vision blocking, we require only two connecting lines, since
+ at least one line would not have to travel through 
+\begin_inset Formula $t$
+\end_inset
+
+, and as such not connect.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[expand, add image]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[move action, move event]
+\end_layout
+
+\begin_layout Subsection
+EIS Extension
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:EIS-Extension"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The EIS extension provides means for communicating with an EIS instance
+ over a socket, as well as serializing and deserializing percepts and actions
+ encoded in an XML representation of EIS' 
+\family typewriter
+iilang
+\family default
+ format.
+ The extension features custom a custom agent controller and manager, which
+ have been developed to work well with EIS.
+ 
+\end_layout
+
+\begin_layout Standard
+As EIS is implemented in Java and our engine is written in C#, information
+ can not easily be passed between the two in a native manner.
+ Instead, we have opted to have the two communicate over sockets.
+ As EIS already supports formatting 
+\family typewriter
+iilang
+\family default
+ objects to XML, we chose this to encode information passed over the sockets.
+ We have implemented our own 
+\family typewriter
+iilang
+\family default
+ object tree in C#, which implements XML serialization and deserialization
+ (see appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:iiLang"
+
+\end_inset
+
+), as well as a Java class used to parse XML to 
+\family typewriter
+iilang
+\family default
+ objects.
+ Furthermore, we have implemented special package streaming objects in both
+ C# and Java, which sends the size of a payload before the actual data when
+ streaming XML over sockets
+\family typewriter
+\emph on
+[Elaborate]
+\family default
+\emph default
+.
+ This allows us to detect when an XML message has been completely received.
+ This means that designers wanting to use EIS with our engine should implement
+ our accompanying Java libraries, as well as the EIS engine extension.
+\end_layout
+
+\begin_layout Standard
+In order for an EIS instance to connect to an agent controller, it must
+ connect to a socket which is known by both the EIS instance and the engine
+ at runtime.
+ The agent manager listens to this socket and accepts the connection.
+ As the EIS instance connects, it receives a new socket which can be used
+ to communicate with the agent controller.
+ It now sends an XML message with the name of the agent on this socket,
+ and the agent manager constructs an agent controller tied to this name
+ and socket.
+ The controller and the EIS instance now have their own private socket connectio
+n to communicate on, and the agent manager proceeds to listen for other
+ APL instances requesting an agent controller.
+\end_layout
+
+\begin_layout Standard
+The EIS instance can now proceed to send actions to be executed to the agent
+ controller.
+ When such an action is received, the controller enqueues it, and sleeps
+ till it is finished, at which point it resumes listening for actions on
+ the socket.
+ The request to return all percepts is just an action with the name 
+\family typewriter
+getAllPercepts
+\family default
+, which causes the controller to gather all available percepts from the
+ attached agent and sent them to the EIS instance via the socket.
+ Note that by default, this is the only way perepts are sent; percepts are
+ returned in response to no other actions.
+ Since the agent controller effectively blocks on actions, the EIS instance
+ can not have the controller queue other actions or return percepts when
+ it is executing an action that takes time, such as the tile extension's
+ move action (this is a restriction imposed by the agent controller base
+ class as described in section 
+\family typewriter
+\emph on
+[insert section number]
+\family default
+\emph default
+, as it is the default behaviour of the 
+\family typewriter
+performAction
+\family default
+ method).
+ This execution sequence is very simple, but has some downsides.
+ Consider, for example, that two agents wish to communicate with each other
+ through the engine via a 
+\family typewriter
+talk
+\family default
+ action.
+ It could be that agent 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ wanted to ask agent 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ whether a certain tile was a desirable place to go.
+ In that case, 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+'s APL would have the action queued in the engine, which would execute it
+ and place the question in 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+'s mailbox.
+ If, however, 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ had just started a lenghty action, such as moving, its APL would not get
+ notified that it had been asked a question until the move was complete,
+ and the controller could respond to the 
+\family typewriter
+getAllPercepts
+\family default
+ action.
+ This introduces quite some delay in performing such actions, which are
+ rather important in a multi-agent system.
+ 
+\end_layout
+
+\begin_layout Standard
+To remedy this, the system could be designed such that the controller instead
+ blocked on the call to return all percepts until the agent had some new
+ percepts available.
+ In the communication example described above, 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ would immediately perceive that 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ had asked it a question, which would cause its controller to send all 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+'s percepts (including the question) to the waiting EIS instance.
+ Assuming that the corresponding AP prioritizes answering the question,
+ 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ would have its answer in the shortest possible amount of time.
+ In general, allowing agents to perform multiple actions at the same time
+ makes the world more responsible in a number of ways.
+ As another example, agents in a tile based world (or any world that allows
+ vision) could subscribe to events on tiles they could see, and be able
+ to respond when eg.
+ an enemy moved into one of them.
+ This would allow them to communicate the offenders position to nearby agents,
+ or simply give the AP a chance to preemptively figure out what the best
+ possible action would be to execute next.
+ 
+\family typewriter
+\emph on
+[Move to Implementation]
+\end_layout
+
+\begin_layout Standard
+This method does have some problems.
+ How, for example, does 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+'s AP know that it should prioritize answering the question, and not, say,
+ command the agent to begin a new move action? Since 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ is already in the middle of a move, it would most likely break the rules
+ of the environment.
+ To remedy this, the agents need to return the action(s) they are currently
+ executing as percepts, and the AP would have to consider these when choosing
+ actions.
+ For larger environments and agent programs, this would complicate the agent
+ logic and percept pool.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Actions and conversion]
+\end_layout
+
+\begin_layout Subsection
+EIS and Tile Extension
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\emph on
+[Converters and actions for working with EIS in a tile based environment]
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,35 @@
+
+\section{Engine Extensions}
+
+
+\subsection{Tile Extension}
+
+
+\subsubsection*{Vision}
+
+As the basic rules for which tiles can be seen from where have been
+explained in the System Features section, we will now turn our attention
+to how corners are connected with each other. 
+
+Recall that a corner $c_{1}$ on a tile $t_{1}$ connects to a corner
+$c_{2}$ of another tile $t_{2}$ if a straight line can be traced
+from $c_{1}$ to $c_{2}$ without intersecting with a tile that is
+blocking the line. In the tile extension, a tile is blocking the line
+if it contains an entity that is movement blocking with respect to
+the entity looking from $t_{1}$. Additionally, the tile $t_{2}$
+is visible from $t_{1}$ if at least one corner of $t_{1}$ connects
+to at least three corners of $t_{2}$. If $t_{2}$ is vision blocking,
+only two corners of $t_{2}$ need be connected to. In its most simple
+form, the algorithm iterates over all the tiles in the agent's visible
+range, and returns a collection containing just those satisfying the
+above condition. 
+
+The interesting part of the algorithm is this: how do we find all
+the tiles a line from one corner to another passes through? \texttt{\emph{{[}Figure{]}}}
+To accomplish this, we find the slope of the line as $\left|\frac{v_{x}}{v_{y}}\right|$,
+where $v$ is the vector describing the line. If either $v_{x}$ or
+$v_{y}$ is zero, the line only passes between tiles, and it is handled
+as a special case.
+
+\texttt{\emph{{[}Explain that it is similar to that other algorithm
+(name?){]}}}
