@@ -263,10 +263,6 @@ The model view controller design pattern is one of the older design patterns
 \end_layout
 
 \begin_layout Section
-Test Driven Development
-\end_layout
-
-\begin_layout Section
 Choice of Technologies
 \end_layout
 
@@ -323,7 +319,10 @@ Comparison to other Environment Construction Tools
 \end_layout
 
 \begin_layout Standard
-Comparison to JaCaMo, EIS
+Artifacts have: function description, operating instructions.
+ Focusing.
+ Linking sensors to agents and properties of artifacts (fd, oi, state) could
+ be modelled by using modules.
 \end_layout
 
 \end_body
