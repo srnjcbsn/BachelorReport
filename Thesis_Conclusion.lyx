@@ -61,21 +61,114 @@
 \begin_body
 
 \begin_layout Standard
-
-\family typewriter
-\emph on
-[Missing]
+In this project, we have developed an engine for constructing scenarios
+ to be used in multi-agent systems.
+ A scenario in this sense is an environment where agents can interact, and
+ with means to control the agents.
+ Our project provides the following features:
 \end_layout
 
-\begin_layout Section
-Usability
+\begin_layout Itemize
+A way to set up environments.
+\end_layout
+
+\begin_layout Itemize
+Means of communicating with APLs, which controls the agents inhabiting the
+ environment.
+\end_layout
+
+\begin_layout Itemize
+Provide a general way for agents to behave in the environment, by allowing
+ them to 
+\emph on
+act
+\emph default
+ and 
+\emph on
+sense
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+Reactivity in the environments, allowing agents and entities to dynamically
+ respond to changes in the world.
+\end_layout
+
+\begin_layout Section*
+What has been done, what needs to be done
 \end_layout
 
 \begin_layout Standard
+All of our goals for the engine have -- to some extent -- been reached.
+ However, There are many aspects of the engine which could be severely improved.
+ These include, but is not limited to, 
+\end_layout
 
+\begin_layout Itemize
+The specific way actions and events are designed.
+ For instance, the distinction between environment events and entity events,
+ as discussed in section 
 \family typewriter
 \emph on
-[Missing]
+[insert section number]
+\family default
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+The way the view is supposed to communicate with the model
+\end_layout
+
+\begin_layout Itemize
+The way agent controllers are forced to have their own threads.
+ This is a unnecessary when APLs runs all agents on a single thread, however
+ inefficient that may be.
+\end_layout
+
+\begin_layout Section*
+Future work
+\end_layout
+
+\begin_layout Standard
+Here, we will list some of the possible additions to the engine, which would
+ make it easier to use by providing functionality for a wide array of MAS
+ scenarios.
+\end_layout
+
+\begin_layout Itemize
+Extensions to communicate with other APLs, that do not support the EIS standard.
+\end_layout
+
+\begin_layout Itemize
+A collection of common environments, such as:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Three dimensional worlds
+\end_layout
+
+\begin_layout Itemize
+A graph based world
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+An extension allowing construction and management of discrete worlds.
+\end_layout
+
+\begin_layout Itemize
+Extensing the reference implementation to include agents cooperating finding
+ packages.
+ Or copying the environment and functionality of the Agents on Mars scenario,
+ to showcase and test our engine against an established implementation.
+\end_layout
+
+\begin_layout Itemize
+A collection of commonly used agent actions and percepts, such as means
+ of communicating with each other.
 \end_layout
 
 \end_body
