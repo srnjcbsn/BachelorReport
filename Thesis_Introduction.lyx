@@ -60,8 +60,45 @@
 
 \begin_body
 
-\begin_layout Section
+\begin_layout Section*
+Background
+\end_layout
+
+\begin_layout Standard
+MASs (multi-agent systems) is an important research topic in the field of
+ AI (artificial intelligence) as they consist of several intelligent agents
+ interacting and cooperating to reach some goal.
+ This lends itself well to distributed computing, following the recent (since
+ the turn of the millenium) trend of designing processors with more cores
+ rather than better ones.
+ Multi-Agent Systems have also been used to simulate naturally occurring
+ systems, where several autonomous agents interact.
+ 
+\end_layout
+
+\begin_layout Standard
+There have been a lot of research on the topic of MASs, as well as related
+ ones such as distributed artificial intelligence (DAI).
+ There are several APLs (Agent Programming Languages) tailored to MAS developmen
+t; they are called MASPLs (Multi-Agent System Programming Languages).
+ To provide a setting for these APs (Agent Programs), we have the general
+ notion of an 
+\emph on
+environment
+\emph default
+ in which they can interact.
+ 
+\end_layout
+
+\begin_layout Section*
 Motivation
+\end_layout
+
+\begin_layout Standard
+While there exists many multi-agent programming languages, there are few
+ tools for constructing environments for the agents to behave in which allows
+ for easy graphical representation.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -80,7 +117,7 @@ What the types of projects can be is manyfold but here are some possible
 \end_layout
 
 \begin_layout Paragraph*
-Agent comparison software 
+Agent comparison software
 \end_layout
 
 \begin_layout Standard
@@ -141,6 +178,104 @@ In theory most computer games are just multi agent programs where one of
 \family typewriter
 \emph on
 [Expand]
+\end_layout
+
+\begin_layout Section*
+Goals
+\end_layout
+
+\begin_layout Description
+Generality: By this, we mean that components developed with our engine should
+ be 
+\emph on
+reusable
+\emph default
+ in the sense that they should be able to be used in other projects.
+ For examle, the logic for connecting to a specific APL should be implamentable
+ in other projects.
+ Furthermore, the engine itself should be multi- applicable; it should be
+ able to be used to construct any kind of scenario, and interface with different
+ APLs.
+\end_layout
+
+\begin_layout Description
+Easy
+\begin_inset space ~
+\end_inset
+
+to
+\begin_inset space ~
+\end_inset
+
+use: It should be relatively easy to construct a complicated scenario, and
+ even easier to construct a simple one.
+\end_layout
+
+\begin_layout Description
+Cross
+\begin_inset space ~
+\end_inset
+
+platform
+\begin_inset space ~
+\end_inset
+
+compatibilty: The engine should be executable on as many platforms as possible,
+ at least the three major operating systems (Linux, Mac and Windows).
+\end_layout
+
+\begin_layout Section*
+Overview of the Report
+\end_layout
+
+\begin_layout Standard
+In this report we will document our efforts to design an engine as described
+ above.
+ The report is structured as follows: 
+\end_layout
+
+\begin_layout Description
+Theory outlining the design patterns used in the engine along with explanation
+ of MAS.
+\end_layout
+
+\begin_layout Description
+Reference
+\begin_inset space ~
+\end_inset
+
+Implementation providing an introduction to how a final product of the engine
+ might look, along with agent programs connected to the engine.
+\end_layout
+
+\begin_layout Description
+System
+\begin_inset space ~
+\end_inset
+
+Features describing the features of the engine and how it can be used.
+\end_layout
+
+\begin_layout Description
+Implementation containing an examination of the actual implementation of
+ the engine, along with our considerations of the choices taken.
+\end_layout
+
+\begin_layout Description
+Testing describes how the engine was tested.
+\end_layout
+
+\begin_layout Description
+Results
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+Comparisons evaluates whether the goals we had set for the engine was reached,
+ and compares it to similar works.
 \end_layout
 
 \end_body
