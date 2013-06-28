@@ -279,12 +279,18 @@ We have chosen to implement the engine in C#, which runs on the .NET platform.
  facilities for writing comprehensive and maintainable code, and provides
  some features usually only found in functional programming languages.
  Additionally, .NET code can be executed across platforms, thanks to the
- Mono project 
+ Mono project
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
 \family typewriter
-\emph on
-[Link to Mono]
-\family default
-\emph default
+http://www.mono-project.com
+\end_layout
+
+\end_inset
+
 , although the newest version of .NET (v4.5) has not been ported at the time
  of this writing.
  Although developing our reference implementation would have been simpler
@@ -319,10 +325,348 @@ Comparison to other Environment Construction Tools
 \end_layout
 
 \begin_layout Standard
-Artifacts have: function description, operating instructions.
- Focusing.
- Linking sensors to agents and properties of artifacts (fd, oi, state) could
- be modelled by using modules.
+In this section, we will compare the XMAS engine to other frameworks that
+ can be used to construct and manage MAS environments.
+ In particular, we will consider CArtAgO
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+http://cartago.sourceforge.net/
+\end_layout
+
+\end_inset
+
+ (
+\emph on
+C
+\emph default
+ommon 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Art
+\emph default
+ifacts for 
+\emph on
+Ag
+\emph default
+ents
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\emph on
+O
+\emph default
+pen framework, henceforth referred to as Cartago), which have been used
+ in several projects, and as a part of the 
+\emph on
+JaCaMo
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+http://jacamo.sourceforge.net/
+\end_layout
+
+\end_inset
+
+
+\emph default
+ (
+\emph on
+Ja
+\emph default
+son, 
+\emph on
+Ca
+\emph default
+rtago, 
+\emph on
+Mo
+\emph default
+ise) project, which provides a complete framework for multi-agent systems
+ consisting of the Jason MAPL (multi-agent programming language), the Cartago
+ environment constructions API, and the Moise organizational system.
+ We will also compare our engine to using plain EIS.
+\end_layout
+
+\begin_layout Subsection
+Cartago
+\end_layout
+
+\begin_layout Subsubsection*
+Agents and Artifacts
+\end_layout
+
+\begin_layout Standard
+The Cartago framework uses the 
+\family typewriter
+A&A
+\family default
+ (Agents and Artifacts) approach to designing environments.
+ In the following, we will provide an overview of this model, which is presented
+ in (Ricci et al., 2008).
+\end_layout
+
+\begin_layout Standard
+In the A&A meta-model, a collection of computational entities called 
+\emph on
+artifacts
+\emph default
+ constitutes the environment.
+ They are computational entities in the sense that they are meant to provide
+ functionality exploitable by the agents, and can have a state and business
+ logic, but are not meant to act autonomously.
+ In fact, instead of agents having predefined actions that manipulates the
+ state of the world when executed, they are aware of a collection of artifacts,
+ which each provide a number of operations the agents can perform on them.
+ The artifacts also provides percepts to the agents, and are as such the
+ agents' means of interacting with the world.
+ 
+\end_layout
+
+\begin_layout Standard
+Artifacts can not only be used to model objects with a physical presence
+ in the world (such as analogues to the packages and dropzones in our reference
+ implementation), but also more abstract concepts, such as control flow
+ objects.
+ For example, a communication artifact could be created, through which several
+ agents could talk and listen, through operations and percepts, respectively.
+ Since agents can create and destroy artifacts at will, such communication
+ channels are easy to spawn in an ad hoc manner.
+\end_layout
+
+\begin_layout Standard
+The A&A meta-model, as described in (Ricci et al., 2008), is to some extent
+ based on the way humans interact in a working environments, as it draws
+ on research in fields such as organisational sciences and anthropology.
+ This lead to the introduction of artifacts as tools, service providers
+ and communication devices, since they better describe such an environment.
+ In general, the A&A approach focuses on incorporating these concepts as
+ an integral part of the environment, so as to make it a functional and
+ reactive part of a multi-agent system.
+ This is in contrast to classical MAS engineering, where the environment
+ is typically defined as a more static structure can act in and retreive
+ percepts from.
+\end_layout
+
+\begin_layout Subsubsection*
+Cartago Implementation
+\end_layout
+
+\begin_layout Standard
+The Cartago framework is implemented in Java and can natively connect to
+ the Jason APL.
+ Here, we will explain how Cartago implements the A&A meta-model.
+ A more thorough explanation can be found in (Ricci et al., 2011).
+\end_layout
+
+\begin_layout Description
+Agents In Cartago, agent programs are connected to agent bodies, which are
+ -- in that respect -- conceptually similar to agent controllers in the
+ XMAS engine, as they represent a vessel for the agent in the environment,
+ but no agent logic.
+ In keeping with the A&A approach explained above, the agent API allows
+ for creating and deleting artifacts, as well as executing operations on
+ artifacts and retreiving percepts from them.
+ 
+\end_layout
+
+\begin_layout Description
+Sensing For handling perception, Cartago provides the concept of 
+\emph on
+sensors
+\emph default
+.
+ An agent contains a set of sensors, each collecting percepts from an artifact.
+ The 
+\family typewriter
+sense
+\family default
+ method of an agent takes a sensor as input and returns a percept gathered
+ by it, whereafter the percept is removed from the sensor.
+ The sensors can be overridden by the designer to -- for example -- control
+ in what order it should return its contained percepts.
+ A sensor is connected to an artifact via the 
+\family typewriter
+focus
+\family default
+ method.
+ Sensory inputs can be filtered, so that a sensor only picks up percepts
+ matching a user-defined pattern.
+\end_layout
+
+\begin_layout Description
+Artifacts Artifacts specify operations that agents can execute as described
+ by the A&A meta-model.
+ Artifacts can generate events, which can be gathered by any connected agent
+ sensors.
+ Artifacts can describe how they are meant to be used, ie.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+what operations thay have and how they should be called.
+ When an agent executes an operation on an artifact, a boolean value is
+ immediately returned, signifying either success or failure.
+ The calling agent can give a sensor as an argument to the method invocation,
+ which will gather any percepts that the artifact generates as a result
+ of executing the operation.
+\end_layout
+
+\begin_layout Subsubsection*
+Agents and Artifacts in XMAS
+\end_layout
+
+\begin_layout Standard
+The main purpose of the Cartago project is to provide a framework for designing
+ MASs using the A&A meta-model.
+ While that have not been the goal of the XMAS engine, it is general enough
+ to support this approach, especially since the engine allows entities to
+ incorporate state and business logic through entity modules.
+ Below, we have described how artifacts, agents and perception would be
+ implemented using the engine:
+\end_layout
+
+\begin_layout Description
+Agents would be XMAS agents, with a module for creating, destroying and
+ containing (references to) artifacts, as well as a module for each sensor.
+ The 
+\family typewriter
+sense
+\family default
+ action used in the Cartago API is not entirely equivalent to our generic
+ 
+\family typewriter
+getAllPercepts
+\family default
+ action, as it only retrieves one percept from one specific sensor, but
+ such an action could easily be implemented.
+ 
+\end_layout
+
+\begin_layout Description
+Artifacts would be represented as entities with a module for each operation
+ the artifact provides.
+ When new stimuli, ie
+.
+\lang english
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+new percepts, would be available, an XMAS event would be raised.
+\end_layout
+
+\begin_layout Description
+Sensing The agents' sensor modules would be connected to the artifact entities
+ by registering triggers on them, wchich would subscribe to the events raised
+ by the artifacts.
+ By using trigger conditions (cf.
+ section 
+\family typewriter
+\emph on
+[Events and triggers section]
+\family default
+\emph default
+), the percepts could be filtered as with Cartago sensors.
+ The modules in XMAS already provides means for being queried for collections
+ of percepts, so this functionality could be used to let them return all
+ the percepts that have become available to them since the last invocation.
+ Alternatively, they could incorporate some logic for the ordering of returned
+ percepts, in case the user only wants one percept per 
+\family typewriter
+sense
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The functionality described above could be encapsulated in an engine extension,
+ providing the proper modules, events and actions.
+\end_layout
+
+\begin_layout Subsection
+The Environment Interface Standard
+\end_layout
+
+\begin_layout Subsubsection*
+References
+\end_layout
+
+\begin_layout Standard
+Ricci et al., 
+\begin_inset Quotes eld
+\end_inset
+
+Environment programming in multi-agent systems: an artifact-based perspective
+\begin_inset Quotes erd
+\end_inset
+
+, Autonomous Agents and Multi-Agent Systems, Volume 23, Issue 2, pp.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+158-192, 2011
+\end_layout
+
+\begin_layout Standard
+Ricci et al., 
+\begin_inset Quotes eld
+\end_inset
+
+Artifacts in the A&A meta-model for multi-agent systems
+\begin_inset Quotes erd
+\end_inset
+
+, Autonomous Agents and Multi-Agent Systems, Volume 17, Issue 3, pp.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+432-456, 2008
 \end_layout
 
 \end_body

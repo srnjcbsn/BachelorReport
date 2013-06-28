@@ -64,23 +64,138 @@
 Multi-Agent Systems
 \end_layout
 
+\begin_layout Subsection
+Agents and Environments in Artificial Intelligence
+\end_layout
+
 \begin_layout Standard
-In a multi-agent system, several intelligent agents act and interact in
- an environment.
- The interacting of agents may be of any character, the important part is
- that each agent can be aware of the others and affect their execution 
-\family typewriter
+In artificial intelligence, an agent is something that can perform actions
+ in and (partially or fully) perceive the state of the environment it is
+ situated in.
+ As an example, consider an agent tasked with finding the shortest route
+ between two nodes in a weighted, undirected graph, with the limitation
+ that it can only see the nodes that have an edge to the one it is standing
+ in.
+ We will now use this example to describe what (Russel, Norvig, 2010) calls
+ a 
 \emph on
-[rewrite]
-\family default
+task environment
+\emph default
+, consisting of definitions for the performance measure for the agent, the
+ environment it acts in, the actions it can take, and its facilities for
+ perception:
+\end_layout
+
+\begin_layout Description
+Environment The environment is a model of the world the agent acts in.
+ In our example, it is described as a graph.
+ The environment may also contain artifacts for agents to interact with,
+ such as a packages to pick up or obstacles to navigate around.
+\end_layout
+
+\begin_layout Description
+Actions This denotes what actions the agent can take to change the state
+ of the environment or itself.
+ In the example, the agent would have a 
+\emph on
+move
+\emph default
+ action, allowing it to move to an adjacent, connected node.
+\end_layout
+
+\begin_layout Description
+Percepts If the agent is to make intelligent decisions, it must be able
+ to perceive the current state of the world -- that is, itself and the environme
+nt.
+ Such a fragment of information that the agent have sensed is called a percept.
+ In the running example, the agent can perceive the nodes immediately connected
+ to the one it is standing on, as well as the edges to those nodes.
+\end_layout
+
+\begin_layout Description
+Performance For an agent to be as efficient as possible, it is useful to
+ have a performance measure describing how well the agent is executing the
+ task at hand.
+ In the provided example, the performance measure could be defined in terms
+ of the number of actions taken per unique node visited, giving the agent
+ an idea of the amount of redundancy in its pathfinding.
+\end_layout
+
+\begin_layout Standard
+While the task environment can be used to succinctly describe the properties
+ of the world, it says nothing of the logic that the agent applies to perform
+ tasks in the world.
+ This is left in the hands of an 
+\emph on
+agent program
+\emph default
+, which is responsible for processing the percepts and choosing actions
+ for an agent.
+ In general, an agent program receives percepts and chooses an appropriate
+ action based on the knowledge available to it in an aptly named 
+\emph on
+percept-action
+\emph default
+ 
+\emph on
+cycle
 \emph default
 .
- As such, a system in which agents compete for ressources and hinder other
- agents' progress is a multi-agent system, as is a system in which the agents
- work together towards a common goal.
- While the former may be used to simulate certain systems, the latter is
- more interesting in software design, as such an approach could conceivably
- lead to faster, decentralized problem solving.
+ This knowledge may just be the current percepts, or it may be all the percepts
+ retreived so far.
+ When choosing an action, it may take into consideration how different actions
+ would affect the world, and how much closer performing the action would
+ bring the agent to its goal.
+ Agents with such capable agent programs are called 
+\emph on
+utility-based agents
+\emph default
+ in (Russel, Norvig, 2010).
+\end_layout
+
+\begin_layout Subsection
+Multi-Agent Systems
+\end_layout
+
+\begin_layout Standard
+While there is no strict, universal definition of what constitutes a multi-agent
+ system, the following seems to represents the simplest consensus: 
+\emph on
+In a multi-agent system, several intelligent agents act and interact more
+ or less autonomously in an environment
+\emph default
+.
+ The interacting of agents may be of any character, the important part is
+ that each agent can be aware of the others and affect their execution directly
+ or indirectly.
+ Here, a direct effect means changing another agents state, eg.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+by moving it into another postition or decreasing its health.
+ An indirect effect could be communicating with the agent, suggesting another
+ execution path.
+ As such 
+\family typewriter
+\emph on
+[unclear?]
+\family default
+\emph default
+, a system in which agents compete for ressources and hinder other agents'
+ progress is a multi-agent system, as is a system in which the agents work
+ together towards a common goal.
+ While the former may be useful in simulating certain systems, the latter
+ is more interesting in software design, as such an approach could conceivably
+ lead to more decentralized problem solving.
  A mixture of the two approaches can also be used, as in the Multi-Agent
  Programming Contest 
 \family typewriter
@@ -88,8 +203,108 @@ In a multi-agent system, several intelligent agents act and interact in
 [Link]
 \family default
 \emph default
- where teams of cooperating agents compete for points.
- In this case, the goal is to mhdfkjsdahlsadjhflsadjhflsdjhflsadjhlsdjhflsdjhf
+, where teams of cooperating agents compete for points.
+ In this case, the goal for each team is to develop the best strategy, where
+ performance is measured by competitiveness.
+\end_layout
+
+\begin_layout Standard
+In addition to the above, limiting the agents' knowledge of the state of
+ the world is a desirable characteristic of a MAS; otherwise, there would
+ be no need for the agents to communicate, and they could just as well be
+ subroutines of a single agent (Panait and Luke, 2005).
+ It could still be modelled as a MAS, of course, but not a very interisting
+ one 
+\family typewriter
+\emph on
+[rewrite sentence]
+\family default
+\emph default
+.
+ Additionally, the case could be made that the less agents know of the world,
+ the less information they have to process when searching for an action
+ to execute, thus reducing their computational load.
+ On the other hand, less information can cause the agent to follow a suboptimal
+ execution path, causing a trade-off between computation time and optimality.
+ 
+\end_layout
+
+\begin_layout Standard
+One of the strong points of multi-agent systems is that it consists of several
+ pieces of software running more or less autonomously.
+ As mentioned above, this allows for developing decentralized systems, where
+ agent programs runs on different threads or servers.
+ In the context of distributed systems, less dependency on a central intelligenc
+e is of course preferred.
+ Furthermore, MASs are useful when simulating naturally occuring systems
+ wherein several 
+\begin_inset Quotes eld
+\end_inset
+
+agents
+\begin_inset Quotes erd
+\end_inset
+
+ interact with each other, such as a group of different animals around a
+ watering hole or costumers in a store.
+ 
+\family typewriter
+\emph on
+[sentence out of context]
+\end_layout
+
+\begin_layout Subsection
+The GOAL Agent Programming Language
+\end_layout
+
+\begin_layout Standard
+For 
+\end_layout
+
+\begin_layout Subsubsection*
+References
+\end_layout
+
+\begin_layout Standard
+Stuart J.
+ Russel, Peter Norvig, 
+\begin_inset Quotes eld
+\end_inset
+
+Artificial Intelligence: A Modern Approach
+\begin_inset Quotes erd
+\end_inset
+
+, Prentice Hall, Upper Saddle River, New Jersey 07458, 3rd ed., 2010
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Panait, Luke, 
+\begin_inset Quotes eld
+\end_inset
+
+Cooperative Multi-Agent Learning: The State of the Art
+\begin_inset Quotes erd
+\end_inset
+
+, Autonomous Agents and Multi-Agent Systems, Volume 11, Issue 3, pp.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+387-434, 2005.
 \end_layout
 
 \end_body
