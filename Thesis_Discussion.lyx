@@ -564,10 +564,7 @@ getAllPercepts
 \begin_layout Description
 Artifacts would be represented as entities with a module for each operation
  the artifact provides.
- When new stimuli, ie
-.
-\lang english
-
+ When new stimuli, ie.
 \begin_inset ERT
 status open
 
@@ -609,10 +606,6 @@ sense
 \begin_layout Standard
 The functionality described above could be encapsulated in an engine extension,
  providing the proper modules, events and actions.
-\end_layout
-
-\begin_layout Subsection
-The Environment Interface Standard
 \end_layout
 
 \begin_layout Subsubsection*

@@ -61,21 +61,90 @@
 \begin_body
 
 \begin_layout Standard
-
-\family typewriter
-\emph on
-[Missing]
+When developing a large project one of the most difficult aspects of the
+ process can be proper testing, this section will go through what kinds
+ of tests we performed to ensure that our engine works correctly.
 \end_layout
 
 \begin_layout Section
-Unit Testing
+Testing the Engine
+\end_layout
+
+\begin_layout Subparagraph*
+Unit Tests: 
 \end_layout
 
 \begin_layout Standard
-
+The location of the unit tests for the engine and all its depencies can
+ be found in the source code in the 
 \family typewriter
-\emph on
-[Missing]
+XmasEngine_Test
+\family default
+ and 
+\family typewriter
+JSLibrary_Test 
+\family default
+projects.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since our engine by itself is not meant to be executed, but rather is meant
+ to have some of its components implemented first.
+ This means that the only kinds of tests that can be performed on the engine
+ are unit tests.
+ The unit tests that are most important to the core functionality of the
+ engine, is the tests concerning the 
+\family typewriter
+EventManager 
+\family default
+and the 
+\family typewriter
+ActionManager
+\family default
+, since these tests shows that the action, trigger and event functionality
+ correctly works.
+ However as we created the engine using a TDD approach we should have tests
+ for almost all classes with business logic contained in them.
+ 
+\end_layout
+
+\begin_layout Standard
+One component proved impossible to properly unit test and that was the EIS
+ agent controller, since this component required a connection to properly
+ understand its errors.
+ To perform this test we designed a simple component/functional test, this
+ test is not meant to be executed as part of the unit tests.
+ The test is designed to be executed with an debugger so that the programmer
+ can easily follow if any errors occur during the run.
+\end_layout
+
+\begin_layout Section
+Testing the Reference Implementation
+\end_layout
+
+\begin_layout Standard
+The testing of our reference implementation hinges on the fact that we assume
+ the engine works correctly, thus it is the job of engine-tests to ensure
+ correctness and not our reference implementation.
+ Therefor as the reference implementation complicated logic was located
+ as part of the extensions, which were already tested as part of testing
+ the engine.
+ The only testing that the reference implementation needed was testing of
+ the Goal program which is controlling the agent.
+\end_layout
+
+\begin_layout Standard
+The goal program was tested by taking out individual parts of it such as
+ its path finding, and carefully tested and debugged in the SWI-prolog program.
+ When all parts worked correctly we moved them to the actual goal program
+ and then made a larger scale test of the goal program using the fully running
+ engine.
+ Once the agent correctly had located all packages and stopped as we wanted,
+ we concluded that the reference implementation is working as it should.
 \end_layout
 
 \end_body

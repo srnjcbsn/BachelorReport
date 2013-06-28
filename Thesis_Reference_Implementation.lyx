@@ -61,33 +61,49 @@
 \begin_body
 
 \begin_layout Standard
-To showcase and test our engine, we have used it to create a simple environment
- with a tile based world.
- In this world, agents are tasked with finding packages in a maze and dropping
- them at a tile containing a 
+In this section we will introduce our reference implementation (henceforth
+ sometimes called the 
+\emph on
+package grabber scenario
+\emph default
+), which we have developed to showcase and test our engine.
+ It will also serve as an example of using the engine as well as the extensions
+ we have provided.
+ In section 
 \family typewriter
-dropzone
+\emph on
+[Implemenation.Reference Implementation]
 \family default
- (see figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:maze-scrot"
+\emph default
+, we will detail the actual implementation of the scenario in the engine,
+ the agent programs, as well as the integration of the two.
+ A less complex example, which describes the simple vacuum world (Russel,
+ Norvig, 2010, p 35), can be found in appendix 
+\family typewriter
+\emph on
+[insert appendix number]
+\family default
+\emph default
+.
+\end_layout
 
-\end_inset
-
-).
- Agents are controlled by separate GOAL instances with an EIS environment,
- which communicates with the XMAS engine via XML messages passed over sockets.
- The agent programs catalogue the tiles they can see and uses A* search
- to find paths to packages and the dropzone.
- The actions available to an agent are listed below.
+\begin_layout Standard
+The reference implementation is intended to cover as many of the engine
+ features and extensions as possible, while not focusing on creating any
+ particularly revolutionary artificial intelligence.
+ As such, we have set up a world that is relativively simple with respect
+ to the action and perception repetoire of the agents, and with an environment
+ representation limited in complexity.
+ Thus, the interesting part of the reference implementation is not the scenario
+ itself, but rather the actual implementation.
+ That being said, the scenario is as follows:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -141,6 +157,54 @@ name "fig:maze-scrot"
 
 \end_layout
 
+\begin_layout Standard
+The agents in the scenario are tasked with navigating a maze in a discrete
+ two dimensional grid of tiles in order to locate 
+\family typewriter
+package
+\family default
+s and bring them to a special tile called the 
+\family typewriter
+dropzone
+\family default
+ (see figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:maze-scrot"
+
+\end_inset
+
+).
+ A tile in this scenario can contain several objects, unless they are explicitly
+ forbidden to occupy the same square.
+ An agent, for example, can not move into a tile that already contains another
+ agent, but it can move into a square containing a package or a dropzone.
+ Importantly, a tile containing a 
+\family typewriter
+wall
+\family default
+ cannot contain anything else, thus the tiles between walls constitutes
+ the navigable pathway of the maze.
+ 
+\end_layout
+
+\begin_layout Standard
+The three actions 
+\emph on
+moving
+\emph default
+, 
+\emph on
+grabbing
+\emph default
+ and 
+\emph on
+dropping
+\emph default
+ are enough for the agents to fulfill their task, and as such they describe
+ the complete action specification:
+\end_layout
+
 \begin_layout Labeling
 \labelwidthstring 00.00.0000
 
@@ -158,6 +222,17 @@ Direction
 \family default
 \emph default
 .
+ 
+\family typewriter
+\emph on
+Direction
+\family default
+ 
+\emph default
+is limited to the four cardinal directions, so an agent can only move to
+ an immediately adjacent square.
+ Note that every tile not containing a wall is reachable from every other
+ such tile in the maze when following this movement rule.
 \end_layout
 
 \begin_layout Labeling
@@ -181,11 +256,21 @@ drop
 \end_layout
 
 \begin_layout Standard
-Additionally, we plan to implement a messaging action, allowing the agents
- to communicate with each other.
- This is particularly necessary when using GOAL, as the GOAL instances have
- no knowledge of each other and thus cannot use the messaging system built
- into GOAL.
+Note that this action specification does not mention any means of communicating
+ or otherwise cooperating, which is an otherwise important feature of any
+ multi-agent system.
+ We have not implemented such functionality in the XMAS engine, although
+ it would be a high priority task if we were to develop it further.
+ Normally, GOAL provides built-in communication devices, which we cannot
+ use in the reference implementation, for reasons explained in the implementatio
+n section.
+ 
+\end_layout
+
+\begin_layout Standard
+Now that agents can act in the environment, they must also be able to sense
+ their surroundings in order to make informed choices about their preferred
+ course of action.
 \end_layout
 
 \end_body
