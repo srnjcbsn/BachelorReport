@@ -31,7 +31,7 @@
 \spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \use_esint 0
 \use_mhchem 1
@@ -46,6 +46,7 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 0cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -63,14 +64,46 @@
 
 \begin_body
 
-\begin_layout Chapter
-heading slfkjalæskfdj læaskj fælsakdjf ælsadkjfælsadk jlsajsdksadf
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename goalSourceCode.bmp
-	width 110text%
+	filename goalSourceCodePart1.png
+	width 115text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename goalSourceCodePart2.png
+	width 115text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename goalSourceCodePart3.png
+	width 115text%
 
 \end_inset
 

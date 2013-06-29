@@ -511,21 +511,6 @@ filename "Thesis_Appendix_GOAL_Source.lyx"
 \end_layout
 
 \begin_layout Chapter
-iiLang (and xml serialization/deserialization?)
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:iiLang"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-Network Streaming
-\end_layout
-
-\begin_layout Chapter
 Source code excerpts
 \end_layout
 
