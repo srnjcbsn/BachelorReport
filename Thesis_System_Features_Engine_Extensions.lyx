@@ -445,10 +445,6 @@ To remedy this, the system could be designed such that the controller instead
  This would allow them to communicate the offenders position to nearby agents,
  or simply give the AP a chance to preemptively figure out what the best
  possible action would be to execute next.
- 
-\family typewriter
-\emph on
-[Move to Implementation]
 \end_layout
 
 \begin_layout Standard
@@ -476,17 +472,6 @@ This method does have some problems.
 \family typewriter
 \emph on
 [Actions and conversion]
-\end_layout
-
-\begin_layout Subsection
-EIS and Tile Extension
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[Converters and actions for working with EIS in a tile based environment]
 \end_layout
 
 \end_body
