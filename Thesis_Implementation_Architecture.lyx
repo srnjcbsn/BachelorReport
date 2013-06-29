@@ -64,5 +64,507 @@
 Architecture
 \end_layout
 
+\begin_layout Standard
+The section will cover how all the components of the engine interacts with
+ one another, it will detail how flow of information is transferred through
+ the engine and into the components connected to it.
+ The component diagram of the Xmas Engine can be found on appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ComponentDiagramAppendix"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The components of the engine are
+\end_layout
+
+\begin_layout Itemize
+Model
+\end_layout
+
+\begin_layout Itemize
+World Creation
+\end_layout
+
+\begin_layout Itemize
+View
+\end_layout
+
+\begin_layout Itemize
+Controller
+\end_layout
+
+\begin_layout Subsection
+Model Component
+\end_layout
+
+\begin_layout Description
+Requires: 
+\family typewriter
+XmasWorld
+\family default
+, 
+\family typewriter
+XmasAction 
+\family default
+and 
+\family typewriter
+Trigger 
+\end_layout
+
+\begin_layout Description
+Provides:
+\family typewriter
+ Percept
+\end_layout
+
+\begin_layout Standard
+The model component is responsible for handling internal interactions of
+ the engine.
+ These interactions are based on which 
+\family typewriter
+XmasAction 
+\family default
+it is given.
+ 
+\end_layout
+
+\begin_layout Standard
+The model component has three requirements, these requirements are necessary
+ for the model component to properly execute the environment requested by
+ the user.
+\end_layout
+
+\begin_layout Standard
+The first requirement of the model component is the 
+\family typewriter
+XmasWorld
+\family default
+, the model component uses the 
+\family typewriter
+XmasWorld 
+\family default
+by giving it to 
+\family typewriter
+ActionManager
+\family default
+, the 
+\family typewriter
+ActionManager 
+\family default
+then gives the 
+\family typewriter
+XmasWorld 
+\family default
+to all 
+\family typewriter
+XmasActions 
+\family default
+as they are about to be executed.
+ Thus all 
+\family typewriter
+XmasAction 
+\family default
+executed in the engine use the same 
+\family typewriter
+XmasWorld
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The second requirement is the 
+\family typewriter
+XmasActions
+\family default
+, all 
+\family typewriter
+XmasActions 
+\family default
+queued on the model component are executed by the 
+\family typewriter
+ActionManager
+\family default
+.
+ An 
+\family typewriter
+XmasAction 
+\family default
+are not executed immediately however as they wait until all prior 
+\family typewriter
+XmasAction
+\family default
+’s executions has been completed.
+ Once queued to the 
+\family typewriter
+ActionManager
+\family default
+, they are provided with all necessary dependencies such as the 
+\family typewriter
+XmasWorld 
+\family default
+and the 
+\family typewriter
+EventManager
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+XmasAction 
+\family default
+is designed to allow other threads the ability to interact with the engine.
+ The reason is that we did not wish for multiple threads to change the state
+ of the model component at once, to ensure this was never necessary we provide
+ the abiltity to inject code into the thread used by the 
+\family typewriter
+ModelComponent
+\family default
+, this code is transferred in the form of an 
+\family typewriter
+XmasAction
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The last requirement of the model component is 
+\family typewriter
+Trigger
+\family default
+, the model component takes any number of triggers and inserts them in the
+ 
+\family typewriter
+EventManager
+\family default
+.
+ When an 
+\family typewriter
+XmasAction 
+\family default
+raise’s an 
+\family typewriter
+XmasEvent 
+\family default
+on the 
+\family typewriter
+EventManager
+\family default
+, the 
+\family typewriter
+Triggers 
+\family default
+that are registered to that 
+\family typewriter
+XmasEvent 
+\family default
+are all triggered.
+ 
+\end_layout
+
+\begin_layout Standard
+The only thing that the model component provides is the 
+\family typewriter
+Percept
+\family default
+, each 
+\family typewriter
+Percept 
+\family default
+is something that an agent can sense.
+ An 
+\family typewriter
+AgentController 
+\family default
+connected to the model component can receive these 
+\family typewriter
+Percept
+\family default
+s
+\family typewriter
+ 
+\family default
+which it is meant to use for analyzing the agent’s next move.
+\end_layout
+
+\begin_layout Standard
+The model component is made of many classes however the three 
+\family typewriter
+XmasModel
+\family default
+, 
+\family typewriter
+EventManager 
+\family default
+and 
+\family typewriter
+ActionManager 
+\family default
+are what provide the core features of the model component and as such is
+ the only ones shown in the diagram.
+ When going into details of the exact design of the engine it will be evident
+ that the class 
+\family typewriter
+XmasEntity 
+\family default
+also provides some of the features of both 
+\family typewriter
+EventManager 
+\family default
+and 
+\family typewriter
+ActionManager
+\family default
+, however it only does this to make the feel of using the engine more natural.
+ For instance when moving an entity we thought that it would make sense
+ that the code for this was 
+\family typewriter
+Entity.QueueAction(new Move())
+\family default
+, instead of 
+\family typewriter
+ActionManager.QueueAction(new Move(EntityToBeMoved))
+\family default
+.
+ In actuality the code does the same thing since in the first case: All
+ the 
+\family typewriter
+Entity 
+\family default
+does is to call the 
+\family typewriter
+ActionManager
+\family default
+ in the same way we just showed and then use itself in place of the 
+\family typewriter
+EntityToBeMoved
+\family default
+.
+ This is the reason why the 
+\family typewriter
+Entity 
+\family default
+is not shown in the model component as it has no relevance when understanding
+ the component itself.
+\end_layout
+
+\begin_layout Subsection
+World Creation Component
+\end_layout
+
+\begin_layout Description
+Provides:
+\family typewriter
+ XmasWorld
+\end_layout
+
+\begin_layout Standard
+The world creation component is responsible for making a world for the engine’s
+ entities to inhabit.
+ The world is created when the engine starts to execute, as such its internal
+ class 
+\family typewriter
+WorldBuilder 
+\family default
+only contains a blue print for which entities it should construct and not
+ the actual entities themselves.
+ It does this by storing a function for each entity, those functions contains
+ the information on how each of the entities should be constructed.
+\end_layout
+
+\begin_layout Standard
+The user of the engine is meant to implement his own 
+\family typewriter
+WorldBuilder 
+\family default
+class, that implementation should contain knowledge on how the world he
+ wishes to construct is created.
+ That means if for instance wants to use a Tile based world then his implementat
+ion of 
+\family typewriter
+WorldBuilder
+\family default
+ should construct a tile based world.
+\end_layout
+
+\begin_layout Subsection
+View Component
+\end_layout
+
+\begin_layout Description
+Provides: 
+\family typewriter
+Trigger
+\end_layout
+
+\begin_layout Standard
+The view component is meant as the component that visualizes the model of
+ the engine to the user, it does not enforce how the visualization is done
+ or in which way the visualization occurs.
+ It only provides the tools necessary to perform this task.
+\end_layout
+
+\begin_layout Standard
+The view is meant to register 
+\family typewriter
+Triggers 
+\family default
+on the model component, these 
+\family typewriter
+Triggers 
+\family default
+contains 
+\family typewriter
+XmasEvents 
+\family default
+when an 
+\family typewriter
+XmasEvent 
+\family default
+is raised, the 
+\family typewriter
+Triggers 
+\family default
+with those 
+\family typewriter
+XmasEvents 
+\family default
+are triggered.
+ The idea is that when a 
+\family typewriter
+Trigger 
+\family default
+is triggered that means the current state of the model component has changed,
+ the view uses these 
+\family typewriter
+Triggers 
+\family default
+to be informed about such changes, and are thus able to change its own state
+ in responds correctly making it able to visualize the new model state.
+ 
+\end_layout
+
+\begin_layout Subsection
+Controller Component
+\end_layout
+
+\begin_layout Description
+Requires: 
+\family typewriter
+Percept 
+\end_layout
+
+\begin_layout Description
+Provides: 
+\family typewriter
+XmasAction
+\end_layout
+
+\begin_layout Standard
+The controller component’s responsibility is to command 
+\family typewriter
+Agents 
+\family default
+to perform actions inside the world.
+ The controller component does this by making the 
+\family typewriter
+AgentController 
+\family default
+send 
+\family typewriter
+XmasAction 
+\family default
+objects to a specific 
+\family typewriter
+Agent 
+\family default
+in the model component.
+ Where upon that 
+\family typewriter
+Agent 
+\family default
+will perform said 
+\family typewriter
+XmasAction
+\family default
+, once the model component has executed all prior actions.
+\end_layout
+
+\begin_layout Standard
+The controller component also has ability to receive 
+\family typewriter
+Percept 
+\family default
+objects back from the engine, these 
+\family typewriter
+Percept 
+\family default
+contain data about what the 
+\family typewriter
+Agent 
+\family default
+it is controlling has sensed.
+ These 
+\family typewriter
+Percepts 
+\family default
+are meant to be analyzed by the controller component to determine what its
+ next 
+\family typewriter
+XmasAction 
+\family default
+should be.
+ 
+\end_layout
+
+\begin_layout Standard
+The controller component is made up of abstract classes which the user of
+ the engine must first implement; these implementations could be setup to
+ act as an interface between a single APL and our engine.
+ This means that for each APL one must make a new implementation of the
+ controller component.
+ To reduce the burden of the user we will in our extensions provide the
+ ability to interface with EIS supported APLs.
+\end_layout
+
+\begin_layout Standard
+Furthermore the controller component is not only designed to make interfacing
+ with different APLs easier, it is also meant to be used when making an
+ interface between the user and the model component.
+ For instance if one wished to control an agent with the keyboard, then
+ an Keyboard implementation of the AgentController and AgentManager should
+ be made, where it would be possible to bind the queuing of move actions
+ to specific buttons on the keyboard.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Summary
+\end_layout
+
+\begin_layout Standard
+The architecture of the engine shows the connectivity between each of the
+ components.
+ The Model component which job it is to ensure proper interactions occur
+ inside the world.
+ The world which is constructed by the World Creation Component, meant to
+ be designed along with the world itself.
+ 
+\end_layout
+
+\begin_layout Standard
+The interactions of the model component are provides by the controller component
+ which task it is to command the agents inside the engine, and make it so
+ they are given intelligence.
+ And lastly the view component which only task is to visualize the state
+ of the engine.
+\end_layout
+
 \end_body
 \end_document

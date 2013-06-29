@@ -342,6 +342,10 @@ n to communicate on, and the agent manager proceeds to listen for other
  APL instances requesting an agent controller.
 \end_layout
 
+\begin_layout Subsubsection*
+Execution Protocol
+\end_layout
+
 \begin_layout Standard
 The EIS instance can now proceed to send actions to be executed to the agent
  controller.
@@ -371,7 +375,14 @@ getAllPercepts
 performAction
 \family default
  method).
- This execution sequence is very simple, but has some downsides.
+\end_layout
+
+\begin_layout Paragraph*
+Problems With the Chosen Execution Sequence
+\end_layout
+
+\begin_layout Standard
+The execution sequence deescribed above is very simple, but has some downsides.
  Consider, for example, that two agents wish to communicate with each other
  through the engine via a 
 \family typewriter

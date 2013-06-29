@@ -388,7 +388,126 @@ name "fig:DomainModelDiagramXMAS"
 \end_layout
 
 \begin_layout Chapter
+XMAS Engine Component Diagram
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:ComponentDiagramAppendix"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename componentDiagram.png
+	width 110text%
+	rotateAngle 270
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
 Usage Example / Hello World! / Vacuum World
+\end_layout
+
+\begin_layout Chapter
+GOAL Part of Reference Implementation
+\end_layout
+
+\begin_layout Section
+Agent Desicion Flow Chart
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:GOALFlowChartAppendix"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename goalAgentDecisionFlowchart.png
+	width 120text%
+	rotateAngle 270
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+GOAL Source Code for Reference Implementation
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:GoalCodeAppendix"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Appendix_GOAL_Source.lyx"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
