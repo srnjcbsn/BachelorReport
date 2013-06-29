@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass report
+\begin_preamble
+\usepackage{alltt}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -70,18 +73,26 @@ package grabber scenario
  It will also serve as an example of using the engine as well as the extensions
  we have provided.
  In section 
-\family typewriter
-\emph on
-[Implemenation.Reference Implementation]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ImplementationRefImpl"
+
+\end_inset
+
 , we will detail the actual implementation of the scenario in the engine,
  the agent programs, as well as the integration of the two.
  A less complex example, which describes the simple vacuum world (Russel,
- Norvig, 2010, p 35), can be found in appendix 
+ Norvig, 2010, p 35), can be found in appendix
 \family typewriter
 \emph on
-[insert appendix number]
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "HelloWorld"
+
+\end_inset
+
+
 \family default
 \emph default
 .
@@ -188,6 +199,10 @@ wall
  
 \end_layout
 
+\begin_layout Subsection*
+Actions
+\end_layout
+
 \begin_layout Standard
 The three actions 
 \emph on
@@ -253,6 +268,7 @@ drop
 \family default
  adds a package to the world in the same tile as the agent (if it is carrying
  a package) and marks the agent as not carrying a package.
+ If a tile is dropped at a dropzone, it is removed from the world.
 \end_layout
 
 \begin_layout Standard
@@ -264,7 +280,13 @@ Note that this action specification does not mention any means of communicating
  Normally, GOAL provides built-in communication devices, which we cannot
  use in the reference implementation, for reasons explained in the implementatio
 n section.
- 
+ In general, although several grabber agents can inhabit the scenario, they
+ will not actively work together or compete, although they will try to accomplis
+h the same goals.
+\end_layout
+
+\begin_layout Subsection*
+Percepts
 \end_layout
 
 \begin_layout Standard
@@ -292,9 +314,8 @@ Here we see the visible tiles for the agent in the middle of the colored
  section.
  Tiles colored in green are visible to the agent while tiles in red are
  are blocked by walls.
- All tiles without a background color is outside the agents visibility range,
- and thus invisible.
- As can bee seen, agents are good at peeking around corners.
+ All other tiles are outside the agents visibility range, and thus invisible.
+ As can be seen, agents are good at peeking around corners.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:maze-scrot-vision"
@@ -322,7 +343,12 @@ name "fig:maze-scrot-vision"
 Now that agents can act in the environment, they must also be able to sense
  their surroundings in order to make informed choices about their course
  of action.
- A rather obvious perception device in this scenario is 
+ For this purpose, the following three percepts can be obtained from the
+ world:
+\end_layout
+
+\begin_layout Description
+Vision: A rather obvious perception device in this scenario is 
 \emph on
 vision
 \emph default
@@ -340,23 +366,169 @@ reference "fig:maze-scrot-vision"
  for an illustration.
 \end_layout
 
-\begin_layout Standard
-Additionally, 
-\end_layout
-
 \begin_layout Description
-Vision: A collection of tiles the agent can see (as described above), and
- their position relative to the agent.
- 
-\end_layout
+Package
+\begin_inset space ~
+\end_inset
 
-\begin_layout Description
-Package: Specifies whether the agent is currently holding a package.
- 
+Possession: Specifies whether the agent is currently holding a package.
+ An agent can only hold one package at a time.
+ This truth value could be mangaged by the agent program, but having it
+ as a percept is easier on the AP.
+ Additionally, an effect could forcibly remove a package from an agent,
+ and we would thus need a percept for that (note that such an effect does
+ not currently exist in the scenario).
+ With our current approach, we provide a snapshot of the state of the perceivabl
+e world through percepts and let the AP make of it what it can.
 \end_layout
 
 \begin_layout Description
 Position: The absolute position of the agent in the grid.
+ In the agent program, we initially used positions relative to the starting
+ position of the agent to build a map of maze.
+ However, using this method we would lose track if the agent was forcibly
+ pushed into another tile (again, such an effect does not exist in this
+ scenario).
+\end_layout
+
+\begin_layout Standard
+Additionally, agents receive their current movement speed (the time it takes
+ to move from one tile to an adjacent one) as a percept, although we do
+ not use it in this scenario.
+\end_layout
+
+\begin_layout Subsection*
+Agent Program
+\end_layout
+
+\begin_layout Standard
+We have implemented the agent logic for the grabber agent in the GOAL agent
+ programming language.
+ The GOAL instance is connected to an EIS environment, which communicates
+ with the XMAS engine by sending actions and receiving percepts.
+\end_layout
+
+\begin_layout Standard
+It will try to find all packages in the maze and bring them to the dropzone.
+ Note that since packages might be hidden in places the agent has not yet
+ looked, the requirement for scenario completion is not just that no more
+ packages can be 
+\emph on
+seen 
+\emph default
+on the map, but also that there are no more tiles to explore.
+\end_layout
+
+\begin_layout Standard
+In order to find all the hidden packages, the agent must explore the maze
+ by moving to tiles it has not stood on before in order to gain vision of
+ other tiles and pathways.
+ The agent logic itself is pretty straight forward; it can be summarized
+ as below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{if} I hold a package 
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\backslash
+textit{and} know the location of the dropzone
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+textit{then} go to the dropzone and drop it
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{if} I have no package 
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\backslash
+textit{and} know the location of one 
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+textit{then} go grab the package
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{otherwise}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+    explore the maze further
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the pseudo code above, decisions such as 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+explore the maze further
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ are 
+\emph on
+goals
+\emph default
+ the agent sets for itself.
+ When it needs to get to a specific location, it finds a path to that location
+ using the 
+\family typewriter
+A*
+\family default
+ algorithm, and then follows it each turn until it reaches a goal or finds
+ something better to do.
 \end_layout
 
 \end_body
