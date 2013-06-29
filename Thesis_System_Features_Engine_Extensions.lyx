@@ -290,7 +290,7 @@ iilang
 \begin_layout Standard
 As EIS is implemented in Java and our engine is written in C#, information
  can not easily be passed between the two in a native manner.
- Instead, we have opted to have the two communicate over sockets.
+ Instead, we have opted to have them communicate over sockets.
  As EIS already supports formatting 
 \family typewriter
 iilang
@@ -378,7 +378,7 @@ performAction
 \end_layout
 
 \begin_layout Paragraph*
-Problems With the Chosen Execution Sequence
+Problems With the Chosen Execution Protocol
 \end_layout
 
 \begin_layout Standard
