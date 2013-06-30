@@ -606,6 +606,17 @@ sense
 \begin_layout Standard
 The functionality described above could be encapsulated in an engine extension,
  providing the proper modules, events and actions.
+ One issue with this is that entities in the XMAS engine are meant to have
+ a position.
+ As mentioned, this is not a strict requirement, as the position can be
+ set to a null value and ignored.
+ Additionally, recent versions of Cartago supports what they call workspaces,
+ which serves to group the agents and artifacts together in different sub-enviro
+nments, for which positions in the XMAS engine would be well suited.
+\end_layout
+
+\begin_layout Subsection
+Environment Interface Standard
 \end_layout
 
 \begin_layout Subsubsection*
