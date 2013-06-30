@@ -1,4 +1,4 @@
-﻿public class VacuumWorld : XmasWorld
+public class VacuumWorld : XmasWorld
 {
 	//The two tiles that can contain the vacuum cleaner
 	private VacuumCleanerAgent[] vacuumTiles = new VacuumCleanerAgent[2];

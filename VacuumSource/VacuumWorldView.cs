@@ -1,4 +1,4 @@
-﻿public class VacuumWorldView : LoggerView
+public class VacuumWorldView : LoggerView
 {
 	private ThreadSafeEventQueue evtq;
 

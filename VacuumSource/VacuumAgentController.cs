@@ -1,4 +1,4 @@
-﻿public class VacuumAgentController : AgentController
+public class VacuumAgentController : AgentController
 {
 	private EntityXmasAction nextAction = null;
 

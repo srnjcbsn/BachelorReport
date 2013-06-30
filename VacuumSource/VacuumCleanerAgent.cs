@@ -1,4 +1,4 @@
-﻿public class VacuumCleanerAgent : Agent
+public class VacuumCleanerAgent : Agent
 {
 	public VacuumCleanerAgent(string name)
 		: base(name)
