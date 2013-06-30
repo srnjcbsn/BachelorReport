@@ -6,6 +6,22 @@
 \begin_preamble
 \usepackage{listings}
 \usepackage{color}
+\usepackage{alltt}
+
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{mygray}{rgb}{0.4,0.4,0.4}
+
+\lstset{
+    basicstyle={\ttfamily\small}
+  , breaklines=true
+  , commentstyle={\color{mygreen}}
+  , keywordstyle={\color{blue}}
+  , language={[Sharp]C}
+  , numbers=left
+  , stringstyle={\color{mygray}}
+  , tabsize=4
+  , showstringspaces=false
+}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -111,11 +127,357 @@ Position in the vacuum world:
 \begin_inset CommandInset include
 LatexCommand lstinputlisting
 filename "VacuumSource/VacuumPosition.cs"
-lstparams "commentstyle={\\color{green}},keywordstyle={\\color{blue}},language={[Sharp]C},numbers=left,stringstyle={\\color{red}},tabsize=4"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Information need to add an agent to the vacuum world:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumSpawnLocation.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we construct the world:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumWorld.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally we create the factory that is meant to build the world on command
+ from the engine:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumWorldBuilder.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The Entities And Agents
+\end_layout
+
+\begin_layout Standard
+The job of the agent in vacuum world is suck up dirt as such we must add
+ a dirt entity:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/DirtEntity.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Before we can add the Vacuum cleaner we must first create the modules it
+ uses, in our case it only needs a module to see the dirt on its current
+ location.
+\end_layout
+
+\begin_layout Standard
+However before that we need to make a percept for the agent, this percept
+ we will call VacuumVision and it will show the vacuum’s current position
+ and if the tile it is on is dirty.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Percepts/VacuumVision.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we can add the module
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Modules/VacuumVisionModule.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And at last we can finally add the Vacuum Agent:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumCleanerAgent.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Actions and Events
+\end_layout
+
+\begin_layout Standard
+The vacuum cleaner can perform two actions which are to suck and to move.
+ We would also like that an event gets raised when either action is done.
+\end_layout
+
+\begin_layout Standard
+Thus we must first define both events
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Events/VacuumMovedEvent.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Events/VacuumSuckedEvent.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now that the events has been defined it is time to make the actions.
+\end_layout
+
+\begin_layout Standard
+We start by creating the move action, to prevent the agent from being too
+ fast we slow it down by putting a delay on its move action.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Actions/MoveVacuumCleanerAction.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, we create the suck action:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Actions/SuckAction.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Controller
+\end_layout
+
+\begin_layout Standard
+In order for the agent to be able to react to its environment we must provide
+ it with an controllers, in this example we will use C# as the agent language.
+\end_layout
+
+\begin_layout Standard
+First we start by making the controller, the controller contains logic on
+ how the agent should behave, in this example we make the agent suck if
+ there is dirt otherwise it will simply move and look for dirt elsewhere.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumAgentController.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Second we make an 
+\family typewriter
+AgentManager
+\family default
+ class this class’s object will be responsible for constructing a controller
+ for the agent as such it must be provided with the name of the agent so
+ it can be located in the world:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumAgentManager.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+View
+\end_layout
+
+\begin_layout Standard
+All other parts are now done and it is time to make a visualization of the
+ world and the agent, to keep the example as simple as possible we will
+ use an extension meant for making loggers and use a log as our view.
+ This way we can track all actions taken by the vacuum agent.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumWorldView.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Designing the map and wiring the parts together
+\end_layout
+
+\begin_layout Standard
+Before the engine can be started its needed to design a map for the engine,
+ there are multiple options how the world looks we have chosen the one where
+ the agent is on Tile 0 and there is only dirt on Tile 1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/VacuumMap1.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the map has been designed the only part left of the engine is to wire
+ all its components together, this is done in the C# programs main method:
+\end_layout
+
+\begin_layout Description
+Notice! that the log is written to file called viewlog.log
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "VacuumSource/Program.cs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Testing the Vacuum World
+\end_layout
+
+\begin_layout Standard
+Opening the 
+\family typewriter
+viewlog.log
+\family default
+ we can see how the agent has progressed:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+Vacuum moved from: Tile(0), to: Tile(1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+Vacuum sucked 
+\end_layout
+
+\begin_layout Plain Layout
+
+Vacuum moved from: Tile(1), to: Tile(0) 
+\end_layout
+
+\begin_layout Plain Layout
+
+Vacuum moved from: Tile(0), to: Tile(1)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see that the agent moved to Tile 1 and sucked up the dirt, after
+ which it went back and forth to locate more dirt.
 \end_layout
 
 \end_body

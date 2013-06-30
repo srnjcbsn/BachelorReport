@@ -179,5 +179,142 @@ The interesting part of the algorithm is this: how do we find all the tiles
 [Explain that it is similar to that other algorithm (name?)]
 \end_layout
 
+\begin_layout Subsection
+EIS Extension
+\end_layout
+
+\begin_layout Standard
+EIS support to the engine to the engine is provided with a special 
+\family typewriter
+AgentController/AgentManager 
+\family default
+class, along with a specially designed java EIS environment jar file.
+ This section will go through how the implementation works and how we connect
+ to the EIS environment.
+\end_layout
+
+\begin_layout Standard
+The EIS environment in java and the agent controller on the engine is connected
+ through a TCP connection.
+ They commicate with each other with XML as a markup language for the data
+ they transmit.
+ 
+\end_layout
+
+\begin_layout Standard
+Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:DeploymentEISandAgentController"
+
+\end_inset
+
+ shows the setup between EIS and the agent controller.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename DeploymentEISandAgentController.png
+	lyxscale 5
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+An illustration of the connection between the EIS environment and the agent
+ controller.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:DeploymentEISandAgentController"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Although the EIS environment and the agent controller sends all data in
+ form of XML data there is one difference and that is all XML nodes are
+ packaged into packages of a certain size and the size is sent before the
+ xml data.
+\end_layout
+
+\begin_layout Standard
+This was done to ensure that the agent controller at all times knew how
+ much data was to be transmitted, thus giving it the right to deny packages
+ if they were over a certain size.
+ In our current implementation however no package size is denied.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Engine Side of EIS Support
+\end_layout
+
+\begin_layout Standard
+In the project: 
+\family typewriter
+XmasEngineExtensions 
+\family default
+we provide two classes:
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+EISAgentController:
+\family default
+ this class is responsible for converting xml data from the EIS environment
+ into actions that can be queued to the agent it controls.
+ And also for converting percepts the agent it controls receives into XML
+ data that can be sent to the EIS environment.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+EISAgentServer
+\family default
+ creates a TCP server all EIS environments that wishes to connect to it
+ must make a TCP client call, once a connection is established then the
+ agent server will construct an 
+\family typewriter
+EISAgentController 
+\family default
+object, that object will take over all further duties of comuncation.
+\end_layout
+
+\begin_layout Subsubsection*
+How the EISAgentServer works
+\end_layout
+
 \end_body
 \end_document
