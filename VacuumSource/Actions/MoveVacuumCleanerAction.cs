@@ -1,4 +1,4 @@
-﻿public class MoveVacuumCleanerAction : EntityXmasAction<VacuumCleanerAgent>
+public class MoveVacuumCleanerAction : EntityXmasAction<VacuumCleanerAgent>
 {
 	//Override this for the action to be executable
 	protected override void Execute()

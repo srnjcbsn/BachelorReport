@@ -1,5 +1,28 @@
 
-\section{Motivation}
+\section*{Background}
+
+MASs (multi-agent systems) is an important research topic in the field
+of AI (artificial intelligence) as they consist of several intelligent
+agents interacting and cooperating to reach some goal. This lends
+itself well to distributed computing, following the recent (since
+the turn of the millenium) trend of designing processors with more
+cores rather than better ones. Multi-Agent Systems have also been
+used to simulate naturally occurring systems, where several autonomous
+agents interact. 
+
+There have been a lot of research on the topic of MASs, as well as
+related ones such as distributed artificial intelligence (DAI). There
+are several APLs (Agent Programming Languages) tailored to MAS development;
+they are called MASPLs (Multi-Agent System Programming Languages).
+To provide a setting for these APs (Agent Programs), we have the general
+notion of an \emph{environment} in which they can interact. 
+
+
+\section*{Motivation}
+
+While there exists many multi-agent programming languages, there are
+few tools for constructing environments for the agents to behave in
+which allows for easy graphical representation. 
 
 There are many complications when developing multi agent systems,
 our goal with this project was to lessen one of these by designing
@@ -12,7 +35,7 @@ What the types of projects can be is manyfold but here are some possible
 examples:
 
 
-\paragraph*{Agent comparison software }
+\paragraph*{Agent comparison software}
 
 There are many different languages in which it is possible to write
 agent programs, some are specifically designed for it others are powerful
@@ -52,3 +75,39 @@ one of the agents is controlled by the player. Our engine should make
 it fairly easy for setting up a framework for creating rules inside
 a given world and ensure that the agents of the world follow said
 rules. \texttt{\emph{{[}Expand{]}}}
+
+
+\section*{Goals}
+\begin{description}
+\item [{Generality:}] By this, we mean that components developed with our
+engine should be \emph{reusable} in the sense that they should be
+able to be used in other projects. For examle, the logic for connecting
+to a specific APL should be implamentable in other projects. Furthermore,
+the engine itself should be multi- applicable; it should be able to
+be used to construct any kind of scenario, and interface with different
+APLs.
+\item [{Easy~to~use:}] It should be relatively easy to construct a complicated
+scenario, and even easier to construct a simple one.
+\item [{Cross~platform~compatibilty:}] The engine should be executable
+on as many platforms as possible, at least the three major operating
+systems (Linux, Mac and Windows).
+\end{description}
+
+\section*{Overview of the Report}
+
+In this report we will document our efforts to design an engine as
+described above. The report is structured as follows: 
+\begin{description}
+\item [{Theory}] outlining the design patterns used in the engine along
+with explanation of MAS.
+\item [{Reference~Implementation}] providing an introduction to how a
+final product of the engine might look, along with agent programs
+connected to the engine.
+\item [{System~Features}] describing the features of the engine and how
+it can be used.
+\item [{Implementation}] containing an examination of the actual implementation
+of the engine, along with our considerations of the choices taken.
+\item [{Testing}] describes how the engine was tested.
+\item [{Results~and~Comparisons}] evaluates whether the goals we had
+set for the engine was reached, and compares it to similar works.\end{description}
+

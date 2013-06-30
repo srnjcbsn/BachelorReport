@@ -4,7 +4,24 @@
 \begin_header
 \textclass report
 \begin_preamble
+\usepackage{listings}
+\usepackage{color}
 \usepackage{alltt}
+
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{mygray}{rgb}{0.4,0.4,0.4}
+
+\lstset{
+    basicstyle={\ttfamily\small}
+  , breaklines=true
+  , commentstyle={\color{mygreen}}
+  , keywordstyle={\color{blue}}
+  , language={[Sharp]C}
+  , numbers=left
+  , stringstyle={\color{mygray}}
+  , tabsize=4
+  , showstringspaces=false
+}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -440,7 +457,14 @@ status collapsed
 \end_layout
 
 \begin_layout Chapter
-Usage Example / Hello World! / Vacuum World
+Vacuum World Example
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:VacuumWorldAppendix"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

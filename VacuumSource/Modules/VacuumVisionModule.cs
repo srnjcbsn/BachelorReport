@@ -1,4 +1,4 @@
-﻿public class VacuumVisionModule : EntityModule
+public class VacuumVisionModule : EntityModule
 {
 	//Override this method for the module to provide percepts to the VacuumCleaner
 	public override IEnumerable<Percept> Percepts

@@ -485,5 +485,57 @@ This method does have some problems.
 [Actions and conversion]
 \end_layout
 
+\begin_layout Subsection
+Logger Extension
+\end_layout
+
+\begin_layout Standard
+One of the extensions that we provide with the engine is a simple logger,
+ this logger is implemented as a view on the engine and it is meant to be
+ used by others to add a logger for their environment.
+\end_layout
+
+\begin_layout Standard
+To use the logger all that is required is that the user extends the class
+ 
+\family typewriter
+LoggerView
+\family default
+.
+ The logger will then providing the extending class with a 
+\family typewriter
+ThreadSafeEventManager
+\family default
+, this manager will have its events automatically executed.
+ As such the only thing required by the user is to create a 
+\family typewriter
+ThreadSafeEventQueue 
+\family default
+and register the triggers with the events the user wishes to log.
+\end_layout
+
+\begin_layout Standard
+The user must also provide the logger with a 
+\family typewriter
+StreamWriter 
+\family default
+object, this object can take many different forms however for logging we
+ recommend using it to wrap a file stream.
+ 
+\end_layout
+
+\begin_layout Standard
+To see an example of how the logger could be used, go to appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:VacuumWorldAppendix"
+
+\end_inset
+
+.
+ This uses the logger as a view, to track the movements and action of the
+ vacuum cleaner in vacuum world.
+\end_layout
+
 \end_body
 \end_document

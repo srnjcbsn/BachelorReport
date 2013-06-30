@@ -101,7 +101,7 @@ For the engine to be general means it has the ability to adapt to any needed
 In many cases, the shortest path to a general system is removing restrictions.
  Unfortunately, features are often restrictive in nature; the most general
  system of all is one that is completely featureless.
- Thus, it is often åa trade-off between features and generality.
+ Thus, it is often a trade-off between features and generality.
 \end_layout
 
 \begin_layout Subsection*

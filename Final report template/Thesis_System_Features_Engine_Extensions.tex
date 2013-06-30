@@ -72,7 +72,7 @@ which have been developed to work well with EIS.
 
 As EIS is implemented in Java and our engine is written in C\#, information
 can not easily be passed between the two in a native manner. Instead,
-we have opted to have the two communicate over sockets. As EIS already
+we have opted to have them communicate over sockets. As EIS already
 supports formatting \texttt{iilang} objects to XML, we chose this
 to encode information passed over the sockets. We have implemented
 our own \texttt{iilang} object tree in C\#, which implements XML serialization
@@ -97,6 +97,9 @@ name and socket. The controller and the EIS instance now have their
 own private socket connection to communicate on, and the agent manager
 proceeds to listen for other APL instances requesting an agent controller.
 
+
+\subsubsection*{Execution Protocol}
+
 The EIS instance can now proceed to send actions to be executed to
 the agent controller. When such an action is received, the controller
 enqueues it, and sleeps till it is finished, at which point it resumes
@@ -111,19 +114,23 @@ other actions or return percepts when it is executing an action that
 takes time, such as the tile extension's move action (this is a restriction
 imposed by the agent controller base class as described in section
 \texttt{\emph{{[}insert section number{]}}}, as it is the default
-behaviour of the \texttt{performAction} method). This execution sequence
-is very simple, but has some downsides. Consider, for example, that
-two agents wish to communicate with each other through the engine
-via a \texttt{talk} action. It could be that agent $a_{1}$ wanted
-to ask agent $a_{2}$ whether a certain tile was a desirable place
-to go. In that case, $a_{1}$'s APL would have the action queued in
-the engine, which would execute it and place the question in $a_{2}$'s
-mailbox. If, however, $a_{2}$ had just started a lenghty action,
-such as moving, its APL would not get notified that it had been asked
-a question until the move was complete, and the controller could respond
-to the \texttt{getAllPercepts} action. This introduces quite some
-delay in performing such actions, which are rather important in a
-multi-agent system. 
+behaviour of the \texttt{performAction} method).
+
+
+\paragraph*{Problems With the Chosen Execution Protocol}
+
+The execution sequence deescribed above is very simple, but has some
+downsides. Consider, for example, that two agents wish to communicate
+with each other through the engine via a \texttt{talk} action. It
+could be that agent $a_{1}$ wanted to ask agent $a_{2}$ whether
+a certain tile was a desirable place to go. In that case, $a_{1}$'s
+APL would have the action queued in the engine, which would execute
+it and place the question in $a_{2}$'s mailbox. If, however, $a_{2}$
+had just started a lenghty action, such as moving, its APL would not
+get notified that it had been asked a question until the move was
+complete, and the controller could respond to the \texttt{getAllPercepts}
+action. This introduces quite some delay in performing such actions,
+which are rather important in a multi-agent system. 
 
 To remedy this, the system could be designed such that the controller
 instead blocked on the call to return all percepts until the agent
@@ -140,7 +147,7 @@ subscribe to events on tiles they could see, and be able to respond
 when eg. an enemy moved into one of them. This would allow them to
 communicate the offenders position to nearby agents, or simply give
 the AP a chance to preemptively figure out what the best possible
-action would be to execute next. \texttt{\emph{{[}Move to Implementation{]}}}
+action would be to execute next.
 
 This method does have some problems. How, for example, does $a_{2}$'s
 AP know that it should prioritize answering the question, and not,
@@ -155,7 +162,23 @@ pool.
 \texttt{\emph{{[}Actions and conversion{]}}}
 
 
-\subsection{EIS and Tile Extension}
+\subsection{Logger Extension}
 
-\texttt{\emph{{[}Converters and actions for working with EIS in a
-tile based environment{]}}}
+One of the extensions that we provide with the engine is a simple
+logger, this logger is implemented as a view on the engine and it
+is meant to be used by others to add a logger for their environment.
+
+To use the logger all that is required is that the user extends the
+class \texttt{LoggerView}. The logger will then providing the extending
+class with a \texttt{ThreadSafeEventManager}, this manager will have
+its events automatically executed. As such the only thing required
+by the user is to create a \texttt{ThreadSafeEventQueue }and register
+the triggers with the events the user wishes to log.
+
+The user must also provide the logger with a \texttt{StreamWriter
+}object, this object can take many different forms however for logging
+we recommend using it to wrap a file stream. 
+
+To see an example of how the logger could be used, go to appendix
+\ref{chap:VacuumWorldAppendix}. This uses the logger as a view, to
+track the movements and action of the vacuum cleaner in vacuum world.

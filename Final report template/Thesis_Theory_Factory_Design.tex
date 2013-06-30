@@ -1,2 +1,166 @@
 
 \section{Factory Design Pattern}
+
+Removing flexibility from a program is normally consider very bad,
+one way to do that can be by tieing object creation to the business
+logic of the program. This section will show why this combining of
+object creation and business logic removes flexibility in the program;
+furthermore it will show how to solve this problem using the Factory
+Design Pattern.
+
+
+\subsection*{Why object creation logic should be removed from business logic}
+
+In all OOP%
+\footnote{Object Oriented Programming%
+} Languages you have the ability to create new objects to be used in
+the program. When creating an object in a function you inadvertently
+tie a specific object type to that function. This means that the function
+can never be used for other purposes than to work with that type of
+object. Thus if an identical function was needed but for another version
+of that object you would have to copy the function redundantly, greatly
+increasing the chance of errors in the code as the same code was written
+twice.
+
+To give an example of this, imagine you have a Printer that prints
+text on sheet of paper, the pseudo code for such a printer would look
+like this:
+
+\begin{alltt}
+Class Printer 
+    Method PrintPaper takes Message returns Paper
+        Paper = new A4Sheet() 		
+        Paper.PrintText(Message) 		
+        Return Paper 	
+    endMethod 
+endClass
+\end{alltt}
+
+As we can see in this example A4Sheet is an implementation of the
+Object type Paper, however seen we have mixed object creation with
+business logic we are forced to specify the exact type of paper that
+our printer produces. This means that if we wanted to make to make
+the printer able to print multiple types of paper we would have to
+make new functions copying the functionality of PrintPaper we would
+have to make PrintPaperA3, PrintPaperA5, etc. As is quickly evident
+this is very redundant and increases code complexity, not only that
+but if years later someone invented a new type of paper then the printer
+would not be changeable since the class was locked to specific paper
+types on the business logic level. 
+
+
+\subsection*{Solving the problem of mixing objection with business logic}
+
+As we have shown there are many problems involved when business logic
+contains object creation logic, in order to solve this problem it
+is necessary to separate the two. This can be done in multiple ways,
+for instance when going back to our printer example it could be that
+instead of having the method \texttt{PrintPaper }take only a message
+instead make it take both a message and the paper as part of its arguments.
+This way we would avoid having to create the Paper as part of printing
+the paper. The only problem is that this would only remove the problem
+from that part of the business logic, and move it to the code that
+uses the method \texttt{PrintPaper}. It also changes the overall functionality
+of the method which was to produce paper with messages on them and
+instead makes it so it doesn\textquoteright{}t produce the paper and
+only prints on paper given to it. Using the factory design pattern
+we can avoid both problems while at the same time separate the object
+creation away from the \texttt{PrintPaper }method. We do this by giving
+the \texttt{Printer }class a factory which we will name \texttt{PaperFactory}.
+
+The \texttt{PaperFactory} only has one task and that is to create
+Paper objects. That means we have removed the object creation code
+away from the \texttt{PrintPaper }method, all the \texttt{PrintPaper
+}method has to do is simply request a new piece of paper from the
+\texttt{PaperFactory}.
+
+The pseudo code for the \texttt{PaperFactory }could look something
+like this:
+
+\begin{alltt}
+Class PaperFactory 	
+    Method CreatePaper takes nothing returns Paper
+        Return new A4() 
+    endMethod 
+endClass
+\end{alltt}
+
+And the pseudo code for the new \texttt{PrintPaper} method of the
+\texttt{Printer }class would be this:
+
+\begin{alltt}
+Method PrintPaper takes paperFactory, message returns paper
+    Paper = paperFactory.CreatePaper()
+    Paper.Print(message) 	
+    Return Paper 
+endMethod	
+\end{alltt}
+
+Thus as we can see the responsibility of creating paper has been removed
+from the \texttt{Printer }class and instead moved to the \texttt{PaperFactory
+}class.
+
+
+\subsection{Abstract Factory Design Pattern}
+
+The abstract factory design pattern is closely tied to Factory design
+pattern in that an abstract Factory like an abstract class only defines
+specification of the implementing class, and doesn\textquoteright{}t
+contain any logic at all. 
+
+An Abstract Factory is made by making an Abstract class of the factory,
+going back to Printer example, imagine that the \texttt{PaperFactory
+}instead was an abstract class.
+
+\begin{alltt}
+Abstract class PaperFactory 	
+    Method CreatePaper takes nothing returns Paper 
+endClass
+\end{alltt}
+
+Now the Printer class only has to know about a Factory capable of
+producing Paper, but it will have no information on what kind of paper
+is produced, an implementation of the \texttt{PaperFactory }could
+now be made for each type of paper that one wishes to produce.
+
+For instance an implementation of the for creating A4 papers could
+be designed like this:
+
+\begin{alltt}
+Class A4PaperFactory implements PaperFactory 	
+    Method CreatePaper takes nothing returns paper 
+        Return new A4Paper() 	
+    endMethod 
+endClass
+\end{alltt}
+
+As we can see the \texttt{A4PaperFactory }class that is an implementation
+of the \texttt{PaperFactory }class is capable of producing a special
+type of paper, as such if this factory was used by the \texttt{Printer
+}class we saw in an earlier example, the \texttt{Printer }would be
+capable of producing A4 papers with messages on them. However were
+we to want another type of paper, the code for the printer would not
+need to be changed or copied since we simply implement a new version
+of the \texttt{PaperFactory }class and give that to the \texttt{Paper
+}class.
+
+
+\section*{Summary}
+
+A lot of problems arise in code when mixing business logic with object
+creation logic, this section has explained why the problems occur
+and what the reasons behind them are. Furthermore it has shown how
+to solve these problems by using the factory design pattern. 
+
+To summarize some of the problems when mixing business logic with
+object creation logic:
+\begin{itemize}
+\item Increases the complexity in business logic, because of added creation
+logic
+\item Removes flexibility of the business logic, forcing it to work only
+with special classes
+\item Increase the need for redundancy of business logic to accommodate
+for new object types
+\item Makes making changes to legacy code difficult as the code is tied
+to specific object types\end{itemize}
+

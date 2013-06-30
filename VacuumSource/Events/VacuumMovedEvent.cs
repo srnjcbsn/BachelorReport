@@ -1,4 +1,4 @@
-﻿public class VacuumMovedEvent : XmasEvent
+public class VacuumMovedEvent : XmasEvent
 {
 	//The position the vacuum moved from
 	public XmasPosition From{get; private set;}

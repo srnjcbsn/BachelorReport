@@ -28,7 +28,7 @@ of those languages.
 In many cases, the shortest path to a general system is removing restrictions.
 Unfortunately, features are often restrictive in nature; the most
 general system of all is one that is completely featureless. Thus,
-it is often åa trade-off between features and generality.
+it is often a trade-off between features and generality.
 
 
 \subsection*{Model}
@@ -139,9 +139,6 @@ we hopefully reduce the number of times they are made by making bad
 decisions harder. \texttt{\emph{{[}rewrite sentence?{]}}}
 
 
-\section{Test Driven Development}
-
-
 \section{Choice of Technologies}
 
 
@@ -154,13 +151,13 @@ EIS standard -- we have a subjective preference for C\#. In general,
 C\# is a newer and more modern programming language with better facilities
 for writing comprehensive and maintainable code, and provides some
 features usually only found in functional programming languages. Additionally,
-.NET code can be executed across platforms, thanks to the Mono project
-\texttt{\emph{{[}Link to Mono{]}}}, although the newest version of
-.NET (v4.5) has not been ported at the time of this writing. Although
-developing our reference implementation would have been simpler had
-we used Java, opting out of this in favor of C\# gave us the opportunity
-to test how well our engine interfaced with programs not written in
-the same language. 
+.NET code can be executed across platforms, thanks to the Mono project%
+\footnote{\texttt{http://www.mono-project.com}%
+}, although the newest version of .NET (v4.5) has not been ported at
+the time of this writing. Although developing our reference implementation
+would have been simpler had we used Java, opting out of this in favor
+of C\# gave us the opportunity to test how well our engine interfaced
+with programs not written in the same language. 
 
 
 \subsection*{Reference Implementation}
@@ -180,4 +177,146 @@ to face, since
 
 \section{Comparison to other Environment Construction Tools}
 
-Comparison to JaCaMo, EIS
+In this section, we will compare the XMAS engine to other frameworks
+that can be used to construct and manage MAS environments. In particular,
+we will consider CArtAgO%
+\footnote{\texttt{http://cartago.sourceforge.net/}%
+} (\emph{C}ommon ``\emph{Art}ifacts for \emph{Ag}ents'' \emph{O}pen
+framework, henceforth referred to as Cartago), which have been used
+in several projects, and as a part of the \emph{JaCaMo}%
+\footnote{\texttt{http://jacamo.sourceforge.net/}%
+} (\emph{Ja}son, \emph{Ca}rtago, \emph{Mo}ise) project, which provides
+a complete framework for multi-agent systems consisting of the Jason
+MAPL (multi-agent programming language), the Cartago environment constructions
+API, and the Moise organizational system. We will also compare our
+engine to using plain EIS.
+
+
+\subsection{Cartago}
+
+
+\subsubsection*{Agents and Artifacts}
+
+The Cartago framework uses the \texttt{A\&A} (Agents and Artifacts)
+approach to designing environments. In the following, we will provide
+an overview of this model, which is presented in (Ricci et al., 2008).
+
+In the A\&A meta-model, a collection of computational entities called
+\emph{artifacts} constitutes the environment. They are computational
+entities in the sense that they are meant to provide functionality
+exploitable by the agents, and can have a state and business logic,
+but are not meant to act autonomously. In fact, instead of agents
+having predefined actions that manipulates the state of the world
+when executed, they are aware of a collection of artifacts, which
+each provide a number of operations the agents can perform on them.
+The artifacts also provides percepts to the agents, and are as such
+the agents' means of interacting with the world. 
+
+Artifacts can not only be used to model objects with a physical presence
+in the world (such as analogues to the packages and dropzones in our
+reference implementation), but also more abstract concepts, such as
+control flow objects. For example, a communication artifact could
+be created, through which several agents could talk and listen, through
+operations and percepts, respectively. Since agents can create and
+destroy artifacts at will, such communication channels are easy to
+spawn in an ad hoc manner.
+
+The A\&A meta-model, as described in (Ricci et al., 2008), is to some
+extent based on the way humans interact in a working environments,
+as it draws on research in fields such as organisational sciences
+and anthropology. This lead to the introduction of artifacts as tools,
+service providers and communication devices, since they better describe
+such an environment. In general, the A\&A approach focuses on incorporating
+these concepts as an integral part of the environment, so as to make
+it a functional and reactive part of a multi-agent system. This is
+in contrast to classical MAS engineering, where the environment is
+typically defined as a more static structure can act in and retreive
+percepts from.
+
+
+\subsubsection*{Cartago Implementation}
+
+The Cartago framework is implemented in Java and can natively connect
+to the Jason APL. Here, we will explain how Cartago implements the
+A\&A meta-model. A more thorough explanation can be found in (Ricci
+et al., 2011).
+\begin{description}
+\item [{Agents}] In Cartago, agent programs are connected to agent bodies,
+which are -- in that respect -- conceptually similar to agent controllers
+in the XMAS engine, as they represent a vessel for the agent in the
+environment, but no agent logic. In keeping with the A\&A approach
+explained above, the agent API allows for creating and deleting artifacts,
+as well as executing operations on artifacts and retreiving percepts
+from them. 
+\item [{Sensing}] For handling perception, Cartago provides the concept
+of \emph{sensors}. An agent contains a set of sensors, each collecting
+percepts from an artifact. The \texttt{sense} method of an agent takes
+a sensor as input and returns a percept gathered by it, whereafter
+the percept is removed from the sensor. The sensors can be overridden
+by the designer to -- for example -- control in what order it should
+return its contained percepts. A sensor is connected to an artifact
+via the \texttt{focus} method. Sensory inputs can be filtered, so
+that a sensor only picks up percepts matching a user-defined pattern.
+\item [{Artifacts}] Artifacts specify operations that agents can execute
+as described by the A\&A meta-model. Artifacts can generate events,
+which can be gathered by any connected agent sensors. Artifacts can
+describe how they are meant to be used, ie.\ what operations thay
+have and how they should be called. When an agent executes an operation
+on an artifact, a boolean value is immediately returned, signifying
+either success or failure. The calling agent can give a sensor as
+an argument to the method invocation, which will gather any percepts
+that the artifact generates as a result of executing the operation.
+\end{description}
+
+\subsubsection*{Agents and Artifacts in XMAS}
+
+The main purpose of the Cartago project is to provide a framework
+for designing MASs using the A\&A meta-model. While that have not
+been the goal of the XMAS engine, it is general enough to support
+this approach, especially since the engine allows entities to incorporate
+state and business logic through entity modules. Below, we have described
+how artifacts, agents and perception would be implemented using the
+engine:
+\begin{description}
+\item [{Agents}] would be XMAS agents, with a module for creating, destroying
+and containing (references to) artifacts, as well as a module for
+each sensor. The \texttt{sense} action used in the Cartago API is
+not entirely equivalent to our generic \texttt{getAllPercepts} action,
+as it only retrieves one percept from one specific sensor, but such
+an action could easily be implemented. 
+\item [{Artifacts}] would be represented as entities with a module for
+each operation the artifact provides. When new stimuli, ie.\ new
+percepts, would be available, an XMAS event would be raised.
+\item [{Sensing}] The agents' sensor modules would be connected to the
+artifact entities by registering triggers on them, wchich would subscribe
+to the events raised by the artifacts. By using trigger conditions
+(cf. section \texttt{\emph{{[}Events and triggers section{]}}}), the
+percepts could be filtered as with Cartago sensors. The modules in
+XMAS already provides means for being queried for collections of percepts,
+so this functionality could be used to let them return all the percepts
+that have become available to them since the last invocation. Alternatively,
+they could incorporate some logic for the ordering of returned percepts,
+in case the user only wants one percept per \texttt{sense}.
+\end{description}
+The functionality described above could be encapsulated in an engine
+extension, providing the proper modules, events and actions. One issue
+with this is that entities in the XMAS engine are meant to have a
+position. As mentioned, this is not a strict requirement, as the position
+can be set to a null value and ignored. Additionally, recent versions
+of Cartago supports what they call workspaces, which serves to group
+the agents and artifacts together in different sub-environments, for
+which positions in the XMAS engine would be well suited.
+
+
+\subsection{Environment Interface Standard}
+
+
+\subsubsection*{References}
+
+Ricci et al., ``Environment programming in multi-agent systems: an
+artifact-based perspective'', Autonomous Agents and Multi-Agent Systems,
+Volume 23, Issue 2, pp.\ 158-192, 2011
+
+Ricci et al., ``Artifacts in the A\&A meta-model for multi-agent
+systems'', Autonomous Agents and Multi-Agent Systems, Volume 17,
+Issue 3, pp.\ 432-456, 2008

@@ -4,24 +4,7 @@
 \begin_header
 \textclass report
 \begin_preamble
-\usepackage{listings}
-\usepackage{color}
-\usepackage{alltt}
 
-\definecolor{mygreen}{rgb}{0,0.4,0}
-\definecolor{mygray}{rgb}{0.4,0.4,0.4}
-
-\lstset{
-    basicstyle={\ttfamily\small}
-  , breaklines=true
-  , commentstyle={\color{mygreen}}
-  , keywordstyle={\color{blue}}
-  , language={[Sharp]C}
-  , numbers=left
-  , stringstyle={\color{mygray}}
-  , tabsize=4
-  , showstringspaces=false
-}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false

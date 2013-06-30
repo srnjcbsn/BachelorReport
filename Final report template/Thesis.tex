@@ -23,7 +23,32 @@
 % PACKAGES
 %==================================================================================================
 \usepackage{LukeThesis}                             %Import Thesis base style
-%input{PhDMacros}                                   %Thesis specific macros
+\usepackage{listings}
+\usepackage{color}
+\usepackage{alltt}
+
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{amstext}
+\usepackage{graphicx}
+
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{mygray}{rgb}{0.4,0.4,0.4}
+
+\lstset{
+    basicstyle={\ttfamily\small}
+  , breaklines=true
+  , commentstyle={\color{mygreen}}
+  , keywordstyle={\color{blue}}
+  , language={[Sharp]C}
+  , numbers=left
+  , stringstyle={\color{mygray}}
+  , tabsize=4
+  , inputencoding=
+  , showstringspaces=false
+}
+
 %
 %==================================================================================================
 % THESIS PROPERTIES (Modifiy these fields with your details)
@@ -85,6 +110,7 @@
 
 
 
+
 \chapter{Introduction}
 
 \input{Thesis_Introduction.tex}
@@ -94,11 +120,11 @@
 
 \input{Thesis_Theory_MAS.tex}
 
-\include{Thesis_Theory_MVC}
+\input{Thesis_Theory_MVC.tex}
 
-\include{Thesis_Theory_Factory_Design}
+\input{Thesis_Theory_Factory_Design.tex}
 
-\include{Thesis_Theory_TDD}
+\input{Thesis_Theory_TDD.tex}
 
 
 \chapter{Reference Implementation}
@@ -108,34 +134,36 @@
 
 \chapter{System Features}
 
-\input{Thesis_System_Features_Overview.tex}\include{Thesis_System_Features_Virtual_World}
+\input{Thesis_System_Features_Overview.tex}
 
-\include{Thesis_System_Features_Events_and_Triggers}
+\input{Thesis_System_Features_Virtual_World.tex}
 
-\include{Thesis_System_Features_Actions}
+\input{Thesis_System_Features_Events_and_Triggers.tex}
 
-\include{Thesis_System_Features_Converters}
+\input{Thesis_System_Features_Actions.tex}
 
-\include{Thesis_System_Features_Agent_Controllers}
+\input{Thesis_System_Features_Converters.tex}
 
-\include{Thesis_System_Features_Views}
+\input{Thesis_System_Features_Agent_Controllers.tex}
 
-\include{Thesis_System_Features_Engine_Extensions}
+\input{Thesis_System_Features_Views.tex}
+
+\input{Thesis_System_Features_Engine_Extensions.tex}
 
 
 \chapter{Implementation}
 
 \input{Thesis_Implementation_Architecture.tex}
 
-\include{Thesis_Implementation_Model}
+\input{Thesis_Implementation_Model.tex}
 
-\include{Thesis_Implementation_Agent_Controllers}
+\input{Thesis_Implementation_Agent_Controllers.tex}
 
-\include{Thesis_Implementation_Views}
+\input{Thesis_Implementation_Views.tex}
 
-\include{Thesis_Implementation_Engine_Extensions}
+\input{Thesis_Implementation_Engine_Extensions.tex}
 
-\include{Thesis_Implementation_Reference_Implementation}
+\input{Thesis_Implementation_Reference_Implementation.tex}
 
 
 \chapter{Testing}
@@ -143,7 +171,7 @@
 \input{Thesis_Testing.tex}
 
 
-\chapter{Discussion}
+\chapter{Results and Comparisons}
 
 \input{Thesis_Discussion.tex}
 
@@ -151,8 +179,57 @@
 \chapter{Conclusion}
 
 \texttt{\emph{\input{Thesis_Conclusion.tex}}}
+
 \appendix
-\include{Appendix1}                                 %Appendix A
+
+\chapter{Domain Model UML Diagram for XMAS Model \label{sec:Domain-Model-UML}}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=1.2\columnwidth]{xmas_domain_model_uml}
+\par\end{centering}
+
+\caption{\label{fig:DomainModelDiagramXMAS}}
+\end{figure}
+
+
+
+\chapter{XMAS Engine Component Diagram\label{chap:ComponentDiagramAppendix}}
+
+\begin{figure}
+\includegraphics[angle=270,width=1.1\textwidth]{componentDiagram}
+
+\caption{}
+
+
+\end{figure}
+
+
+
+\chapter{Vacuum World Example\label{chap:VacuumWorldAppendix}}
+
+\input{Thesis_Appendix_Vacuum_World_Example.tex}
+
+
+\chapter{GOAL Part of Reference Implementation}
+
+
+\section{Agent Desicion Flow Chart\label{sec:GOALFlowChartAppendix}}
+
+\begin{figure}
+\includegraphics[angle=270,width=1.2\textwidth]{goalAgentDecisionFlowchart}
+
+\caption{}
+\end{figure}
+
+
+
+\section{GOAL Source Code for Reference Implementation\label{chap:GoalCodeAppendix}}
+
+\input{Thesis_Appendix_GOAL_Source.tex}
+
+
+\chapter{Source code excerpts}
 %-----------
 % Backmatter
 %-----------

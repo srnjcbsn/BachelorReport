@@ -1,6 +1,51 @@
-\texttt{\emph{{[}Missing{]}}}
+In this project, we have developed an engine for constructing scenarios
+to be used in multi-agent systems. A scenario in this sense is an
+environment where agents can interact, and with means to control the
+agents. Our project provides the following features:
+\begin{itemize}
+\item A way to set up environments.
+\item Means of communicating with APLs, which controls the agents inhabiting
+the environment.
+\item Provide a general way for agents to behave in the environment, by
+allowing them to \emph{act} and \emph{sense}.
+\item Reactivity in the environments, allowing agents and entities to dynamically
+respond to changes in the world.
+\end{itemize}
 
+\section*{What has been done, what needs to be done}
 
-\section{Usability}
+All of our goals for the engine have -- to some extent -- been reached.
+However, There are many aspects of the engine which could be severely
+improved. These include, but is not limited to, 
+\begin{itemize}
+\item The specific way actions and events are designed. For instance, the
+distinction between environment events and entity events, as discussed
+in section \texttt{\emph{{[}insert section number{]}}}.
+\item The way the view is supposed to communicate with the model
+\item The way agent controllers are forced to have their own threads. This
+is a unnecessary when APLs runs all agents on a single thread, however
+inefficient that may be.
+\end{itemize}
 
-\texttt{\emph{{[}Missing{]}}}
+\section*{Future work}
+
+Here, we will list some of the possible additions to the engine, which
+would make it easier to use by providing functionality for a wide
+array of MAS scenarios.
+\begin{itemize}
+\item Extensions to communicate with other APLs, that do not support the
+EIS standard.
+\item A collection of common environments, such as:
+
+\begin{itemize}
+\item Three dimensional worlds
+\item A graph based world
+\end{itemize}
+\item An extension allowing construction and management of discrete worlds.
+\item Extensing the reference implementation to include agents cooperating
+finding packages. Or copying the environment and functionality of
+the Agents on Mars scenario, to showcase and test our engine against
+an established implementation.
+\item A collection of commonly used agent actions and percepts, such as
+means of communicating with each other.\end{itemize}
+

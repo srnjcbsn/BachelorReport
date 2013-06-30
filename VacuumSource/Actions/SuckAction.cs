@@ -1,4 +1,4 @@
-﻿public class SuckAction : EntityXmasAction<VacuumCleanerAgent>
+public class SuckAction : EntityXmasAction<VacuumCleanerAgent>
 {
 	//Override this for the action to be executable
 	protected override void Execute()

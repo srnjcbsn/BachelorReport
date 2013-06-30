@@ -559,12 +559,38 @@ When writing code breaking law of Demeter doesn’t normally feel wrong however
 \end_layout
 
 \begin_layout Standard
-Imagine that you are in a shop and the cashier asks for 10€.
+Imagine that you are in a shop and the cashier asks for 10
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texteuro
+\end_layout
+
+\end_inset
+
+.
  What would you do?
 \end_layout
 
 \begin_layout Enumerate
-Give him a 10€ bill
+Give him a 10
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texteuro
+\end_layout
+
+\end_inset
+
+ bill
 \end_layout
 
 \begin_layout Enumerate

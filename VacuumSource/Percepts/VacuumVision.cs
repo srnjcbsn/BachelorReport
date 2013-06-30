@@ -1,4 +1,4 @@
-﻿public class VacuumVision : Percept
+public class VacuumVision : Percept
 {
 	//Property that tells if dirt is located at the vacuum cleaner's position
 	public bool ContainsDirt { get; set; }
