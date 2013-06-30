@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XmasEngineModel.Management;
-
-namespace VacuumCleanerWorldExample.Events
+﻿//Define a Vacuum sucked event
+public class VacuumSuckedEvent : XmasEvent
 {
-	public class VacuumSuckedEvent : XmasEvent
-	{
-	}
 }
