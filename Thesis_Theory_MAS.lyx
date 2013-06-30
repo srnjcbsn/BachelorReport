@@ -69,13 +69,68 @@ Agents and Environments in Artificial Intelligence
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename MASNodeSearch.png
+	lyxscale 30
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+What an agent can see of a graph where it tries to move from node A to node
+ B.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:MASNodeSearch"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 In artificial intelligence, an agent is something that can perform actions
  in and (partially or fully) perceive the state of the environment it is
  situated in.
  As an example, consider an agent tasked with finding the shortest route
  between two nodes in a weighted, undirected graph, with the limitation
  that it can only see the nodes that have an edge to the one it is standing
- in.
+ in, an example of the graph can be seen on fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:MASNodeSearch"
+
+\end_inset
+
+.
  We will now use this example to describe what (Russel, Norvig, 2010) calls
  a 
 \emph on
@@ -184,15 +239,9 @@ status open
 by moving it into another postition or decreasing its health.
  An indirect effect could be communicating with the agent, suggesting another
  execution path.
- As such 
-\family typewriter
-\emph on
-[unclear?]
-\family default
-\emph default
-, a system in which agents compete for ressources and hinder other agents'
- progress is a multi-agent system, as is a system in which the agents work
- together towards a common goal.
+ For instance, a system in which agents compete for ressources and hinder
+ other agents' progress is a multi-agent system, as is a system in which
+ the agents work together towards a common goal.
  
 \end_layout
 
@@ -201,10 +250,22 @@ While the former may be useful in simulating certain systems, the latter
  is more interesting in software design, as such an approach could conceivably
  lead to more decentralized problem solving.
  A mixture of the two approaches can also be used, as in the Multi-Agent
- Programming Contest 
+ Programming Contest
 \family typewriter
 \emph on
-[Link]
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+multiagentcontest.org
+\end_layout
+
+\end_inset
+
+
 \family default
 \emph default
 , where teams of cooperating agents compete for points.
@@ -218,13 +279,7 @@ In addition to the above, limiting the agents' knowledge of the state of
  be no need for the agents to communicate, and they could just as well be
  subroutines of a single agent (Panait and Luke, 2005).
  It could still be modelled as a MAS, of course, but not a very interisting
- one 
-\family typewriter
-\emph on
-[rewrite sentence]
-\family default
-\emph default
-.
+ one.
  Additionally, the case could be made that the less agents know of the world,
  the less information they have to process when searching for an action
  to execute, thus reducing their computational load.
@@ -240,7 +295,11 @@ One of the strong points of multi-agent systems is that it consists of several
  agent programs runs on different threads or servers.
  In the context of distributed systems, less dependency on a central intelligenc
 e is of course preferred.
- Furthermore, MASs are useful when simulating naturally occuring systems
+ 
+\end_layout
+
+\begin_layout Standard
+Furthermore, MASs are useful when simulating naturally occuring systems
  wherein several 
 \begin_inset Quotes eld
 \end_inset
@@ -249,12 +308,8 @@ agents
 \begin_inset Quotes erd
 \end_inset
 
- interact with each other, such as a group of different animals around a
- watering hole or costumers in a store.
- 
-\family typewriter
-\emph on
-[sentence out of context]
+ interact with each other An example of this could be a group of animals
+ around a watering hole, where some are prey and some are predators.
 \end_layout
 
 \begin_layout Subsection
@@ -262,10 +317,7 @@ The GOAL Agent Programming Language
 \end_layout
 
 \begin_layout Standard
-
-\family typewriter
-\emph on
-[Reference to the GOAL manual]
+In this section we will outline the GOAL language based on (Hindriks, 2009).
 \end_layout
 
 \begin_layout Standard
@@ -371,12 +423,12 @@ bel(
 \begin_inset Formula $\varphi$
 \end_inset
 
-.
+ holds.
 \end_layout
 
 \begin_layout Description
 Goals are what the agent strives to accomplish.
- These can be dynamically updated along the way to acommodate a changing
+ These can be dynamically updated along the way to acommodate for a changing
  world.
  This is done with the 
 \family typewriter
@@ -514,27 +566,31 @@ Several agent programming languages -- including GOAL -- is only concerned
  To provide a world in which these agents can function, they need to be
  connected to a program providing an environment.
  
-\family typewriter
-\emph on
-[Reference EIS technical report]
 \end_layout
 
 \begin_layout Standard
-EIS (Environment Interface Standard) is a tool which can be used to design
- environments and connect them to agent programming languages.
+EIS (Environment Interface Standard) 
+\family typewriter
+\emph on
+[Reference EIS technical report]
+\family default
+\emph default
+ is a Java framework, which can be used to design environments and connect
+ them to agent programming languages.
  As such, it does not assume much about the implementation of the environments
  or the agents inhabiting it.
- It provides 
+ 
+\end_layout
+
+\begin_layout Standard
+It provides 
 \family typewriter
 entities
 \family default
  which can function as the bodies of agent programs, and means for receiveing
- commands and returning percepts to the connected agents.
-\end_layout
-
-\begin_layout Standard
-When using EIS, the environment designer can handle actions sent by the
- agent programs with the 
+ commands and returning percepts to the connected agents.When using EIS,
+ the environment designer can handle actions sent by the agent programs
+ with the 
 \family typewriter
 performAction
 \family default
