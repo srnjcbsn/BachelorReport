@@ -1,4 +1,4 @@
-﻿public class VacuumMap1 : VacuumWorldBuilder
+public class VacuumMap1 : VacuumWorldBuilder
 {
 	public VacuumMap1()
 	{

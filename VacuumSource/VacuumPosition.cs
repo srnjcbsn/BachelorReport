@@ -1,4 +1,4 @@
-﻿public class VacuumPosition : XmasPosition
+public class VacuumPosition : XmasPosition
 {
 	public int PosID { get; set; }
 

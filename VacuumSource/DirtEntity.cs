@@ -1,4 +1,4 @@
-﻿//Here we define a dirt entity
+//Here we define a dirt entity
 public class DirtEntity : XmasEntity
 {
 }

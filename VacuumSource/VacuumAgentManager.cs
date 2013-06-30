@@ -1,4 +1,4 @@
-﻿public class VacuumAgentManager : AgentManager
+public class VacuumAgentManager : AgentManager
 {
 	private string name;
 
