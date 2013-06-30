@@ -72,6 +72,22 @@ To ensure that code is correctly decoupled from one another, strict design
  development might prove impossible.
  This section will cover all the rules and ideas behind the MVC (Model-View-Cont
 roller) design pattern.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{WikiMVC}
+\end_layout
+
+\end_inset
+
+ provides a short introduction to MVC, but in order to comletele comprehension
+ of the design pattern requires experience in using it.
+ Hence, this section will be based on our prior experiences with MVC.
 \end_layout
 
 \begin_layout Standard
@@ -120,7 +136,11 @@ This image shows how the three components are connected to each other; the
  it is pointing to.
  A dashed arrow indicates that the component the dashed arrow is pointing
  to is listening to the component the arrow is originating from.
- 
+ (Image taken from 
+\family typewriter
+www.htmlgoodies.com/img/2010/11/mvc.png
+\family default
+)
 \end_layout
 
 \end_inset

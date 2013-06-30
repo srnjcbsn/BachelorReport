@@ -413,7 +413,20 @@ A&A
 \family default
  (Agents and Artifacts) approach to designing environments.
  In the following, we will provide an overview of this model, which is presented
- in (Ricci et al., 2008).
+ in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Ricci08}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -445,9 +458,22 @@ Artifacts can not only be used to model objects with a physical presence
 \end_layout
 
 \begin_layout Standard
-The A&A meta-model, as described in (Ricci et al., 2008), is to some extent
- based on the way humans interact in a working environments, as it draws
- on research in fields such as organisational sciences and anthropology.
+The A&A meta-model, as described in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Ricci08}
+\end_layout
+
+\end_inset
+
+, is to some extent based on the way humans interact in a working environments,
+ as it draws on research in fields such as organisational sciences and anthropol
+ogy.
  This lead to the introduction of artifacts as tools, service providers
  and communication devices, since they better describe such an environment.
  In general, the A&A approach focuses on incorporating these concepts as
@@ -466,7 +492,20 @@ Cartago Implementation
 The Cartago framework is implemented in Java and can natively connect to
  the Jason APL.
  Here, we will explain how Cartago implements the A&A meta-model.
- A more thorough explanation can be found in (Ricci et al., 2011).
+ A more thorough explanation can be found in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Ricci11}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Description
@@ -620,57 +659,7 @@ Environment Interface Standard
 \end_layout
 
 \begin_layout Subsubsection*
-References
-\end_layout
 
-\begin_layout Standard
-Ricci et al., 
-\begin_inset Quotes eld
-\end_inset
-
-Environment programming in multi-agent systems: an artifact-based perspective
-\begin_inset Quotes erd
-\end_inset
-
-, Autonomous Agents and Multi-Agent Systems, Volume 23, Issue 2, pp.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
- 
-\end_layout
-
-\end_inset
-
-158-192, 2011
-\end_layout
-
-\begin_layout Standard
-Ricci et al., 
-\begin_inset Quotes eld
-\end_inset
-
-Artifacts in the A&A meta-model for multi-agent systems
-\begin_inset Quotes erd
-\end_inset
-
-, Autonomous Agents and Multi-Agent Systems, Volume 17, Issue 3, pp.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
- 
-\end_layout
-
-\end_inset
-
-432-456, 2008
 \end_layout
 
 \end_body

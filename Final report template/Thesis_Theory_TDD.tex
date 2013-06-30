@@ -14,9 +14,8 @@ and what problems that might occur when attempting to write unit tests.
 \includegraphics[width=0.7\textwidth]{TestWrittenCycle}
 \par\end{centering}
 
-\caption{The cycle of written test used to write production code\label{fig:TestWrittenCycle}}
-
-
+\caption{The cycle of written test used to write production code (from ~\cite{WikiTDD},
+\texttt{http://upload.wikimedia.org/wikipedia/en/9/9c/Test-driven\_development.PNG})\label{fig:TestWrittenCycle}}
 \end{figure}
 
 
@@ -88,18 +87,20 @@ It is important when doing a TDD approach to properly understand how
 to design unit tests, there are many problems that occur doing the
 process of writing unit tests. Most of these problems can be traced
 to a few common mistakes programmers do when designing a piece of
-code. 
+code. A good introduction to using test-driven development id Misko
+Hevery's lecture on the subject, see ~\cite{LectureTDD}.
 
-In truth there is nothing that can be said about writing unit tests
-that would improve the tests, there is no trick to writing them. However
-there is a lot that can be said about designing code, a correctly
-designed piece of code can make the process of making a unit test
-very easy, while a badly designed piece of code can make creating
-a unit test very difficult if not impossible. To understand what these
-bad design choices are we will go through each of them.
+As mentioned in ~\cite{LectureTDD}, there is nothing that can be
+said about writing unit tests that would improve the tests, there
+is no trick to writing them. However there is a lot that can be said
+about designing code, a correctly designed piece of code can make
+the process of making a unit test very easy, while a badly designed
+piece of code can make creating a unit test very difficult if not
+impossible. To understand what these bad design choices are we will
+go through each of them. 
 
 
-\subsection{Mixing Object creation logic with business logic}
+\subsubsection*{Mixing Object creation logic with business logic}
 
 To properly design a test for a given class in the code, you must
 have access to how an object of that class gets instantiated. This
@@ -152,11 +153,12 @@ the entire program in order to just test a single unit. By using dependency
 injection we effectively remove this issue.
 
 
-\subsection{Global State in the Code}
+\subsubsection*{Global State in the Code}
 
 Whenever you have global state in your units it becomes very difficult
-to design tests, as actions done in one test will inadvertently affect
-the result of another test. Thus by eliminating all sources of global
+to design tests, as pointed out in ~\cite{LectureSingletons}. This
+is because actions done in one test will inadvertently affect the
+result of another test. Thus by eliminating all sources of global
 state you ensure that the code which you are testing always works
 in the same manner.
 
@@ -183,8 +185,8 @@ code that is non-deterministic is untestable, since a test requires
 knowing the outcome in advance so it can be asserted if the result
 is the same.
 
-
-\subsubsection*{Examples of commonly accepted code design that produce global state}
+Here we provide two examples of commonly accepted code design that
+produce global state:
 
 
 \subparagraph*{Singletons}
@@ -205,7 +207,7 @@ they usually hide the fact that they use global state, and as such
 can easily sneak their way into the code if one is not careful. 
 
 
-\subsection{Breaking Law of Demeter}
+\subsubsection*{Breaking Law of Demeter}
 
 One thing that makes testing difficult is if an object instead of
 asking for what it needs instead asks for the object that can locate
@@ -220,8 +222,9 @@ When writing code breaking law of Demeter doesn\textquoteright{}t
 normally feel wrong however were we to do it in the real world the
 problems with it becomes immediately visible to everyone.
 
-Imagine that you are in a shop and the cashier asks for 10\texteuro.
-What would you do?
+As an example (adapted from ~\cite{WikiDemeter}) Imagine that you
+are in a shop and the cashier asks for 10\texteuro. What would you
+do?
 \begin{enumerate}
 \item Give him a 10\texteuro bill
 \item Give him the wallet and let him find the money
@@ -297,19 +300,3 @@ test to prove it works as expected
 \end{itemize}
 
 \subsubsection*{References}
-
-http://en.wikipedia.org/wiki/Law\_of\_Demeter http://en.wikipedia.org/wiki/Test-driven\_development 
-
-\textquotedbl{}The Clean Code Talks -- Unit Testing\textquotedbl{} 
-
-http://www.youtube.com/watch?v=wEhu57pih5w
-
-The Clean Code Talks - \textquotedbl{}Global State and Singletons\textquotedbl{}
-
-http://www.youtube.com/watch?v=-FRm3VPhseI 
-
-The Clean Code Talks - Don't Look For Things!
-
-http://www.youtube.com/watch?v=RlfLCWKxHJ0 \textquotedbl{}The Clean
-Code Talks -- Inheritance, Polymorphism, \& Testing\textquotedbl{}
-http://www.youtube.com/watch?v=4F72VULWFvc

@@ -74,6 +74,20 @@ Removing flexibility from a program is normally consider very bad, one way
  This section will show why this combining of object creation and business
  logic removes flexibility in the program; furthermore it will show how
  to solve this problem using the Factory Design Pattern.
+ We refer to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{WikiFactory}
+\end_layout
+
+\end_inset
+
+ for an explanation of the subject.
 \end_layout
 
 \begin_layout Subsection*

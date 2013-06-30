@@ -108,7 +108,24 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The cycle of written test used to write production code
+The cycle of written test used to write production code (from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{WikiTDD}
+\end_layout
+
+\end_inset
+
+, 
+\family typewriter
+http://upload.wikimedia.org/wikipedia/en/9/9c/Test-driven_development.PNG
+\family default
+)
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:TestWrittenCycle"
@@ -120,10 +137,6 @@ name "fig:TestWrittenCycle"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -242,21 +255,49 @@ It is important when doing a TDD approach to properly understand how to
  of writing unit tests.
  Most of these problems can be traced to a few common mistakes programmers
  do when designing a piece of code.
- 
+ A good introduction to using test-driven development id Misko Hevery's
+ lecture on the subject, see 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{LectureTDD}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-In truth there is nothing that can be said about writing unit tests that
- would improve the tests, there is no trick to writing them.
+As mentioned in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{LectureTDD}
+\end_layout
+
+\end_inset
+
+, there is nothing that can be said about writing unit tests that would
+ improve the tests, there is no trick to writing them.
  However there is a lot that can be said about designing code, a correctly
  designed piece of code can make the process of making a unit test very
  easy, while a badly designed piece of code can make creating a unit test
  very difficult if not impossible.
  To understand what these bad design choices are we will go through each
  of them.
+ 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection*
 Mixing Object creation logic with business logic
 \end_layout
 
@@ -433,13 +474,27 @@ This basically comes down to giving choice to the unit test writer, without
  By using dependency injection we effectively remove this issue.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection*
 Global State in the Code
 \end_layout
 
 \begin_layout Standard
 Whenever you have global state in your units it becomes very difficult to
- design tests, as actions done in one test will inadvertently affect the
+ design tests, as pointed out in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{LectureSingletons}
+\end_layout
+
+\end_inset
+
+.
+ This is because actions done in one test will inadvertently affect the
  result of another test.
  Thus by eliminating all sources of global state you ensure that the code
  which you are testing always works in the same manner.
@@ -507,8 +562,9 @@ Since a computer is deterministic then that means the assertion that the
  the result is the same.
 \end_layout
 
-\begin_layout Subsubsection*
-Examples of commonly accepted code design that produce global state
+\begin_layout Standard
+Here we provide two examples of commonly accepted code design that produce
+ global state:
 \end_layout
 
 \begin_layout Subparagraph*
@@ -537,7 +593,7 @@ are all cases of objects that hides global state inside them, thus if you
  
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection*
 Breaking Law of Demeter
 \end_layout
 
@@ -559,7 +615,20 @@ When writing code breaking law of Demeter doesn’t normally feel wrong however
 \end_layout
 
 \begin_layout Standard
-Imagine that you are in a shop and the cashier asks for 10
+As an example (adapted from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{WikiDemeter}
+\end_layout
+
+\end_inset
+
+) Imagine that you are in a shop and the cashier asks for 10
 \begin_inset ERT
 status open
 
@@ -808,36 +877,6 @@ Increases the develop time as all code produced must also have a unit test
 
 \begin_layout Subsubsection*
 References
-\end_layout
-
-\begin_layout Standard
-http://en.wikipedia.org/wiki/Law_of_Demeter http://en.wikipedia.org/wiki/Test-driven
-_development 
-\end_layout
-
-\begin_layout Standard
-"The Clean Code Talks -- Unit Testing" 
-\end_layout
-
-\begin_layout Standard
-http://www.youtube.com/watch?v=wEhu57pih5w
-\end_layout
-
-\begin_layout Standard
-The Clean Code Talks - "Global State and Singletons"
-\end_layout
-
-\begin_layout Standard
-http://www.youtube.com/watch?v=-FRm3VPhseI 
-\end_layout
-
-\begin_layout Standard
-The Clean Code Talks - Don't Look For Things!
-\end_layout
-
-\begin_layout Standard
-http://www.youtube.com/watch?v=RlfLCWKxHJ0 "The Clean Code Talks -- Inheritance,
- Polymorphism, & Testing" http://www.youtube.com/watch?v=4F72VULWFvc
 \end_layout
 
 \end_body

@@ -131,8 +131,20 @@ reference "fig:MASNodeSearch"
 \end_inset
 
 .
- We will now use this example to describe what (Russel, Norvig, 2010) calls
- a 
+ We will now use this example to describe what 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Norvig96}
+\end_layout
+
+\end_inset
+
+ calls a 
 \emph on
 task environment
 \emph default
@@ -205,7 +217,20 @@ cycle
 \emph on
 utility-based agents
 \emph default
- in (Russel, Norvig, 2010).
+ in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Norvig96}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -277,7 +302,20 @@ multiagentcontest.org
 In addition to the above, limiting the agents' knowledge of the state of
  the world is a desirable characteristic of a MAS; otherwise, there would
  be no need for the agents to communicate, and they could just as well be
- subroutines of a single agent (Panait and Luke, 2005).
+ subroutines of a single agent 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Panait05}
+\end_layout
+
+\end_inset
+
+.
  It could still be modelled as a MAS, of course, but not a very interisting
  one.
  Additionally, the case could be made that the less agents know of the world,
@@ -645,52 +683,6 @@ In conclusion, it is important to note that GOAL and EIS are supposed to
  be two components of a multi-agent system.
  GOAL is not supposed to maintain an environment, and EIS is not very well
  suited for implementing agent logic.
-\end_layout
-
-\begin_layout Subsubsection*
-References
-\end_layout
-
-\begin_layout Standard
-Stuart J.
- Russel, Peter Norvig, 
-\begin_inset Quotes eld
-\end_inset
-
-Artificial Intelligence: A Modern Approach
-\begin_inset Quotes erd
-\end_inset
-
-, Prentice Hall, Upper Saddle River, New Jersey 07458, 3rd ed., 2010
-\begin_inset Newline newline
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Panait, Luke, 
-\begin_inset Quotes eld
-\end_inset
-
-Cooperative Multi-Agent Learning: The State of the Art
-\begin_inset Quotes erd
-\end_inset
-
-, Autonomous Agents and Multi-Agent Systems, Volume 11, Issue 3, pp.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
- 
-\end_layout
-
-\end_inset
-
-387-434, 2005.
 \end_layout
 
 \end_body

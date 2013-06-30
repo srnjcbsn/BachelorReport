@@ -23,10 +23,9 @@ the shortest route between two nodes in a weighted, undirected graph,
 with the limitation that it can only see the nodes that have an edge
 to the one it is standing in, an example of the graph can be seen
 on fig. \ref{fig:MASNodeSearch}. We will now use this example to
-describe what (Russel, Norvig, 2010) calls a \emph{task environment},
-consisting of definitions for the performance measure for the agent,
-the environment it acts in, the actions it can take, and its facilities
-for perception:
+describe what ~\cite{Norvig96} calls a \emph{task environment}, consisting
+of definitions for the performance measure for the agent, the environment
+it acts in, the actions it can take, and its facilities for perception:
 \begin{description}
 \item [{Environment}] The environment is a model of the world the agent
 acts in. In our example, it is described as a graph. The environment
@@ -61,7 +60,7 @@ the percepts retreived so far. When choosing an action, it may take
 into consideration how different actions would affect the world, and
 how much closer performing the action would bring the agent to its
 goal. Agents with such capable agent programs are called \emph{utility-based
-agents} in (Russel, Norvig, 2010).
+agents} in ~\cite{Norvig96}.
 
 
 \subsection{Multi-Agent Systems}
@@ -93,8 +92,8 @@ is measured by competitiveness.
 In addition to the above, limiting the agents' knowledge of the state
 of the world is a desirable characteristic of a MAS; otherwise, there
 would be no need for the agents to communicate, and they could just
-as well be subroutines of a single agent (Panait and Luke, 2005).
-It could still be modelled as a MAS, of course, but not a very interisting
+as well be subroutines of a single agent ~\cite{Panait05}. It could
+still be modelled as a MAS, of course, but not a very interisting
 one. Additionally, the case could be made that the less agents know
 of the world, the less information they have to process when searching
 for an action to execute, thus reducing their computational load.
@@ -246,15 +245,3 @@ In conclusion, it is important to note that GOAL and EIS are supposed
 to be two components of a multi-agent system. GOAL is not supposed
 to maintain an environment, and EIS is not very well suited for implementing
 agent logic.
-
-
-\subsubsection*{References}
-
-Stuart J. Russel, Peter Norvig, ``Artificial Intelligence: A Modern
-Approach'', Prentice Hall, Upper Saddle River, New Jersey 07458,
-3rd ed., 2010\\
-
-
-Panait, Luke, ``Cooperative Multi-Agent Learning: The State of the
-Art'', Autonomous Agents and Multi-Agent Systems, Volume 11, Issue
-3, pp.\ 387-434, 2005.
