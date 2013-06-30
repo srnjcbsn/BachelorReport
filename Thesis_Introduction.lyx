@@ -67,7 +67,7 @@ Background
 \begin_layout Standard
 MASs (multi-agent systems) is an important research topic in the field of
  AI (artificial intelligence) as they consist of several intelligent agents
- interacting and cooperating to reach some goal.
+ interacting and cooperating to reach a specific goal.
  This lends itself well to distributed computing, following the recent (since
  the turn of the millenium) trend of designing processors with more cores
  rather than better ones.
@@ -96,8 +96,8 @@ Motivation
 
 \begin_layout Standard
 While there exists many multi-agent programming languages, there are few
- tools for constructing environments for the agents to behave in which allows
- for easy graphical representation.
+ tools for constructing environments for the agents to behave in, which
+ also allows for easy graphical representation.
  
 \end_layout
 
@@ -106,8 +106,8 @@ There are many complications when developing multi agent systems, our goal
  with this project was to lessen one of these by designing an engine with
  the specific purpose to develop multi agent environments.
  What these environments can be is left to the developer, however almost
- everything in the engine is modular and interchangeable, ensuring that
- all types of multi agent environments are possible.
+ everything in the engine we propose is modular and interchangeable, ensuring
+ that all types of multi agent environments are possible.
  
 \end_layout
 
@@ -122,10 +122,10 @@ Agent comparison software
 
 \begin_layout Standard
 There are many different languages in which it is possible to write agent
- programs, some are specifically designed for it others are powerful enough
+ programs; some are specifically designed for it, others are powerful enough
  to accommodate the possibility of agent programming.
  Our engine is designed with support for multiple languages at once which
- makes this engine a perfect candidate for designing a comparator program.
+ makes this engine a suitable candidate for designing a comparator program.
  
 \end_layout
 
@@ -142,7 +142,7 @@ Agent testing/Simulation software
 \begin_layout Standard
 Testing agent software can be complicated.
  Being able to rapidly create an environment and visualize it can be important
- to the project, as it ensure basic mistakes are ironed out before larger
+ to a MAS project, as it ensure basic mistakes are ironed out before larger
  scale implementation.
  
 \end_layout
@@ -155,9 +155,9 @@ Agent teaching tools
 Teaching agent languages can be tough without proper exercises; however,
  the time spent on designing these exercises can prove too exhausting for
  the teacher to develop.
- In this case the teacher can rapidly design the world he had in mind for
- his exercise instead of designing every integral part of the multi agent
- system himself.
+ Using our engine the teacher can rapidly design the world he had in mind
+ for his exercise instead of designing every integral part of the multi
+ agent system himself.
  This is because our engine provides all the basic features of a multi agent
  system, so that the time can be spent more productively on designing how
  a given exercise should play out, showcasing the problem the students are
@@ -169,19 +169,20 @@ Computer games
 \end_layout
 
 \begin_layout Standard
-In theory most computer games are just multi agent programs where one of
- the agents is controlled by the player.
- Our engine should make it fairly easy for setting up a framework for creating
+In practice most computer games are just multi agent programs where one
+ of the agents is controlled by the player.
+ Our engine should make it fairly easy by setting up framework for creating
  rules inside a given world and ensure that the agents of the world follow
- said rules.
- 
-\family typewriter
-\emph on
-[Expand]
+ said rules, thus defining a game which the engine would be capable of running.
 \end_layout
 
 \begin_layout Section*
 Goals
+\end_layout
+
+\begin_layout Standard
+The engine which we propose must reach a list of goals in order for us to
+ deem the project succesful:
 \end_layout
 
 \begin_layout Description
@@ -229,7 +230,7 @@ Overview of the Report
 \end_layout
 
 \begin_layout Standard
-In this report we will document our efforts to design an engine as described
+In this report we will document our efforts to design an engine as described
  above.
  The report is structured as follows: 
 \end_layout
