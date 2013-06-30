@@ -71,7 +71,7 @@ Test Driven Development
 Designing code using a test first approach helps direct the design of the
  code in a way that makes it more flexible.
  This section will cover how to properly perform such a feat along with
- helpful advice on how to handle certain aspects of the process TDD
+ helpful advice on how to handle certain aspects of the TDD
 \begin_inset Foot
 status open
 
@@ -81,7 +81,7 @@ Test Driven Development
 
 \end_inset
 
-.
+ process.
  As such it will also explain the ways unit tests should be used and what
  problems that might occur when attempting to write unit tests.
  
@@ -166,15 +166,16 @@ reference "fig:TestWrittenCycle"
 \end_inset
 
 , as is shown on the fig.
- the idea is that you behind the development of a unit in the program by
+ the idea is that you begin the development of a unit in the program by
  writing a test.
  The test is then used to develop the actual production code, once all tests
  succeed you clean up the code and start the process is over.
  After multiple iterations you ensure that not only does your code have
  all the features you want, but that those features work as you would expect.
  Furthermore if new features were requested at a later time it would be
- quite easy to simply add new tests.
- 
+ quite easy to simply add new tests, and begin development of the new features,
+ while using the old tests to ensure the old features wasn't ruined.
+ [CHANGED]
 \end_layout
 
 \begin_layout Standard
@@ -224,7 +225,7 @@ This specification will enforce that the final calculator can perform all
 
 \begin_layout Standard
 However the great thing about using TDD is that you can go deeper and specify
- how the exact outcome of should be, assume that you wanted to ensure that
+ how the exact outcome should be, assume that you wanted to ensure that
  when the calculator divides by zero, an error is thrown.
  To do this all that is required is to simply add a new test:
 \end_layout
@@ -255,7 +256,7 @@ It is important when doing a TDD approach to properly understand how to
  of writing unit tests.
  Most of these problems can be traced to a few common mistakes programmers
  do when designing a piece of code.
- A good introduction to using test-driven development id Misko Hevery's
+ A good introduction to using test-driven development is Misko Hevery's
  lecture on the subject, see 
 \begin_inset ERT
 status open
@@ -505,7 +506,7 @@ Most people when developing code do not even notice that they are writing
  code with global state in it, this is because global state can show up
  in multiple forms.
  By definition global state occurs every time a piece of code knows about
- something that is has no reference to thus it has reference to something
+ something that is has no reference to, thus it has reference to something
  that is globally accessible.
 \end_layout
 
@@ -572,10 +573,10 @@ Singletons
 \end_layout
 
 \begin_layout Standard
-are objects is only instantiated once their instantiation is located on
- a global variable, since the variable on which the singleton is located
- is global, that means all objects that use the singleton has their state
- bound to that of the singleton.
+are objects that is only instantiated once.
+ Their instantiation is located on a global variable, since the variable
+ on which the singleton is located is global, that means all objects that
+ use the singleton has their state bound to that of the singleton.
 \end_layout
 
 \begin_layout Subparagraph*
@@ -823,8 +824,8 @@ Summary
 While a TDD approach will increase the workload of the project as it will
  require the developer to write a lot of tests, it does so much in return
  for a project.
- The best things about TDD it provides specification of the programs individual
- units which could be hard to properly formulate in words.
+ The best things about TDD is it provides specification of the programs
+ individual units which could be hard to properly formulate in words.
  Furthermore it also enforces good code design practices this means that
  people in the development team that easily succumb to making bad design
  decisions are stopped by the fact that they are unable to write tests for
@@ -873,10 +874,6 @@ Has a learning curve for those no familiar with TDD
 \begin_layout Itemize
 Increases the develop time as all code produced must also have a unit test
  to prove it works as expected
-\end_layout
-
-\begin_layout Subsubsection*
-References
 \end_layout
 
 \end_body
