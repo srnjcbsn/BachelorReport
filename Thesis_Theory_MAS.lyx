@@ -262,6 +262,13 @@ The GOAL Agent Programming Language
 \end_layout
 
 \begin_layout Standard
+
+\family typewriter
+\emph on
+[Reference to the GOAL manual]
+\end_layout
+
+\begin_layout Standard
 Several APLs (Agent Programming Languages) have been developed to suit the
  defining characters of agents and their interaction with environments as
  we have described them above.
@@ -478,8 +485,90 @@ action specification
  hold.
  If it does hold and the action is taken, the logical statements in the
  postcondition is inserted into the belief base.
- Obviously, postconditions should only be used when it is guaranteed that
- the action will have the desired effect.
+ 
+\end_layout
+
+\begin_layout Standard
+When an action have been chosen in GOAL, it is only 
+\emph on
+set
+\emph default
+ to be executed, that is, GOAL requests that it be executed.
+ It might be that the program managing the agent in the environment sees
+ fit to not execute it, or that the action fails (if the agent tries to
+ move into a wall, for example).
+ In that case, GOAL only knows about the failure of the action if it is
+ somehow obvious from the next set of percepts it receives.
+ In light of this, postconditions on actions should only be used when it
+ absolutely certain that what the postcondition specifies is true, as it
+ may otherwise insert flawed information into the agents beliefs.
+\end_layout
+
+\begin_layout Subsection
+The Environment Interface Standard
+\end_layout
+
+\begin_layout Standard
+Several agent programming languages -- including GOAL -- is only concerned
+ with the agent logic of a MAS.
+ To provide a world in which these agents can function, they need to be
+ connected to a program providing an environment.
+ 
+\family typewriter
+\emph on
+[Reference EIS technical report]
+\end_layout
+
+\begin_layout Standard
+EIS (Environment Interface Standard) is a tool which can be used to design
+ environments and connect them to agent programming languages.
+ As such, it does not assume much about the implementation of the environments
+ or the agents inhabiting it.
+ It provides 
+\family typewriter
+entities
+\family default
+ which can function as the bodies of agent programs, and means for receiveing
+ commands and returning percepts to the connected agents.
+\end_layout
+
+\begin_layout Standard
+When using EIS, the environment designer can handle actions sent by the
+ agent programs with the 
+\family typewriter
+performAction
+\family default
+ method to define exactly how they affect the world the designer have constructe
+d.
+ Percepts can be requested explicitly through the 
+\family typewriter
+getAllPercepts
+\family default
+ method (this is how GOAL gets its percepts from EIS) or as notifications,
+ for APLs that support it.
+ 
+\end_layout
+
+\begin_layout Standard
+The main point of EIS is to provide a standard (hence the name) for developing
+ MASs, such that environments designed with this standard can easily be
+ interfaced with different APLs.
+ As such, EIS comes pre-loaded with bindings for several common APLs such
+ as GOAL and Jason.
+ As part of this standard, the IILang (Interface Immediate Language) abstract
+ syntax tree have been developed.
+ It can be used to easily and unambiguously define actions and percepts
+ consisting of identifiers, numerals, representations of functions over
+ identifiers and numerals, and lists of identifiers, numerals and functions.
+ These IILang objects can be created as native Java objects and easily parsed
+ to -- in the case of GOAL -- prolog statements, and vice versa.
+\end_layout
+
+\begin_layout Standard
+In conclusion, it is important to note that GOAL and EIS are supposed to
+ be two components of a multi-agent system.
+ GOAL is not supposed to maintain an environment, and EIS is not very well
+ suited for implementing agent logic.
 \end_layout
 
 \begin_layout Subsubsection*
