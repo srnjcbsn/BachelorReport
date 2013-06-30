@@ -325,7 +325,7 @@ status open
 
 ~
 \backslash
-cite{Hindriks06}
+cite{Hindriks09}
 \end_layout
 
 \end_inset
@@ -583,11 +583,18 @@ Several agent programming languages -- including GOAL -- is only concerned
 
 \begin_layout Standard
 EIS (Environment Interface Standard) 
-\family typewriter
-\emph on
-[Reference EIS technical report]
-\family default
-\emph default
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{EIS09}
+\end_layout
+
+\end_inset
+
  is a Java framework, which can be used to design environments and connect
  them to agent programming languages.
  As such, it does not assume much about the implementation of the environments

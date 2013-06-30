@@ -6,7 +6,7 @@
 
 \begin{figure}
 \begin{centering}
-\includegraphics[width=0.5\textwidth,bb = 0 0 200 100, draft, type=eps]{MASNodeSearch.png}
+\includegraphics[width=0.5\textwidth]{MASNodeSearch}
 \par\end{centering}
 
 \caption{What an agent can see of a graph where it tries to move from node
@@ -117,7 +117,7 @@ are prey and some are predators.
 
 \subsection{The GOAL Agent Programming Language}
 
-In this section we will outline the GOAL language based on ~\cite{Hindriks06}.
+In this section we will outline the GOAL language based on ~\cite{Hindriks09}.
 
 Several APLs (Agent Programming Languages) have been developed to
 suit the defining characters of agents and their interaction with
@@ -216,11 +216,10 @@ with the agent logic of a MAS. To provide a world in which these agents
 can function, they need to be connected to a program providing an
 environment. 
 
-EIS (Environment Interface Standard) \texttt{\emph{{[}Reference EIS
-technical report{]}}} is a Java framework, which can be used to design
-environments and connect them to agent programming languages. As such,
-it does not assume much about the implementation of the environments
-or the agents inhabiting it. 
+EIS (Environment Interface Standard) ~\cite{EIS09} is a Java framework,
+which can be used to design environments and connect them to agent
+programming languages. As such, it does not assume much about the
+implementation of the environments or the agents inhabiting it. 
 
 It provides \texttt{entities} which can function as the bodies of
 agent programs, and means for receiveing commands and returning percepts
