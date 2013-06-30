@@ -102,7 +102,7 @@ filename "Thesis_Theory_MAS.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Theory_MVC.lyx"
 
 \end_inset
@@ -112,7 +112,7 @@ filename "Thesis_Theory_MVC.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Theory_Factory_Design.lyx"
 
 \end_inset
@@ -122,7 +122,7 @@ filename "Thesis_Theory_Factory_Design.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Theory_TDD.lyx"
 
 \end_inset
@@ -156,8 +156,11 @@ filename "Thesis_System_Features_Overview.lyx"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Virtual_World.lyx"
 
 \end_inset
@@ -167,7 +170,7 @@ filename "Thesis_System_Features_Virtual_World.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Events_and_Triggers.lyx"
 
 \end_inset
@@ -177,7 +180,7 @@ filename "Thesis_System_Features_Events_and_Triggers.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Actions.lyx"
 
 \end_inset
@@ -187,7 +190,7 @@ filename "Thesis_System_Features_Actions.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Converters.lyx"
 
 \end_inset
@@ -197,7 +200,7 @@ filename "Thesis_System_Features_Converters.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Agent_Controllers.lyx"
 
 \end_inset
@@ -207,7 +210,7 @@ filename "Thesis_System_Features_Agent_Controllers.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Views.lyx"
 
 \end_inset
@@ -217,7 +220,7 @@ filename "Thesis_System_Features_Views.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_System_Features_Engine_Extensions.lyx"
 
 \end_inset
@@ -241,7 +244,7 @@ filename "Thesis_Implementation_Architecture.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Implementation_Model.lyx"
 
 \end_inset
@@ -251,7 +254,7 @@ filename "Thesis_Implementation_Model.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Implementation_Agent_Controllers.lyx"
 
 \end_inset
@@ -261,7 +264,7 @@ filename "Thesis_Implementation_Agent_Controllers.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Implementation_Views.lyx"
 
 \end_inset
@@ -271,7 +274,7 @@ filename "Thesis_Implementation_Views.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Implementation_Engine_Extensions.lyx"
 
 \end_inset
@@ -281,7 +284,7 @@ filename "Thesis_Implementation_Engine_Extensions.lyx"
 
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand include
+LatexCommand input
 filename "Thesis_Implementation_Reference_Implementation.lyx"
 
 \end_inset
@@ -438,6 +441,16 @@ status collapsed
 
 \begin_layout Chapter
 Usage Example / Hello World! / Vacuum World
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Thesis_Appendix_Vacuum_World_Example.lyx"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
