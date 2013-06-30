@@ -3,8 +3,8 @@
 
 MASs (multi-agent systems) is an important research topic in the field
 of AI (artificial intelligence) as they consist of several intelligent
-agents interacting and cooperating to reach some goal. This lends
-itself well to distributed computing, following the recent (since
+agents interacting and cooperating to reach a specific goal. This
+lends itself well to distributed computing, following the recent (since
 the turn of the millenium) trend of designing processors with more
 cores rather than better ones. Multi-Agent Systems have also been
 used to simulate naturally occurring systems, where several autonomous
@@ -21,15 +21,15 @@ notion of an \emph{environment} in which they can interact.
 \section*{Motivation}
 
 While there exists many multi-agent programming languages, there are
-few tools for constructing environments for the agents to behave in
-which allows for easy graphical representation. 
+few tools for constructing environments for the agents to behave in,
+which also allows for easy graphical representation. 
 
 There are many complications when developing multi agent systems,
 our goal with this project was to lessen one of these by designing
 an engine with the specific purpose to develop multi agent environments.
 What these environments can be is left to the developer, however almost
-everything in the engine is modular and interchangeable, ensuring
-that all types of multi agent environments are possible. 
+everything in the engine we propose is modular and interchangeable,
+ensuring that all types of multi agent environments are possible. 
 
 What the types of projects can be is manyfold but here are some possible
 examples:
@@ -38,10 +38,11 @@ examples:
 \paragraph*{Agent comparison software}
 
 There are many different languages in which it is possible to write
-agent programs, some are specifically designed for it others are powerful
-enough to accommodate the possibility of agent programming. Our engine
-is designed with support for multiple languages at once which makes
-this engine a perfect candidate for designing a comparator program. 
+agent programs; some are specifically designed for it, others are
+powerful enough to accommodate the possibility of agent programming.
+Our engine is designed with support for multiple languages at once
+which makes this engine a suitable candidate for designing a comparator
+program. 
 
 For instance, if two groups wanted to test their agent programs against
 each other, this engine would make it possible for them to easily
@@ -51,33 +52,36 @@ design a world in which this test could occur.
 \paragraph*{Agent testing/Simulation software}
 
 Testing agent software can be complicated. Being able to rapidly create
-an environment and visualize it can be important to the project, as
-it ensure basic mistakes are ironed out before larger scale implementation. 
+an environment and visualize it can be important to a MAS project,
+as it ensure basic mistakes are ironed out before larger scale implementation. 
 
 
 \paragraph*{Agent teaching tools}
 
 Teaching agent languages can be tough without proper exercises; however,
 the time spent on designing these exercises can prove too exhausting
-for the teacher to develop. In this case the teacher can rapidly design
-the world he had in mind for his exercise instead of designing every
-integral part of the multi agent system himself. This is because our
-engine provides all the basic features of a multi agent system, so
-that the time can be spent more productively on designing how a given
-exercise should play out, showcasing the problem the students are
-supposed to deal with.
+for the teacher to develop. Using our engine the teacher can rapidly
+design the world he had in mind for his exercise instead of designing
+every integral part of the multi agent system himself. This is because
+our engine provides all the basic features of a multi agent system,
+so that the time can be spent more productively on designing how a
+given exercise should play out, showcasing the problem the students
+are supposed to deal with.
 
 
 \paragraph*{Computer games}
 
-In theory most computer games are just multi agent programs where
+In practice most computer games are just multi agent programs where
 one of the agents is controlled by the player. Our engine should make
-it fairly easy for setting up a framework for creating rules inside
-a given world and ensure that the agents of the world follow said
-rules. \texttt{\emph{{[}Expand{]}}}
+it fairly easy by setting up framework for creating rules inside a
+given world and ensure that the agents of the world follow said rules,
+thus defining a game which the engine would be capable of running.
 
 
 \section*{Goals}
+
+The engine which we propose must reach a list of goals in order for
+us to deem the project succesful:
 \begin{description}
 \item [{Generality:}] By this, we mean that components developed with our
 engine should be \emph{reusable} in the sense that they should be

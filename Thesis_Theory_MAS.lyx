@@ -317,7 +317,20 @@ The GOAL Agent Programming Language
 \end_layout
 
 \begin_layout Standard
-In this section we will outline the GOAL language based on (Hindriks, 2009).
+In this section we will outline the GOAL language based on 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+cite{Hindriks06}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard

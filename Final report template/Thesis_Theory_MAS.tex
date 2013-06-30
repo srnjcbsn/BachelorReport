@@ -4,15 +4,29 @@
 
 \subsection{Agents and Environments in Artificial Intelligence}
 
+\begin{figure}
+\begin{centering}
+\includegraphics[width=0.5\textwidth,bb = 0 0 200 100, draft, type=eps]{MASNodeSearch.png}
+\par\end{centering}
+
+\caption{What an agent can see of a graph where it tries to move from node
+A to node B.\label{fig:MASNodeSearch}}
+
+
+\end{figure}
+
+
 In artificial intelligence, an agent is something that can perform
 actions in and (partially or fully) perceive the state of the environment
 it is situated in. As an example, consider an agent tasked with finding
 the shortest route between two nodes in a weighted, undirected graph,
 with the limitation that it can only see the nodes that have an edge
-to the one it is standing in. We will now use this example to describe
-what (Russel, Norvig, 2010) calls a \emph{task environment}, consisting
-of definitions for the performance measure for the agent, the environment
-it acts in, the actions it can take, and its facilities for perception:
+to the one it is standing in, an example of the graph can be seen
+on fig. \ref{fig:MASNodeSearch}. We will now use this example to
+describe what (Russel, Norvig, 2010) calls a \emph{task environment},
+consisting of definitions for the performance measure for the agent,
+the environment it acts in, the actions it can take, and its facilities
+for perception:
 \begin{description}
 \item [{Environment}] The environment is a model of the world the agent
 acts in. In our example, it is described as a graph. The environment
@@ -61,45 +75,49 @@ is that each agent can be aware of the others and affect their execution
 directly or indirectly. Here, a direct effect means changing another
 agents state, eg.\ by moving it into another postition or decreasing
 its health. An indirect effect could be communicating with the agent,
-suggesting another execution path. As such \texttt{\emph{{[}unclear?{]}}},
-a system in which agents compete for ressources and hinder other agents'
-progress is a multi-agent system, as is a system in which the agents
-work together towards a common goal. 
+suggesting another execution path. For instance, a system in which
+agents compete for ressources and hinder other agents' progress is
+a multi-agent system, as is a system in which the agents work together
+towards a common goal. 
 
 While the former may be useful in simulating certain systems, the
 latter is more interesting in software design, as such an approach
 could conceivably lead to more decentralized problem solving. A mixture
 of the two approaches can also be used, as in the Multi-Agent Programming
-Contest \texttt{\emph{{[}Link{]}}}, where teams of cooperating agents
-compete for points. In this case, the goal for each team is to develop
-the best strategy, where performance is measured by competitiveness.
+Contest\texttt{\emph{}}%
+\footnote{\texttt{multiagentcontest.org}%
+}, where teams of cooperating agents compete for points. In this case,
+the goal for each team is to develop the best strategy, where performance
+is measured by competitiveness.
 
 In addition to the above, limiting the agents' knowledge of the state
 of the world is a desirable characteristic of a MAS; otherwise, there
 would be no need for the agents to communicate, and they could just
 as well be subroutines of a single agent (Panait and Luke, 2005).
 It could still be modelled as a MAS, of course, but not a very interisting
-one \texttt{\emph{{[}rewrite sentence{]}}}. Additionally, the case
-could be made that the less agents know of the world, the less information
-they have to process when searching for an action to execute, thus
-reducing their computational load. On the other hand, less information
-can cause the agent to follow a suboptimal execution path, causing
-a trade-off between computation time and optimality. 
+one. Additionally, the case could be made that the less agents know
+of the world, the less information they have to process when searching
+for an action to execute, thus reducing their computational load.
+On the other hand, less information can cause the agent to follow
+a suboptimal execution path, causing a trade-off between computation
+time and optimality. 
 
 One of the strong points of multi-agent systems is that it consists
 of several pieces of software running more or less autonomously. As
 mentioned above, this allows for developing decentralized systems,
 where agent programs runs on different threads or servers. In the
 context of distributed systems, less dependency on a central intelligence
-is of course preferred. Furthermore, MASs are useful when simulating
-naturally occuring systems wherein several ``agents'' interact with
-each other, such as a group of different animals around a watering
-hole or costumers in a store. \texttt{\emph{{[}sentence out of context{]}}}
+is of course preferred. 
+
+Furthermore, MASs are useful when simulating naturally occuring systems
+wherein several ``agents'' interact with each other An example of
+this could be a group of animals around a watering hole, where some
+are prey and some are predators.
 
 
 \subsection{The GOAL Agent Programming Language}
 
-\texttt{\emph{{[}Reference to the GOAL manual{]}}}
+In this section we will outline the GOAL language based on ~\cite{Hindriks06}.
 
 Several APLs (Agent Programming Languages) have been developed to
 suit the defining characters of agents and their interaction with
@@ -132,9 +150,9 @@ the rules and constants of the system.
 its knowledge. Beliefs can be updated at runtime by using the \texttt{insert($\varphi$)}
 and \texttt{delete($\varphi$)} commands, where\texttt{ $\varphi$}
 is a belief. The \texttt{bel($\varphi$)} operation can be used to
-ascertain whether the agent believes that $\varphi$.
+ascertain whether the agent believes that $\varphi$ holds.
 \item [{Goals}] are what the agent strives to accomplish. These can be
-dynamically updated along the way to acommodate a changing world.
+dynamically updated along the way to acommodate for a changing world.
 This is done with the \texttt{adopt($\varphi$)} and \texttt{drop($\varphi$)}
 commands, where $\varphi$ is a goal. \texttt{goal($\varphi$)} checks
 whether $\varphi$ is currently a goal of the agent. If a goal have
@@ -196,20 +214,21 @@ the agents beliefs.
 Several agent programming languages -- including GOAL -- is only concerned
 with the agent logic of a MAS. To provide a world in which these agents
 can function, they need to be connected to a program providing an
-environment. \texttt{\emph{{[}Reference EIS technical report{]}}}
+environment. 
 
-EIS (Environment Interface Standard) is a tool which can be used to
-design environments and connect them to agent programming languages.
-As such, it does not assume much about the implementation of the environments
-or the agents inhabiting it. It provides \texttt{entities} which can
-function as the bodies of agent programs, and means for receiveing
-commands and returning percepts to the connected agents.
+EIS (Environment Interface Standard) \texttt{\emph{{[}Reference EIS
+technical report{]}}} is a Java framework, which can be used to design
+environments and connect them to agent programming languages. As such,
+it does not assume much about the implementation of the environments
+or the agents inhabiting it. 
 
-When using EIS, the environment designer can handle actions sent by
-the agent programs with the \texttt{performAction} method to define
-exactly how they affect the world the designer have constructed. Percepts
-can be requested explicitly through the \texttt{getAllPercepts} method
-(this is how GOAL gets its percepts from EIS) or as notifications,
+It provides \texttt{entities} which can function as the bodies of
+agent programs, and means for receiveing commands and returning percepts
+to the connected agents.When using EIS, the environment designer can
+handle actions sent by the agent programs with the \texttt{performAction}
+method to define exactly how they affect the world the designer have
+constructed. Percepts can be requested explicitly through the \texttt{getAllPercepts}
+method (this is how GOAL gets its percepts from EIS) or as notifications,
 for APLs that support it. 
 
 The main point of EIS is to provide a standard (hence the name) for
