@@ -84,10 +84,11 @@ position
 \end_layout
 
 \begin_layout Standard
-To give an example of how these positions should look like, imagine a tile
- based environment, the world could consist of a two dimensional array containin
-g lists of entities, with each field representing a tile, and positions
- represented as 
+To give an example of what these positions should look like, imagine a tile
+ based environment.
+ The world could then consist of a two dimensional array containing lists
+ of entities, with each field representing a tile, and positions represented
+ as 
 \begin_inset Formula $(x,y)$
 \end_inset
 
@@ -481,7 +482,7 @@ AgentController
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "SystemFeaturesAgentControllers"
+reference "sec:SystemFeaturesAgentControllers"
 
 \end_inset
 

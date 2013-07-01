@@ -80,7 +80,7 @@ Concept
 \begin_layout Standard
 In the natural world, all actions have a reaction, these reactions could
  be thought of as events meant to trigger when such actions are performed.
- Thus an engine for modeling a virtual environment must provide as many
+ Thus, an engine for modeling a virtual environment must provide as many
  features as those of the real world environment.
 \end_layout
 
@@ -93,12 +93,9 @@ To be clear, an event in the context of this engine is the occurrence of
  something, for instance an event could be that “an Agent has moved”, or
  “an Agent has picked up an item”.
  Furthermore, an event also has the duty of providing necessary information
- for the listener, giving the listener a correct idea of the meaning behind
- an event.
- In the case of the event which signified the movement of an agent, it is
- necessary to provide the listener 
+ for the listener
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Listeners refer to the object which is listening to the occurrence of an
@@ -107,8 +104,10 @@ Listeners refer to the object which is listening to the occurrence of an
 
 \end_inset
 
- with information of which direction the agent moved, where its starting
- position is and how far it has moved.
+, giving the listener a correct idea of the meaning behind an event.
+ In the case of the event which signifies the movement of an agent, it is
+ necessary to provide the listener with information of which direction the
+ agent moved, where its starting position is and how far it has moved.
  Since a listener might be operating in a different thread, the listener
  is completely dependent on this information, as it might no longer be retrievab
 le at the time the event is being analyzed.
@@ -148,7 +147,7 @@ events are what the trigger is listening for.
  These can be any type of event, and a trigger can be registered to any
  number of events.
  But only one event is required to “trigger” a Trigger.
- For instance, if a Trigger is listening on both the events “10 seconds
+ For instance, if a Trigger is listening on both of the events “10 seconds
  passed” and “Agent has moved”, then the Trigger will be “triggered” when
  either of these events occur.
  However it will be triggered each and every time such event has occurred
