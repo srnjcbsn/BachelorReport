@@ -111,7 +111,14 @@ The specific way actions and events are designed.
  as discussed in section 
 \family typewriter
 \emph on
-[insert section number]
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:ImplementationEventsTriggers"
+
+\end_inset
+
+
 \family default
 \emph default
 .

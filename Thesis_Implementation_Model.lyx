@@ -237,6 +237,13 @@ reference "sub:SysFeatEntities"
 
 \begin_layout Subsection
 Events and Triggers
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:ImplementationEventsTriggers"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
