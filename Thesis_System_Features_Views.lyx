@@ -219,11 +219,7 @@ EntityView
 \family typewriter
 ThreadSafeEventQueue
 \family default
- from the entity and attaches that 
-\family typewriter
-ThreadSafeEventQueue
-\family default
- to the 
+ from the entity and attaches it to the 
 \family typewriter
 ThreadSafeEventManager
 \family default
@@ -236,7 +232,8 @@ XmasView
 \family typewriter
 XmasView 
 \family default
-wishes to listen on should be done by registering its triggers to the 
+wishes to listen on should be subscribed to by registering its triggers
+ on the 
 \family typewriter
 ThreadSafeEventQueue
 \family default
@@ -278,7 +275,7 @@ EntityView
 \family typewriter
 XmasEntity
 \family default
- one is required to register all types of 
+, one is required to register all types of 
 \family typewriter
 XmasEntities
 \family default

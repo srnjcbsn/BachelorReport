@@ -89,31 +89,30 @@ converters
 \end_layout
 
 \begin_layout Standard
-To user our converter one simply extends the 
+To use our converter, the designer simply extends the 
 \family typewriter
 XmasConversionTool
 \family default
- class then procides to define what type he wishes to convert from and to
- 
+ class, then proceeds to define what foreign type he wishes to convert from
+ or to an internal 
 \family typewriter
-XmasObjects
+XmasType
 \family default
 .
- After this the user defines each individual object of the foreign type
+ After this, the user defines each individual object of the foreign type
  by extending the 
 \family typewriter
 XmasConverter
 \family default
  class.
- Once this task is complete the converters objects are added to the Tool
- object, thus the conversion of a Foreign object type to and from Xmas object
- types are now possible.
+ Once this task is complete, the converter objects are added to the Tool
+ object, and conversion between foreign and internal types are now possible.
  
 \end_layout
 
 \begin_layout Standard
-This feature is used as part of our EIS extension for converting IILanguage
- data into Xmas percepts/actions.
+This feature is used as part of our EIS extension for converting IILang
+ data into XMAS percepts/actions.
 \end_layout
 
 \end_body

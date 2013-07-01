@@ -141,15 +141,6 @@ Concept
 
 \begin_layout Standard
 The engine is designed to support the ability to be adapted for all APL
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Agent Programming Language
-\end_layout
-
-\end_inset
-
  types, this means that the engine itself does not support all APLs but
  instead provides a framework for quickly designing interfaces between the
  engine and any APL.
@@ -177,18 +168,18 @@ AgentController
 \family typewriter
 AgentManager
 \family default
- is in that sense much akin to an Abstract Factory(see sec.
+ is in that sense much akin to an Abstract Factory (see sec.
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "TheoryFactoryDesignPattern"
+reference "sec:TheoryFactoryDesignPattern"
 
 \end_inset
 
-) , which according to the design pattern requires that an abstract class
- has a method generating a certain type of what object but not exactly which
- object.
- The idea is of course that if you have a 
+) , which -- according to the design pattern -- is an abstract class with
+ a method generating a certain type of object, without restricting exactly
+ which object is generated, as long as it is of the specified type.
+ The idea is that if you have a 
 \family typewriter
 GoalAgentManager
 \family default
@@ -205,8 +196,8 @@ AgentController
 \family typewriter
 AgentManager
 \family default
- are abstract thus, we ensure at compile time that the engine framework
- is properly used
+ are abstract.
+ Thus, we ensure at compile time that the engine framework is properly used
 \family typewriter
 \emph on
 .
@@ -221,19 +212,10 @@ The
 \family typewriter
 AgentController
 \family default
- is the link between a single agent and the AP 
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Agent Program
-\end_layout
-
-\end_inset
-
-.
- Its job is to take all commands directed to it and transform them into
- actions understood by the engine, and apply them to the agent that it controls.
+ is the link between a single agent and the AP.
+ Its job is to take all commands sent to it by the connected AP, transform
+ them into actions understood by the engine, and apply them to the agent
+ that it controls.
 \end_layout
 
 \begin_layout Standard
@@ -347,7 +329,7 @@ AgentManager
 \family default
  to locate the agent it wishes to assume control of.
  The agent is located through a string (its name) which is unique to it
- and ensures only one agent is taken.
+ and ensures that only one agent is taken.
  When the 
 \family typewriter
 AgentManager
@@ -381,12 +363,20 @@ AgentController
 \end_layout
 
 \begin_layout Subsection
-How to use
+How to use agent controllers
 \end_layout
 
 \begin_layout Standard
-To use the built in controller features of the engine, the designer must
- provide his own implementations of the AgentController and the AgentManager.
+To use the built-in controller features of the engine, the designer must
+ provide his own implementations of 
+\family typewriter
+AgentController
+\family default
+ and
+\family typewriter
+ AgentManager
+\family default
+.
  The designer must do this for every different APL he wishes to use in the
  engine.
 \end_layout
@@ -400,9 +390,8 @@ AgentManger
 \family typewriter
 AgentController
 \family default
- both provides functionality as part of their own classes but also directly
- states to the designer what methods that must be implemented for the classes
- to function.
+ both provides functionality as part of their own classes but also requires
+ some methods that must be implemented for the classes to function.
 \end_layout
 
 \begin_layout Standard
@@ -421,18 +410,19 @@ AgentManager
  does provide some assistance in that regard, in the form of a agent locating
  method defined as: 
 \family typewriter
-TakeControlOf takes AgentName
+TakeControlOf
 \family default
+, which takes the name of an agent as a string, and returns the corresponding
  
 \family typewriter
-returns Agent
+Agent
 \family default
 .
- Furthermore it should be noted that the 
+ Furthermore, it should be noted that the 
 \family typewriter
 AgentManager
 \family default
- is also automatically designed to make threads for the 
+ is also automatically designed to create threads for the 
 \family typewriter
 AgentControllers
 \family default
@@ -444,14 +434,18 @@ For the
 \family typewriter
 AgentController
 \family default
-, the designer must provide all logic on how a controller handles a given
- agent, this means getting the percepts from the agent, analyzing the percepts
- and deciding an action(Could be outsourced to another APL such as GOAL)
- and then queue said action to the agent.
- The AgentController has a method called PerformAction.
+, the designer must provide all logic defining how a controller handles
+ a given agent, this means getting the percepts from the agent, analyzing
+ the percepts and deciding an action (Could be outsourced to another APL
+ such as GOAL) and then queue said action to the agent.
+ The AgentController has the method 
+\family typewriter
+PerformAction
+\family default
+.
  This method can be very useful as it queues an action automatically to
  its agent, then blocks the thread until the action has been performed.
- Furthermore this action will also trigger a C# event called 
+ Furthermore, this action will also trigger a C# event called 
 \family typewriter
 PerceptsRecieved
 \family default

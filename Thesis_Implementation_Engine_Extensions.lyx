@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass report
+\begin_preamble
+\usepackage{alltt}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -66,6 +69,13 @@ Engine Extensions
 
 \begin_layout Subsection
 Tile Extension
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:ImplementationTileExtension"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -80,7 +90,84 @@ As the basic rules for which tiles can be seen from where have been explained
 \end_layout
 
 \begin_layout Standard
-Recall that a corner 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename tilemapVision.png
+	lyxscale 30
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+In this figure we see the visibility of selected tiles 
+\begin_inset Formula $\mathtt{T}_{1}\dots\mathtt{T}_{4}$
+\end_inset
+
+with regards to the agent in position 
+\begin_inset Formula $\mathtt{A}$
+\end_inset
+
+.
+ The light gray squares represent vision blocking tiles, and all other tiles
+ are see-through.
+ Lines have been drawn from the corners of the agent's tile to the corners
+ of the selected tiles.
+ Green lines signifies that the two corners connect, whereas red lines means
+ they are not connected.
+ Tiles 
+\begin_inset Formula $\mathtt{T}_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathtt{T}_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathtt{T}_{4}$
+\end_inset
+
+ are visible to the agent, while 
+\begin_inset Formula $\mathtt{T}_{3}$
+\end_inset
+
+ is obscured.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:TileMapVision"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We say that a corner 
 \begin_inset Formula $c_{1}$
 \end_inset
 
@@ -106,12 +193,36 @@ Recall that a corner
 
  without intersecting with a tile that is blocking the line.
  In the tile extension, a tile is blocking the line if it contains an entity
- that is movement blocking with respect to the entity looking from 
+ that is vision blocking with respect to the entity looking from 
 \begin_inset Formula $t_{1}$
 \end_inset
 
 .
- Additionally, the tile 
+ This presents a problem with a line whose vector has an 
+\begin_inset Formula $x$
+\end_inset
+
+ or 
+\begin_inset Formula $y$
+\end_inset
+
+ component equal to 0.
+ As such a line never intersects with any tiles (it only passes between
+ them), it will always connect with the rules stated above, even if all
+ tiles it passes are vision blocking.
+ Thus, we say that a line which only extends in the 
+\begin_inset Formula $x$
+\end_inset
+
+ or 
+\begin_inset Formula $y$
+\end_inset
+
+ direction does not connect if it passes between two vision blocking tiles.
+\end_layout
+
+\begin_layout Standard
+Recall that the tile 
 \begin_inset Formula $t_{2}$
 \end_inset
 
@@ -137,21 +248,134 @@ Recall that a corner
 \end_inset
 
  need be connected to.
- In its most simple form, the algorithm iterates over all the tiles in the
- agent's visible range, and returns a collection containing just those satisfyin
-g the above condition.
- 
+ In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TileMapVision"
+
+\end_inset
+
+ we have shown some examples of connecting corners.
+ Note that the line from the SE corner of 
+\family typewriter
+A
+\family default
+ to the SW corner of 
+\begin_inset Formula $\mathtt{T}_{3}$
+\end_inset
+
+ does not connect, as it passes between two vision blocking tiles, as described
+ above.
+ Also note that 
+\begin_inset Formula $\mathtt{T}_{4}$
+\end_inset
+
+ should, intuitively, be obscured to the agent; we should have a rule saying
+ that when a line intersects with a corner, it should be blocked if both
+ of the two tiles that are connected to the corner, and is not intersected
+ by the line, are vision blocking.
 \end_layout
 
 \begin_layout Standard
-The interesting part of the algorithm is this: how do we find all the tiles
- a line from one corner to another passes through? 
-\family typewriter
-\emph on
-[Figure]
-\family default
-\emph default
- To accomplish this, we find the slope of the line as 
+In its most simple form, the vision algorithm iterates over all the tiles
+ in the agent's visible range, and returns a collection containing just
+ those satisfying the above condition, as shown in the pseudo code below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{Method} Vision 
+\backslash
+textit{takes} Agent A, 
+\backslash
+textit{returns} a collection of tiles
+\end_layout
+
+\begin_layout Plain Layout
+
+    Tiles : Collection of Tiles
+\end_layout
+
+\begin_layout Plain Layout
+
+    for each Tile T in A's visible range:
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\backslash
+textit{if} T.isVisionBlocking(A):
+\end_layout
+
+\begin_layout Plain Layout
+
+            
+\backslash
+textit{if} any one corner of A connects with any two corners of T:
+\end_layout
+
+\begin_layout Plain Layout
+
+                add T to Tiles
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\backslash
+textit{else}:
+\end_layout
+
+\begin_layout Plain Layout
+
+            
+\backslash
+textit{if} any one corner of A connects with any three corners of T:
+\end_layout
+
+\begin_layout Plain Layout
+
+                add T to Tiles
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+textit{return} T
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The interesting part of the algorithm is this: how do we determine whether
+ two corners connect? That is, how do we find all the tiles a line from
+ one corner to another passes through? To accomplish this, we find the slope
+ of the line as 
 \begin_inset Formula $\left|\frac{v_{x}}{v_{y}}\right|$
 \end_inset
 
@@ -160,7 +384,43 @@ The interesting part of the algorithm is this: how do we find all the tiles
 \end_inset
 
  is the vector describing the line.
- If either 
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{Method} CennectCorners 
+\backslash
+textit{takes} $ two corners to connect
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If either 
 \begin_inset Formula $v_{x}$
 \end_inset
 
