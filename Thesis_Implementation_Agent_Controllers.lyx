@@ -232,11 +232,20 @@ AgentServer
 \family default
 s, it would be required to setup a server just for using a language which
  the engine already understands.
- 
+ There is also that our goal for the engine was to be general as possible
+ and since an 
 \family typewriter
-\emph on
-[Consider rewriting paragraph from another standpoint: AgentManager is more
- general, less restrictive than AgentServer]
+AgentServer
+\family default
+ is more restrictive than an 
+\family typewriter
+AgentManger
+\family default
+, then 
+\family typewriter
+AgentManager
+\family default
+ is the design we went with.
 \end_layout
 
 \begin_layout Subsection*
@@ -255,7 +264,7 @@ AgentController
  is designed as a framework for making an interface between an APL and the
  engine.
  They are intentionally made very lightweight so that they do not prohibit
- the any special requirements of any given APL.
+ any special requirements of any given APL.
 \end_layout
 
 \end_body

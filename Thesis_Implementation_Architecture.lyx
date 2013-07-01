@@ -165,15 +165,7 @@ to all
 XmasActions 
 \family default
 as they are about to be executed.
- Thus all 
-\family typewriter
-XmasAction 
-\family default
-executed in the engine use the same 
-\family typewriter
-XmasWorld
-\family default
-.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -196,9 +188,9 @@ XmasAction
 \family default
 are not executed immediately however as they wait until all prior 
 \family typewriter
-XmasAction
+XmasActions
 \family default
-’s executions has been completed.
+ executions has been completed.
  Once queued to the 
 \family typewriter
 ActionManager
@@ -221,12 +213,14 @@ XmasAction
 \family default
 is designed to allow other threads the ability to interact with the engine.
  The reason is that we did not wish for multiple threads to change the state
- of the model component at once, to ensure this was never necessary we provide
- the abiltity to inject code into the thread used by the 
+ of the model component at once, is that would force the designer using
+ the engin to deal with mutli threading problems.
+ To guarentee this was never necessary we provide the abiltity to inject
+ code into the 
 \family typewriter
 ModelComponent
 \family default
-, this code is transferred in the form of an 
+ thread, which is transferred in the form of an 
 \family typewriter
 XmasAction
 \family default
@@ -540,7 +534,8 @@ Furthermore the controller component is not only designed to make interfacing
  For instance if one wished to control an agent with the keyboard, then
  an Keyboard implementation of the AgentController and AgentManager should
  be made, where it would be possible to bind the queuing of move actions
- to specific buttons on the keyboard.
+ to specific buttons on the keyboard, this done as part of our Reference
+ implemenation that can be seen in its source code.
  
 \end_layout
 
