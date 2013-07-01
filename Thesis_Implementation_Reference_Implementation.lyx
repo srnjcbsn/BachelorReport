@@ -62,6 +62,13 @@
 
 \begin_layout Section
 Reference Implementation
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:ImplementationReferenceImplementation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -243,11 +250,11 @@ GOAL Program Implementation
 \end_layout
 
 \begin_layout Standard
-The GOAL program is designed to work directly with our reference implementation.
- As it is just a showcase of what such a program might look like, it will
- make assumptions based on how the reference implementation works.
+The GOAL program is designed to work directly with our reference implementation,
+ as it is just a showcase of what such a program might look like.
+ It will make assumptions about how the reference implementation works.
  For instance, it will assume that there are entities called walls that
- blocks.
+ blocks movement.
  
 \end_layout
 
@@ -267,7 +274,7 @@ Agent Decision
 \end_layout
 
 \begin_layout Standard
-A full flow chart of the goal program decision chart can be found on appendix
+A full flow chart of the goal program decision chart can be found in appendix
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -279,7 +286,7 @@ reference "sec:GOALFlowChartAppendix"
 \end_layout
 
 \begin_layout Standard
-As can be seen from the flow chart, the agent will try and find packages
+As can be seen from the flow chart, the agent will try to find packages
  and bring them to a dropzone, if no such packages can be found or if no
  dropzone is found, the agent will start exploring the entire world.
 \end_layout
@@ -289,17 +296,39 @@ The goal program operates with a few different notions;
 \end_layout
 
 \begin_layout Description
-Street the first notion is the notion of streets.
- A tile is a street if it contains no wall types such a normal walls or
- impassableWalls(map boundary walls) this means that the agent can move
- on this tile.
+Street The first notion is the notion of streets.
+ A tile is a street if it contains no wall types such as normal walls or
+ impassableWalls (map boundary walls).
+ This means that the agent can move on this tile.
 \end_layout
 
 \begin_layout Description
-Route all the agents decisions are preplanned this means that the agent
- determines where to move to, this plan is put into a route, the agent will
- follow this route whenever it has nothing else to do, such as grabbing/releasin
-g packages.
+Route When an agent decides to move to a specific tile, it will perform
+ an 
+\family typewriter
+A*
+\family default
+ search to find the shortest path to that tile.
+ The 
+\family typewriter
+A*
+\family default
+ search (which is called 
+\family typewriter
+As
+\family default
+ in the GOAL / prolog code found in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:GoalCodeAppendix"
+
+\end_inset
+
+) returns a route represented by a list of tiles the agent should follow
+ to reach the desired tile.
+ Whenever the agent have no tasks of higher priority (such as grabbing a
+ package if it is standing on one), it will pop a tile from the route and
+ move onto it.
 \end_layout
 
 \begin_layout Standard
@@ -345,21 +374,9 @@ name "fig:VisionExploredGoalAgent"
 
 \begin_layout Description
 Explored the agent’s goal is to eventually have all tiles explored as this
- means that all packages has been collected from the world.
+ means that it can determine whether all packages have been picked up.
  The agent determines that a tile has been explored if it has seen all its
- adjacent tiles.
- This works great for the agent because until it reaches a wall the unexplored
- tiles that it has stored as a street will always be considered unexplored,
- no matter how far it moves, this makes the agent work much like putting
- a carrot in front of a mule, no matter how much the agent explores whenever
- it explores something, there is always something new that becomes unexplored.
- As such this will continue until a wall has been reached on all its paths.
- 
-\begin_inset Newline newline
-\end_inset
-
-A tile is determined to be explored if all tiles adjacent to has been seen
- by the agent, fig.
+ adjacent tiles (fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -367,7 +384,14 @@ reference "fig:VisionExploredGoalAgent"
 
 \end_inset
 
- shows an image of this.
+ shows an image of this).
+ No matter how much the agent explores, whenever it uncovers a previously
+ unexplored tile, it will see new tiles to explore, unless the uncovered
+ tile is a wall.
+ This will continue until a wall has been reached on all its paths.
+ Uncovering a new tiles works much like putting a carrot in front of a mule;
+ it will always try to catch up to the carrot, just as the agent will try
+ to uncover unexplored tiles.
 \end_layout
 
 \begin_layout Subsection*
@@ -376,21 +400,20 @@ Summary
 
 \begin_layout Standard
 The reference implementation was designed as a reference for all the features
- of the engine, as such it made heavily use of the extensions that we implemente
-d.
+ of the engine, as such it made heavy use of the extensions that we implemented.
  This section only covered the view and the goal program in details.
  This is because most of the reference implementation consists of either
- declaring new agent/entity types or wiring all the extensions together,
- as such there was almost no business logic involved which makes them rather
+ declaring new agent/entity types or wiring all the extensions together.
+ As such, there was almost no business logic involved which makes them rather
  uninteresting to explain in detail.
 \end_layout
 
 \begin_layout Standard
 One part that the reference implementation does not cover which could have
- been interesting was the notion of linked module as explained in 
+ been interesting was the notion of linked modules as explained in 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "SysFeatEntities"
+reference "sub:SysFeatEntities"
 
 \end_inset
 

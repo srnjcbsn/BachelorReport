@@ -125,8 +125,7 @@ World
 The world is the place all entities are meant to inhabit as either agents
  of the world or simply objects for other entities to interact with.
  The world is not defined by the engine.
- As shown in fig.
- 
+ As shown in appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:DomainModelDiagramXMAS"
@@ -215,7 +214,7 @@ Events and Triggers
 
 \begin_layout Standard
 The engine relies heavily upon events, this means that all actions performed
- within the engine is meant to trigger events in responds.
+ within the engine is meant to trigger events in response.
  This can be used to either activate new actions within the engine, or be
  meant to transfer data to the views listening.
  

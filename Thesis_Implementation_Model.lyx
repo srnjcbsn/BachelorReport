@@ -121,9 +121,9 @@ id
 \end_inset
 
  entities.
- In an environment that is meant to run indefinetely, and where entities
+ Even in an environment that is meant to run indefinetely, and where entities
  are added and removed often (such as a server based website indexing tool),
- this limit may be a concern.
+ this limit is still very hard to reach.
  
 \end_layout
 
@@ -277,7 +277,16 @@ EventManager
  manager which also raises the event.
  The intent is to minimize the number of events needed to cover a single
  case.
- To be clear on how exactly this transpires, we have drawn a sequence diagram.
+ To be clear on how exactly this transpires, we have drawn a sequence diagram
+ shown in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ImplementationEventAndEventManagerSequenceDiagram"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -308,10 +317,10 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-
+A sequence diagram of an event being raised on an entity
 \family typewriter
 \emph on
-A sequence diagram of an event being raised on an entity
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:ImplementationEventAndEventManagerSequenceDiagram"
@@ -336,15 +345,8 @@ name "fig:ImplementationEventAndEventManagerSequenceDiagram"
 \end_layout
 
 \begin_layout Standard
-As shown on fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:ImplementationEventAndEventManagerSequenceDiagram"
-
-\end_inset
-
-, an action -- in this case a move action -- raises an 
+As can be seen in the figure, an action -- in this case a move action --
+ raises an 
 \family typewriter
 EntityMovedEvent
 \family default
@@ -471,9 +473,8 @@ The trigger design came about as a necessity for providing a way for the
  a condition.
  We designed it with the condition because we wanted it to be obvious how
  unwanted events should be handled.
- Furthermore it also helps to split up the code containing if the action
- should be executed away from the action itself allowing for more readable
- code.
+ Furthermore it also helps to separate the code containing the condition
+ and the code containing the action itself, allowing for more readable code.
  
 \end_layout
 

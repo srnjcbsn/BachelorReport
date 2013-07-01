@@ -274,8 +274,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename SystemFeatureAgentControllerSequenceDiagram.png
-	width 70text%
+	filename AgentManagerAndAgentControllSequenceDiagram.png
+	lyxscale 10
+	width 95text%
 
 \end_inset
 
@@ -481,7 +482,7 @@ AgentController
  is more akin to a convention or a design pattern for how interfacing with
  agents should occur.
  It provides the skeleton of how a link might be designed but does not impose
- any restriction of how should link should be setup.
+ any restriction on how the link should be set up.
 \end_layout
 
 \end_body

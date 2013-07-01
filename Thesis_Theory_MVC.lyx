@@ -202,7 +202,7 @@ View
 \end_layout
 
 \begin_layout Standard
-The view is a way to visualize what is currently occurring inside model
+The view is a way to visualize what is currently occurring inside the model
  by visualizing it to the user.
  A view may take many shapes depending on the model.
  If, for instance, the model is a program processing data on a server, then

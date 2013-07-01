@@ -28,12 +28,12 @@ In our domain model, we have state stored in three object types:
 
 The world is the place all entities are meant to inhabit as either
 agents of the world or simply objects for other entities to interact
-with. The world is not defined by the engine. As shown in fig. \ref{fig:DomainModelDiagramXMAS},
-it is an abstract class, meaning it is the developer using our engine
-that defines the world. As such the world can be any type of world
-needed, it could be a 3-d world, a 2-d world, a world based on tiles
-or hexagons, or simply be nodes with an undefined number of edges
-connecting each other.
+with. The world is not defined by the engine. As shown in appendix
+\ref{fig:DomainModelDiagramXMAS}, it is an abstract class, meaning
+it is the developer using our engine that defines the world. As such
+the world can be any type of world needed, it could be a 3-d world,
+a 2-d world, a world based on tiles or hexagons, or simply be nodes
+with an undefined number of edges connecting each other.
 
 
 \paragraph*{Entities}
@@ -79,7 +79,7 @@ action that can shut down the engine called \texttt{CloseEngineAction}.
 \subsection{Events and Triggers}
 
 The engine relies heavily upon events, this means that all actions
-performed within the engine is meant to trigger events in responds.
+performed within the engine is meant to trigger events in response.
 This can be used to either activate new actions within the engine,
 or be meant to transfer data to the views listening. 
 
