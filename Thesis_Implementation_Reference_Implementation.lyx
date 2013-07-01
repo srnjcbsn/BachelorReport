@@ -67,12 +67,10 @@ Reference Implementation
 \begin_layout Standard
 The reference implementation relies heavily upon the extensions that are
  attached as part of the engine.
- Thus to see how the reference implementation was designed we would refer
- to look at those extensions.
 \end_layout
 
 \begin_layout Standard
-The extensions the reference implementation uses:
+The extensions the reference implementation uses are:
 \end_layout
 
 \begin_layout Description
@@ -140,16 +138,15 @@ The Console View
 \end_layout
 
 \begin_layout Standard
-The console view is designed is optimized to draw the screen at a specific
- frame rate.
+The console view is designed to draw the screen at a specific frame rate.
  When the console view does not draw it will instead update all view data
- is has stored.
+ it has stored.
 \end_layout
 
 \begin_layout Standard
 To change view data in a view, an event must be fired from the model, however
- since the model is operating on a different thread than the view.
- The view must ensure no concurrent errors.
+ since the model is operating on a different thread than the view, the view
+ must ensure no concurrency errors.
  This is done by using the 
 \family typewriter
 ThreadSafeEventMananger
@@ -157,7 +154,7 @@ ThreadSafeEventMananger
 , as explained in 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "ImplementationView"
+reference "sec:ImplementationView"
 
 \end_inset
 
@@ -171,6 +168,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename ConsoleViewDrawingFlowChart.png
 	lyxscale 20
@@ -210,17 +208,17 @@ name "fig:FlowOfConsole"
 \end_layout
 
 \begin_layout Standard
-The console view works by drawing the screen, then if it has time between
- left before the next drawing is scheduled the view will execute a single
- event on the 
+The console view works by drawing the screen, then -- if it has time left
+ before the next drawing is scheduled -- it will execute a single event
+ on the 
 \family typewriter
 ThreadSafeEventManager
 \family default
 .
- The view will continue this process until either, there is no events left
+ The view will continue this process until either there are no events left
  to be executed or the time is up and it is time for it to perform the next
  drawing of the screen.
- On fig.
+ In fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -228,16 +226,16 @@ reference "fig:FlowOfConsole"
 
 \end_inset
 
- a drawing of this process can be seen.
+ an illustration of this process is shown.
 \end_layout
 
 \begin_layout Standard
 This provides the reference implementation with a very quickly updated view
- as no time is wasted on the thread and instead will continue to update
+ as no time is wasted on the thread, since the view will continue to update
  even when it is not drawing.
- Furthermore by updating the view data in a separate thread the engine core
- does not use its computation power on handling this making the engine overall
- more efficient.
+ Furthermore, by updating the view data in a separate thread the engine
+ core does not use its computation power on handling this, which makes the
+ engine more efficient overall.
 \end_layout
 
 \begin_layout Subsection
@@ -245,19 +243,19 @@ GOAL Program Implementation
 \end_layout
 
 \begin_layout Standard
-The goal program is designed to work directly with our reference implementation,
- as it is just a show case of how such a program might look like, it will
- make assumptions based on how the reference implementation interact.
- For instance it will assume that there are entities called walls that are
- meant to block off tiles.
+The GOAL program is designed to work directly with our reference implementation.
+ As it is just a showcase of what such a program might look like, it will
+ make assumptions based on how the reference implementation works.
+ For instance, it will assume that there are entities called walls that
+ blocks.
  
 \end_layout
 
 \begin_layout Standard
-To see the source code of our goal program commented, look in appendix 
+To see the commented source code of our GOAL program, see appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "GoalCodeAppendix"
+reference "chap:GoalCodeAppendix"
 
 \end_inset
 
@@ -273,7 +271,7 @@ A full flow chart of the goal program decision chart can be found on appendix
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "GOALFlowChartAppendix"
+reference "sec:GOALFlowChartAppendix"
 
 \end_inset
 

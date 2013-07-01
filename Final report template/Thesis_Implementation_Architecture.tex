@@ -4,7 +4,7 @@
 The section will cover how all the components of the engine interacts
 with one another, it will detail how flow of information is transferred
 through the engine and into the components connected to it. The component
-diagram of the Xmas Engine can be found on appendix \ref{ComponentDiagramAppendix}.
+diagram of the Xmas Engine can be found in appendix \ref{ComponentDiagramAppendix}.
 
 The components of the engine are
 \begin{itemize}
@@ -30,23 +30,23 @@ requested by the user.
 The first requirement of the model component is the \texttt{XmasWorld},
 the model component uses the \texttt{XmasWorld }by giving it to \texttt{ActionManager},
 the \texttt{ActionManager }then gives the \texttt{XmasWorld }to all
-\texttt{XmasActions }as they are about to be executed. Thus all \texttt{XmasAction
-}executed in the engine use the same \texttt{XmasWorld}.
+\texttt{XmasActions }as they are about to be executed. 
 
 The second requirement is the \texttt{XmasActions}, all \texttt{XmasActions
 }queued on the model component are executed by the \texttt{ActionManager}.
-An \texttt{XmasAction }are not executed immediately however as they
-wait until all prior \texttt{XmasAction}\textquoteright{}s executions
-has been completed. Once queued to the \texttt{ActionManager}, they
-are provided with all necessary dependencies such as the \texttt{XmasWorld
-}and the \texttt{EventManager}.
+An \texttt{XmasAction }are not executed immediately however, as they
+wait until all prior \texttt{XmasActions} executions has been completed.
+Once queued to the \texttt{ActionManager}, they are provided with
+all necessary dependencies such as the \texttt{XmasWorld }and the
+\texttt{EventManager}.
 
 \texttt{XmasAction }is designed to allow other threads the ability
 to interact with the engine. The reason is that we did not wish for
-multiple threads to change the state of the model component at once,
-to ensure this was never necessary we provide the abiltity to inject
-code into the thread used by the \texttt{ModelComponent}, this code
-is transferred in the form of an \texttt{XmasAction}.
+multiple threads to change the state of the model component at once
+is that would force the designer using the engine to deal with mutli
+threading problems. To guarentee that this is never necessary we provide
+the abiltity to inject code into the \texttt{ModelComponent} thread,
+which is transferred in the form of an \texttt{XmasAction}.
 
 The last requirement of the model component is \texttt{Trigger}, the
 model component takes any number of triggers and inserts them in the
@@ -148,7 +148,8 @@ when making an interface between the user and the model component.
 For instance if one wished to control an agent with the keyboard,
 then an Keyboard implementation of the AgentController and AgentManager
 should be made, where it would be possible to bind the queuing of
-move actions to specific buttons on the keyboard. 
+move actions to specific buttons on the keyboard, this done as part
+of our Reference implemenation that can be seen in its source code. 
 
 
 \subsection*{Summary}

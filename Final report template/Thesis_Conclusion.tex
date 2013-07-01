@@ -12,22 +12,70 @@ allowing them to \emph{act} and \emph{sense}.
 respond to changes in the world.
 \end{itemize}
 
-\section*{What has been done, what needs to be done}
+\section{Results of comparisons}
 
-All of our goals for the engine have -- to some extent -- been reached.
+As discussed in \ref{sec:DiscussionComparison}, our engine is placed
+somewhere in between Cartgo and EIS in terms of multi-applicability
+and features. That is, our engine is more general than Cartago, while
+providing more convenient features for a MAS than EIS (and, conversely,
+being more specific in its implementation than EIS, and less feature
+complete than Cartago). We have argued that the meta-model used in
+the Cartago project can be implemented in Xmas, and shown that EIS
+can be used as an extension to the engine in order to exploit its
+APL compatibility.
+
+
+\section{Engine completion}
+
+We will now evaluate whether the goals we listed in the introduction
+have been reached:
+\begin{description}
+\item [{Generality:}] As we discussed in section \ref{sec:DiscussionGenerality},
+we believe we have reached a good amount of generality in the engine,
+as we impose few restrictions on the design of environments. The eternal
+problem is the trade-off between generality and features, and much
+of our effort have been directed towards equalizing these two qualities.
+Without several implementations of the engine, it is difficult to
+say how well our solution caters to different environment systems
+and their needs.
+\item [{Ease~of~use:}] While our engine features tools that can ease
+the development of larger systems, it is not comparatively easier
+to use in small scale apllications. Our minimal example implementation
+(Vacuum World, see Appendix \ref{chap:VacuumWorldAppendix}) consists
+of a total of 17 C\# classes. It should be noted, however, that the
+example does not use any extensions apart from the very basic logger
+extension. Extensions can be used to define some of the abstract notions
+such as position, and thus ease the development burden. It is also
+worth noting that most of the classes contains very little code.
+\item [{Cross~platform~compatibility:}] We have compiled the project
+against the mono platform, which provides the .NET platform on Mac,
+Linux and Windows. We have developed the engine in both Linux and
+Windows, and it works as it should on both platforms. At the moment,
+our reference implementation can not be run on Linux or Mac due to
+a bug in Mono regarding text buffer sizes when printing to a terminal.
+While the reference implementation is an important part of this project,
+we do not consider it a part of the core of the Xmas engine, and therefore
+conclude that this goal has been reached.
+\end{description}
+In summation, we believe that the goals for the engine have mostly
+been reached.
+
 However, There are many aspects of the engine which could be severely
 improved. These include, but is not limited to, 
-\begin{itemize}
-\item The specific way actions and events are designed. For instance, the
-distinction between environment events and entity events, as discussed
-in section \texttt{\emph{{[}insert section number{]}}}.
-\item The way the view is supposed to communicate with the model
-\item The way agent controllers are forced to have their own threads. This
-is a unnecessary when APLs runs all agents on a single thread, however
-inefficient that may be.
-\end{itemize}
 
-\section*{Future work}
+\textbullet{} The specific way actions and events are designed. For
+instance, the distinction between environment events and entity events,
+as discussed in section \ref{sub:ImplementationEventsTriggers}.
+
+\textbullet{} The way the view is supposed to communicate with the
+model
+
+\textbullet{} The way agent controllers are forced to have their own
+threads. This is unnecessary when APLs runs all agents on a single
+thread, however inefficient that may be.
+
+
+\section{Future work}
 
 Here, we will list some of the possible additions to the engine, which
 would make it easier to use by providing functionality for a wide
@@ -42,10 +90,10 @@ EIS standard.
 \item A graph based world
 \end{itemize}
 \item An extension allowing construction and management of discrete worlds.
-\item Extensing the reference implementation to include agents cooperating
-finding packages. Or copying the environment and functionality of
-the Agents on Mars scenario, to showcase and test our engine against
-an established implementation.
+\item Extending the reference implementation to include agents cooperating
+to find packages. 
+\item Copying the environment and functionality of the Agents on Mars scenario,
+to showcase and test our engine against an established implementation.
 \item A collection of commonly used agent actions and percepts, such as
 means of communicating with each other.\end{itemize}
 

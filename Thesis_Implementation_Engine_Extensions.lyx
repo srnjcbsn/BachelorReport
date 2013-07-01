@@ -527,9 +527,13 @@ EIS Extension
 \end_layout
 
 \begin_layout Standard
-EIS support to the engine to the engine is provided with a special 
+EIS support in engine is provided with a special 
 \family typewriter
-AgentController/AgentManager 
+AgentController 
+\family default
+and
+\family typewriter
+ AgentManager 
 \family default
 class, along with a specially designed java EIS environment jar file.
  This section will go through how the implementation works and how we connect
@@ -539,8 +543,8 @@ class, along with a specially designed java EIS environment jar file.
 \begin_layout Standard
 The EIS environment in java and the agent controller on the engine is connected
  through a TCP connection.
- They commicate with each other with XML as a markup language for the data
- they transmit.
+ They communicate with each other with XML as a markup language for the
+ data they transmit.
  
 \end_layout
 
@@ -625,6 +629,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename XMLDataPackageFigure.png
 	scale 80
@@ -679,7 +684,7 @@ In the project:
 \family typewriter
 XmasEngineExtensions 
 \family default
-we provide two classes:
+we provide the following two classes:
 \end_layout
 
 \begin_layout Description
@@ -698,13 +703,14 @@ EISAgentController:
 \family typewriter
 EISAgentServer
 \family default
- creates a TCP server all EIS environments that wishes to connect to it
- must make a TCP client call, once a connection is established then the
- agent server will construct an 
+ creates a TCP server.
+ All EIS environments that wish to connect to it must make a TCP client
+ call.
+ Once a connection is established, the agent server will construct an 
 \family typewriter
 EISAgentController 
 \family default
-object, that object will take over all further duties of comuncation.
+object, that object will take over all further duties of comunication.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -721,7 +727,7 @@ EisAgentController
 \end_layout
 
 \begin_layout Standard
-On Fig.
+In Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -729,11 +735,11 @@ reference "fig:EISServerSequenceDiagram"
 
 \end_inset
 
- is shown how an EIS environment connects to an agent server and how the
+ we show how an EIS environment connects to an agent server and how the
  agent server handles the connection.
- The connection works by the EIS environment making a TCP connection request
- the agent server then responds by constructing the agent controller( and
- give it, its own thread).
+ The connection works by the EIS environment making a TCP connection request.
+ The agent server then responds by constructing the agent controller (and
+ give it its own thread).
  Once the agent controller is constructed the agent server is no longer
  responsible for handling that connection and leaves it up to the agent
  controller to find out what the EIS environment wants.
@@ -763,7 +769,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-a sequence diagram of an EIS environment connecting to the engine through
+A sequence diagram of an EIS environment connecting to the engine through
  an EisAgentServer.
 \begin_inset CommandInset label
 LatexCommand label
@@ -793,9 +799,10 @@ How the EisAgentController works
 \end_layout
 
 \begin_layout Standard
-The EIS agent controller job is to ensure that all demands made by an EIS
- environment is fulfilled, this is done by receiving actions in XML data
- form, and convert the data into Xmas Actions.
+The EIS agent controller's job is to ensure that all demands made by an
+ EIS environment are met.
+ This is done by receiving actions in XML data form and convert the data
+ into Xmas Actions.
  These actions are then queued onto an agent.
 \end_layout
 
@@ -847,7 +854,7 @@ name "fig:EisAgentControllerSequenceDiagram"
 \end_layout
 
 \begin_layout Standard
-On fig.
+In fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -855,11 +862,12 @@ reference "fig:EisAgentControllerSequenceDiagram"
 
 \end_inset
 
-, is shown how xml data received is converted by the controller and then
+, it is shown how xml data received is converted by the controller and then
  sent to the agent inside the engine.
- Percepts are only sent if they are updated in this case the action was
- to get percepts however if the action was to move an agent, then no percepts
- would be sent the controller.
+ Percepts are only sent if they are updated.
+ In this case the action was to retrieve percepts.
+ If the action had instead been to move an agent, then no percepts would
+ be sent by the controller.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -868,18 +876,17 @@ EIS Environment
 
 \begin_layout Standard
 The EIS environment is designed to setup an interface between an APL and
- an environment built in java.
- As our engine is built In C#, we cannot use the EIS as it was supposed
- to.
- The way we use EIS instead is by making it a hollow link between our engine
- and the APL(such as GOAL).
+ an environment.
+ The way we use EIS is by making it a hollow link between our engine and
+ the APL (such as GOAL).
  Thus the EIS environment implementation we make must be able to provide
  communication between the APL and our engine.
  The way we have done this is by making the environment convert all the
- XML data it receives into the EIS data-structures for percepts.
- Which is one of the classes that EIS provides, it all provides the means
- to directly convert the data structures into prolog code which is used
- by GOAL to understand the data.
+ XML data it receives from Xmas into IILang objects, which is an object
+ tree implemented in EIS for recursively representing percepts and actions
+ in native Java code as well as converting them to and from XML and prolog
+ statements.
+ It can then use the IILang objects in its internal GOAL interface.
 \end_layout
 
 \begin_layout Standard
@@ -930,8 +937,8 @@ name "fig:EISEnvironmentToGoalSequenceDiagram"
 \end_layout
 
 \begin_layout Standard
-An example of sequence for the EIS environment communicating with an APL(such
- as GOAL) can be seen on fig.
+An example of sequence for the EIS environment communicating with an APL
+ (such as GOAL) can be seen on fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -946,7 +953,7 @@ reference "fig:EISEnvironmentToGoalSequenceDiagram"
 \family typewriter
 EisAgentController
 \family default
-, through a TCP connection.
+ through a TCP connection.
 \end_layout
 
 \begin_layout Subsection*
@@ -954,7 +961,7 @@ Considerations
 \end_layout
 
 \begin_layout Standard
-The design of interfacing with goal was originally what the engine design
+The design of interfacing with GOAL was originally what the engine design
  was mostly focused on; as such there have been lots of different approaches
  to this interfacing that we have gone through.
  One approach was to connect the EIS environment using J# which could be

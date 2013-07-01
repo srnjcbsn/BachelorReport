@@ -2,7 +2,7 @@
 \section{Engine Extensions}
 
 
-\subsection{Tile Extension}
+\subsection{Tile Extension\label{sub:ImplementationTileExtension}}
 
 
 \subsubsection*{Vision}
@@ -11,28 +11,98 @@ As the basic rules for which tiles can be seen from where have been
 explained in the System Features section, we will now turn our attention
 to how corners are connected with each other. 
 
-Recall that a corner $c_{1}$ on a tile $t_{1}$ connects to a corner
+\begin{figure}
+\begin{centering}
+\includegraphics[width=0.5\textwidth]{tilemapVision}
+\par\end{centering}
+
+\caption{In this figure we see the visibility of selected tiles $\mathtt{T}_{1}\dots\mathtt{T}_{4}$with
+regards to the agent in position $\mathtt{A}$. The light gray squares
+represent vision blocking tiles, and all other tiles are see-through.
+Lines have been drawn from the corners of the agent's tile to the
+corners of the selected tiles. Green lines signifies that the two
+corners connect, whereas red lines means they are not connected. Tiles
+$\mathtt{T}_{1}$, $\mathtt{T}_{2}$ and $\mathtt{T}_{4}$ are visible
+to the agent, while $\mathtt{T}_{3}$ is obscured.\label{fig:TileMapVision}}
+
+
+\end{figure}
+
+
+We say that a corner $c_{1}$ on a tile $t_{1}$ connects to a corner
 $c_{2}$ of another tile $t_{2}$ if a straight line can be traced
 from $c_{1}$ to $c_{2}$ without intersecting with a tile that is
 blocking the line. In the tile extension, a tile is blocking the line
-if it contains an entity that is movement blocking with respect to
-the entity looking from $t_{1}$. Additionally, the tile $t_{2}$
-is visible from $t_{1}$ if at least one corner of $t_{1}$ connects
-to at least three corners of $t_{2}$. If $t_{2}$ is vision blocking,
-only two corners of $t_{2}$ need be connected to. In its most simple
-form, the algorithm iterates over all the tiles in the agent's visible
-range, and returns a collection containing just those satisfying the
-above condition. 
+if it contains an entity that is vision blocking with respect to the
+entity looking from $t_{1}$. This presents a problem with a line
+whose vector has an $x$ or $y$ component equal to 0. As such a line
+never intersects with any tiles (it only passes between them), it
+will always connect with the rules stated above, even if all tiles
+it passes are vision blocking. Thus, we say that a line which only
+extends in the $x$ or $y$ direction does not connect if it passes
+between two vision blocking tiles.
 
-The interesting part of the algorithm is this: how do we find all
-the tiles a line from one corner to another passes through? \texttt{\emph{{[}Figure{]}}}
-To accomplish this, we find the slope of the line as $\left|\frac{v_{x}}{v_{y}}\right|$,
-where $v$ is the vector describing the line. If either $v_{x}$ or
-$v_{y}$ is zero, the line only passes between tiles, and it is handled
-as a special case.
+Recall that the tile $t_{2}$ is visible from $t_{1}$ if at least
+one corner of $t_{1}$ connects to at least three corners of $t_{2}$.
+If $t_{2}$ is vision blocking, only two corners of $t_{2}$ need
+be connected to. In figure \ref{fig:TileMapVision} we have shown
+some examples of connecting corners. Note that the line from the SE
+corner of \texttt{A} to the SW corner of $\mathtt{T}_{3}$ does not
+connect, as it passes between two vision blocking tiles, as described
+above. Also note that $\mathtt{T}_{4}$ should, intuitively, be obscured
+to the agent; we should have a rule saying that when a line intersects
+with a corner, it should be blocked if both of the two tiles that
+are connected to the corner, and is not intersected by the line, are
+vision blocking.
 
-\texttt{\emph{{[}Explain that it is similar to that other algorithm
-(name?){]}}}
+In its most simple form, the vision algorithm iterates over all the
+tiles in the agent's visible range, and returns a collection containing
+just those satisfying the above condition, as shown in the pseudo
+code below:
+
+\begin{alltt}
+\textit{Method} Vision 
+        \textit{takes} an Agent A, 
+        \textit{returns} a collection of Tiles
+    Tiles : Collection of Tiles
+    for each Tile T in A's visible range:
+        \textit{if} T.isVisionBlocking(A):
+            \textit{if} any one corner of A connects with any two corners of T:
+                add T to Tiles
+        \textit{else}:
+            \textit{if} any one corner of A connects with any three corners of T:
+                add T to Tiles
+    \textit{return} T
+\end{alltt}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=0.4\textwidth]{tilemapConnection}
+\par\end{centering}
+
+\caption{A line described by the vector $v=(3,4)$ with slope $s=\frac{v_{y}}{v_{x}}=\frac{4}{3}$.
+Squares in light gray are tiles the line intersect with.\label{fig:ConnectingLine}}
+\end{figure}
+
+
+The interesting part of the algorithm is this: how do we determine
+whether two corners connect? That is, how do we find all the tiles
+a line from one corner to another passes through? To illustrate the
+problem, consider the line depicted in fig. \ref{fig:ConnectingLine}.
+First, we find the slope of the line as $s=\frac{v_{y}}{v_{x}}$,
+where $v$ is the vector describing the line. If we consider the line's
+equation ($y=s\cdot x$), as it is depicted in the figure, we can
+see that the line segment decribed by the vector between the points
+$\left(x_{0},s\cdot x_{0}\right)$ and $\left(x_{0}+1,s\cdot\left(x_{0}+1\right)\right)$
+(where $x_{0}\in\mathbb{N}$) crosses the tiles between $x=x_{0}$
+and $x=x_{0}+1$ on the $x$-axis and $y=\left\lfloor s\cdot x_{0}\right\rfloor $
+and $y=\left\lceil s\cdot\left(x_{0}+1\right)\right\rceil $ on the
+$y$ axis. This can be repeated for every $x_{0}$ in the range $0\dots v_{x}$
+to obtain the complete collection of intersected tiles.
+
+Additional complications occur when $v$ has negative components,
+or when $v_{x}$ or $v_{y}$ is zero, but this outlines the basic
+principle of the algorithm.
 
 
 \subsection{EIS Extension}

@@ -2,10 +2,22 @@
 \section{Converting Actions and Percepts}
 
 Both actions and percepts are very abstract objects, and the XMAS
-engine can not how they are represented in different APLs. This means
-that the system designer needs a way to translate actions from foreign
-types into \texttt{XmasAction}s, and \texttt{XmasPercept}s into percepts
-of foreign types. We have provided the base necessities for implementing
-this functionality with \emph{converters}. A converter is, as the
-name implies, a class that takes objects of a foreign type and map
-them to internal types or vice versa. \texttt{\emph{{[}Expand{]}}}
+engine can not know how they are represented in different APLs. This
+means that the system designer needs a way to translate actions from
+foreign types -- such as GOAL actions -- into \texttt{XmasAction}s,
+and \texttt{XmasPercept}s into percepts of foreign types. We have
+provided the base necessities for implementing this functionality
+with \emph{converters}. A converter is, as the name implies, a class
+that takes objects of a foreign type and map them to internal types
+or vice versa. 
+
+To use our converter, the designer simply extends the \texttt{XmasConversionTool}
+class, then proceeds to define what foreign type he wishes to convert
+from or to an internal \texttt{XmasType}. After this, the user defines
+each individual object of the foreign type by extending the \texttt{XmasConverter}
+class. Once this task is complete, the converter objects are added
+to the Tool object, and conversion between foreign and internal types
+are now possible. 
+
+This feature is used as part of our EIS extension for converting IILang
+data into XMAS percepts/actions.
