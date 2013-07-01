@@ -58,15 +58,15 @@ is initially empty, can have many benefits as the project expands.
 Much like the \texttt{WorldView} class, the \texttt{EntityView} is
 also very minimal. However, it enforces certain things that the user
 of the engine should take care of. First, it automatically makes a
-\texttt{ThreadSafeEventQueue} from the entity and attaches that \texttt{ThreadSafeEventQueue}
-to the \texttt{ThreadSafeEventManager} which should be provided by
-the \texttt{XmasView}. The idea is that all events the \texttt{XmasView
-}wishes to listen on should be done by registering its triggers to
-the \texttt{ThreadSafeEventQueue}. This will ensure that when the
-view updates the \texttt{ThreadSafeEventManager} all events pertaining
-to the specific entity is also updated on the \texttt{EntityView}\textquoteright{}s
-triggers, but done so on the view thread instead of the model thread,
-separating the two threads completely.
+\texttt{ThreadSafeEventQueue} from the entity and attaches it to the
+\texttt{ThreadSafeEventManager} which should be provided by the \texttt{XmasView}.
+The idea is that all events the \texttt{XmasView }wishes to listen
+on should be subscribed to by registering its triggers on the \texttt{ThreadSafeEventQueue}.
+This will ensure that when the view updates the \texttt{ThreadSafeEventManager}
+all events pertaining to the specific entity is also updated on the
+\texttt{EntityView}\textquoteright{}s triggers, but done so on the
+view thread instead of the model thread, separating the two threads
+completely.
 
 
 \paragraph*{\texttt{ViewFactory}}
@@ -74,7 +74,7 @@ separating the two threads completely.
 The \texttt{ViewFactory} is meant to include all objects with low
 life cycle used by the view, it is also designed specifically to construct
 new \texttt{EntityViews} during runtime of the engine. In order to
-know which \texttt{EntityView} belongs to which \texttt{XmasEntity}
+know which \texttt{EntityView} belongs to which \texttt{XmasEntity},
 one is required to register all types of \texttt{XmasEntities} and
 link it to its counterpart \texttt{EntityView}. For instance, assume
 you have a class inheriting \texttt{XmasEntity} called \texttt{Wall},

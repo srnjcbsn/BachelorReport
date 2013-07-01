@@ -3,18 +3,18 @@
 
 Since most of the engine is very abstract in functionality, we have
 made three extensions, which makes it easy to implement a tile based
-environment and communicating with EIS.
+environment and communicating with EIS supported APLs.
 
 
 \subsection{Tile Extension}
 
 This extension represents the world as a two-dimensional array of
-tiles using what we will call a tile map. \texttt{\emph{{[}Elaborate
-on tile, that entities can move{]}}} We have implemented it so that
-the tile in the center has the position $(0,0)$. This means that
-all positions are given relative to the origo tile at $(0,0)$. As
-a consequence of this, a tile map must have odd dimensions, as it
-would otherwise not have a center tile. If the user tries to access
+tiles using what we will call a tile map.\emph{ }Tiles in this sense
+are squares that fit exactly one entity. We have implemented it so
+that the tile in the center has the position $(0,0)$. This means
+that all positions are given relative to the origo tile at $(0,0)$.
+As a consequence of this, a tile map must have odd dimensions, as
+it would otherwise not have a center tile. If the user tries to access
 a tile that is out of bounds (for example the tile at position $(0,n+1)$
 in a $n\times n$ tile map), a tile containing a special entity signaling
 that the tile is not part of the world is returned. This ensures that
@@ -22,8 +22,11 @@ querying the tile map for a tile at any position will never fail and
 always return a valid value. As well as accessing tiles at arbitrary
 positions, the tile map can be queried with a position and a range
 $r$, in which case a two dimensional array of size $(2r+1)\times(2r+1)$
-is returned, containing the tiles in that square. \texttt{\emph{{[}Explain
-that it is relevant in eg. vision. Figure?{]}}}
+is returned, containing the tiles in that square. This can be used
+when the querying of large pieces of the map at a time is needed.
+When determinining an agent's vision (described below), we use this
+functionality to collect all tiles in the agent's visible range and
+then filter out the obscured tiles.
 
 In the tile extension, we have provided several modules that can be
 equipped to agents to make them better suited for inhabiting a tile
@@ -31,8 +34,12 @@ based environment. For example, the \emph{movement blocking-} and
 \emph{vision blocking} modules apply to all entities with a physical
 presence in the environment; given another entity, they specify whether
 the entity they are attached to blocks the aforementioned entity's
-movement or vision, respectively. The \emph{speed} module defines
-how long it takes for the entity to move to an adjacent square. \texttt{\emph{{[}Rewrite{]}}}
+movement or vision, respectively. 
+
+Also provided in the Tile Extension is a \texttt{MoveUnit }action
+which is designed to move agents along a vector inside the Tile world.
+This action requires a \emph{speed} module, defining how ling it takes
+for an agent to move one tile.
 
 
 \subsubsection*{Vision}
@@ -45,46 +52,41 @@ can see.
 
 When the vision module is asked to return its percepts, it asks the
 world to build it a \texttt{Vision} object, which it returns. The
-\texttt{Vision} object uses an algorithm described in appendix \ref{sec:VisionAppendix}
+\texttt{Vision} object uses an algorithm described in appendix \ref{sub:ImplementationTileExtension}
 to assemble a set of mappings from positions (relative to the entity)
 to tile references. To determine whether a tile $t$ is visible to
 an entity $e$, we draw straight lines from each corner of $e$'s
 tile to the corners of $t$. If such a line does not intersect with
 a tile that is vision blocking with respect to $e$, we say that the
 line \emph{connects}. If $e$'s tile has any corner from which we
-can connect lines to all corners of $t$, then $t$ is visible to
-$e$. If, however, $t$ is itself vision blocking, we require only
+can connect lines to any three corners of $t$, then $t$ is visible
+to $e$. If, however, $t$ is itself vision blocking, we require only
 two connecting lines, since at least one line would not have to travel
 through $t$, and as such not connect.
-
-\texttt{\emph{{[}expand, add image{]}}}
-
-\texttt{\emph{{[}move action, move event{]}}}
 
 
 \subsection{EIS Extension\label{sub:EIS-Extension}}
 
 The EIS extension provides means for communicating with an EIS instance
 over a socket, as well as serializing and deserializing percepts and
-actions encoded in an XML representation of EIS' \texttt{iilang} format.
+actions encoded in an XML representation of EIS'\texttt{ }IILang format.
 The extension features custom a custom agent controller and manager,
 which have been developed to work well with EIS. 
 
 As EIS is implemented in Java and our engine is written in C\#, information
 can not easily be passed between the two in a native manner. Instead,
 we have opted to have them communicate over sockets. As EIS already
-supports formatting \texttt{iilang} objects to XML, we chose this
-to encode information passed over the sockets. We have implemented
-our own \texttt{iilang} object tree in C\#, which implements XML serialization
-and deserialization (see appendix \ref{sec:iiLang}), as well as a
-Java class used to parse XML to \texttt{iilang} objects. Furthermore,
-we have implemented special package streaming objects in both C\#
-and Java, which sends the size of a payload before the actual data
-when streaming XML over sockets\texttt{\emph{{[}Elaborate{]}}}. This
-allows us to detect when an XML message has been completely received.
-This means that designers wanting to use EIS with our engine should
-implement our accompanying Java libraries, as well as the EIS engine
-extension.
+supports formatting IILang objects to XML, we chose this to encode
+information passed over the sockets. We have implemented our own IILang
+object tree in C\#, which implements XML serialization and deserialization,
+as well as a Java class used to parse XML to IILang objects. 
+
+Furthermore, we have implemented special package streaming objects
+in both C\# and Java, which sends the size of a payload before the
+actual data when streaming XML over sockets. This allows us to detect
+when an XML message has been completely received. This means that
+designers wanting to use EIS with our engine should implement our
+accompanying Java libraries, as well as the EIS engine extension.
 
 In order for an EIS instance to connect to an agent controller, it
 must connect to a socket which is known by both the EIS instance and
@@ -100,7 +102,7 @@ proceeds to listen for other APL instances requesting an agent controller.
 
 \subsubsection*{Execution Protocol}
 
-The EIS instance can now proceed to send actions to be executed to
+The EIS instance can now proceed to send actions to be executed by
 the agent controller. When such an action is received, the controller
 enqueues it, and sleeps till it is finished, at which point it resumes
 listening for actions on the socket. The request to return all percepts
@@ -113,8 +115,8 @@ blocks on actions, the EIS instance can not have the controller queue
 other actions or return percepts when it is executing an action that
 takes time, such as the tile extension's move action (this is a restriction
 imposed by the agent controller base class as described in section
-\texttt{\emph{{[}insert section number{]}}}, as it is the default
-behaviour of the \texttt{performAction} method).
+\ref{sec:SystemFeaturesAgentControllers}, as it is the default behaviour
+of the \texttt{performAction} method).
 
 
 \paragraph*{Problems With the Chosen Execution Protocol}
@@ -159,8 +161,6 @@ would have to consider these when choosing actions. For larger environments
 and agent programs, this would complicate the agent logic and percept
 pool.
 
-\texttt{\emph{{[}Actions and conversion{]}}}
-
 
 \subsection{Logger Extension}
 
@@ -169,16 +169,25 @@ logger, this logger is implemented as a view on the engine and it
 is meant to be used by others to add a logger for their environment.
 
 To use the logger all that is required is that the user extends the
-class \texttt{LoggerView}. The logger will then providing the extending
-class with a \texttt{ThreadSafeEventManager}, this manager will have
-its events automatically executed. As such the only thing required
-by the user is to create a \texttt{ThreadSafeEventQueue }and register
-the triggers with the events the user wishes to log.
+class \texttt{LoggerView}. The logger will then provide the extending
+class with a \texttt{ThreadSafeEventManager}, which will have its
+events automatically executed. As such, the only thing required by
+the user is to create a \texttt{ThreadSafeEventQueue }and register
+the triggers with the events the user wishes to log. 
+
+The \texttt{LoggerView} is constructed with a \texttt{Logger} object,
+on which the user can call the method \texttt{LogStringWithTimeStamp},
+providing a string to be logged as well as the importance of the event,
+that is, what debug level it is on. The \texttt{Logger} class is instantiated
+with a maximum debug level, and will not log messages from events
+with higher debug level. In this way, the user can specify if he only
+wants critical errors, critical errors and warnings, or all information
+to be logged.
 
 The user must also provide the logger with a \texttt{StreamWriter
 }object, this object can take many different forms however for logging
 we recommend using it to wrap a file stream. 
 
-To see an example of how the logger could be used, go to appendix
-\ref{chap:VacuumWorldAppendix}. This uses the logger as a view, to
-track the movements and action of the vacuum cleaner in vacuum world.
+For an example of how the logger is used, see appendix \ref{chap:VacuumWorldAppendix}.
+This uses the logger as a view, to track the movements and action
+of the vacuum cleaner in vacuum world.

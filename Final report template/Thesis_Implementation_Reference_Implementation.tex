@@ -1,5 +1,5 @@
 
-\section{Reference Implementation\label{sec:ImplementationReferenceImplementation}}
+\section{Reference Implementation}
 
 The reference implementation relies heavily upon the extensions that
 are attached as part of the engine. Thus to see how the reference
@@ -42,7 +42,7 @@ the \texttt{ThreadSafeEventMananger}, as explained in \ref{ImplementationView}.
 \begin{figure}
 \includegraphics[width=0.4\textwidth]{ConsoleViewDrawingFlowChart}
 
-\caption{the sequence of the console view drawing process}
+\caption{the sequence of the console view drawing process\label{fig:FlowOfConsole}}
 
 
 \end{figure}
@@ -53,8 +53,8 @@ between left before the next drawing is scheduled the view will execute
 a single event on the \texttt{ThreadSafeEventManager}. The view will
 continue this process until either, there is no events left to be
 executed or the time is up and it is time for it to perform the next
-drawing of the screen. On fig. \ref{FlowOfConsole} a drawing of this
-process can be seen.
+drawing of the screen. On fig. \ref{fig:FlowOfConsole} a drawing
+of this process can be seen.
 
 This provides the reference implementation with a very quickly updated
 view as no time is wasted on the thread and instead will continue
@@ -89,7 +89,7 @@ The goal program operates with a few different notions;
 \begin{description}
 \item [{Street}] the first notion is the notion of streets. A tile is a
 street if it contains no wall types such a normal walls or impassableWalls(map
-boundaries walls) this means that the agent can move on this tile.
+boundary walls) this means that the agent can move on this tile.
 \item [{Route}] all the agents decisions are preplanned this means that
 the agent determines where to move to, this plan is put into a route,
 the agent will follow this route whenever it has nothing else to do,
@@ -101,7 +101,7 @@ such as grabbing/releasing packages.
 \par\end{centering}
 
 \caption{An image of an agent\textquoteright{}s vision and which it would determine
-to be explored}
+to be explored\label{fig:VisionExploredGoalAgent}}
 \end{figure}
 
 \begin{description}
@@ -117,8 +117,8 @@ explores something, there is always something new that becomes unexplored.
 As such this will continue until a wall has been reached on all its
 paths. \\
 A tile is determined to be explored if all tiles adjacent to has been
-seen by the agent, fig. VisionExploredGoalAgent shows an image of
-this.
+seen by the agent, fig. \ref{fig:VisionExploredGoalAgent} shows an
+image of this.
 \end{description}
 
 \subsection*{Summary}

@@ -2,9 +2,11 @@
 \section{Agent Controllers\label{sec:SystemFeaturesAgentControllers}}
 
 The purpose of the agent controllers is to be able to control agents
-in the engine from outside. This section will cover our design of
-an agent controller. To get an overview of the classes used for the
-\texttt{AgentController}, look at fig. \ref{fig:AgentControllerDomainModel}.
+in the engine from outside. This section will cover our setup of an
+agent controller. 
+
+To get an overview of the classes used for the \texttt{AgentController},
+look at fig. \ref{fig:AgentControllerDomainModel}.
 
 \begin{figure}
 \begin{centering}
@@ -19,10 +21,8 @@ an agent controller. To get an overview of the classes used for the
 \subsection{Concept}
 
 The engine is designed to support the ability to be adapted for all
-APL%
-\footnote{Agent Programming Language%
-} types, this means that the engine itself does not support all APLs
-but instead provides a framework for quickly designing interfaces
+APL types, this means that the engine itself does not support all
+APLs but instead provides a framework for quickly designing interfaces
 between the engine and any APL. There are two classes that one must
 use in order to properly design the interface:
 \begin{description}
@@ -30,20 +30,19 @@ use in order to properly design the interface:
 with the agent language it attempts to interface with. Its job is
 to spawn an \texttt{AgentController} for each agent the AP wishes
 to take control of. The \texttt{AgentManager} is in that sense much
-akin to an Abstract Factory, which according to the design pattern
-requires that an abstract class has a method generating a certain
-type of what object but not exactly which object\texttt{\emph{ {[}rewrite
-sentence{]}}}. The idea is of course that if you have a \texttt{GoalAgentManager}
-then the controller it constructs would be \texttt{GoalAgentController}.
-By making it an abstract method, we ensure at compile time that the
-engine framework is properly used which is very good for the user.
-\texttt{\emph{{[}Explain{]}}}
+akin to an Abstract Factory (see sec. \ref{sec:TheoryFactoryDesignPattern})
+, which -- according to the design pattern -- is an abstract class
+with a method generating a certain type of object, without restricting
+exactly which object is generated, as long as it is of the specified
+type. The idea is that if you have a \texttt{GoalAgentManager} then
+the controller it constructs would be \texttt{GoalAgentController}.
+The methods required by both the \texttt{AgentController} and the
+\texttt{AgentManager} are abstract. Thus, we ensure at compile time
+that the engine framework is properly used\texttt{\emph{.}}
 \item [{The~\texttt{AgentController}}] is the link between a single agent
-and the AP %
-\footnote{Agent Program%
-}. Its job is to take all commands directed to it and transform them
-into actions understood by the engine, and apply them to the agent
-that it controls.
+and the AP. Its job is to take all commands sent to it by the connected
+AP, transform them into actions understood by the engine, and apply
+them to the agent that it controls.
 \end{description}
 To simplify the \texttt{AgentController} design, it provides the method
 \texttt{PerformAction}, which makes it easy to execute actions on
@@ -54,7 +53,7 @@ sleep. Once the action has been executed by the engine, the \texttt{AgentControl
 is woken up and returns from the \texttt{performAction} method. All
 percepts received by the \texttt{AgentController} during this time
 is stored on the \texttt{AgentController} and can be easily accessed
-by the actual \texttt{AgentController}.
+by the actual implemenation of the \texttt{AgentController}.
 
 \begin{figure}
 \begin{centering}
@@ -70,9 +69,9 @@ the \texttt{AgentController\label{fig:APConnectingToAndControllingAC}}}
 The process of an AP taking control of an agent is illustrated in
 fig. \ref{fig:APConnectingToAndControllingAC}. The AP calls the \texttt{AgentManager}
 to locate the agent it wishes to assume control of. The agent is located
-through a string (its name) which is unique to it and ensures only
-one agent is taken. When the \texttt{AgentManager} finds the correct
-agent, it will immediately generate a new \texttt{AgentController}.
+through a string (its name) which is unique to it and ensures that
+only one agent is taken. When the \texttt{AgentManager} finds the
+correct agent, it will immediately generate a new \texttt{AgentController}.
 The AP will not gain access to the agent but instead it will gain
 access to the \texttt{AgentController}. Now that the AP possesses
 the \texttt{AgentController}, it will have the ability to send the
@@ -82,11 +81,40 @@ own language and as such it is the duty of the \texttt{AgentController}
 to convert these commands into actual actions which the engine can
 understand.
 
-As this project is about working with GOAL in particular, we have
-created an extension for the \texttt{AgentController} designed specifically
-to work with GOAL. Therefore any example shown here would be incomplete
-compared to the EIS/Goal implementation we have made. \texttt{\emph{{[}Remove
-paragraph?{]}}}
+
+\subsection{How to use agent controllers}
+
+To use the built-in controller features of the engine, the designer
+must provide his own implementations of \texttt{AgentController} and\texttt{
+AgentManager}. The designer must do this for every different APL he
+wishes to use in the engine.
+
+The classes \texttt{AgentManger} and \texttt{AgentController} both
+provides functionality as part of their own classes but also requires
+some methods that must be implemented for the classes to function.
+
+For the \texttt{AgentManager }the designer must provide a method that
+produces \texttt{AgentControllers} of their implemention, along with
+locating an agent though the \texttt{AgentManager} does provide some
+assistance in that regard, in the form of a agent locating method
+defined as: \texttt{TakeControlOf}, which takes the name of an agent
+as a string, and returns the corresponding \texttt{Agent}. Furthermore,
+it should be noted that the \texttt{AgentManager} is also automatically
+designed to create threads for the \texttt{AgentControllers} it constructs.
+
+For the \texttt{AgentController}, the designer must provide all logic
+defining how a controller handles a given agent, this means getting
+the percepts from the agent, analyzing the percepts and deciding an
+action (Could be outsourced to another APL such as GOAL) and then
+queue said action to the agent. The AgentController has the method
+\texttt{PerformAction}. This method can be very useful as it queues
+an action automatically to its agent, then blocks the thread until
+the action has been performed. Furthermore, this action will also
+trigger a C\# event called \texttt{PerceptsRecieved} in the case that
+the agent controller actually recieve any percepts during the action.
+For instance, this event could be used for where the \texttt{AgentController},
+decides the next action for the agent to perform, as done in the Vacuum
+World Example in appendix \ref{chap:VacuumWorldAppendix}.
 
 
 \subsection*{Summary}

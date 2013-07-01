@@ -47,11 +47,7 @@ the return value from \texttt{OnAddEntity} to its caller when it returns.
 The \texttt{RemoveEntity} method dereferences the entity by removing
 itself and its \texttt{id} from the previously mentioned set of mappings.
 Similarly to the \texttt{AddEntity} method, it calls the user-supplied
-\texttt{OnRemoveEntity} method, and returns its return value. \texttt{\emph{{[}entity.OnLeaveWorld?{]}}}
-
-\texttt{\emph{{[}pseudo code for AddEntity, RemoveEntity?{]}}}
-
-\texttt{\emph{{[}abstract methods in System Features?{]}}}
+\texttt{OnRemoveEntity} method, and returns its return value. 
 
 
 \subsection{Entities and Entity Modules}
@@ -72,7 +68,7 @@ Instead of using inheritance, we designed the module system described
 in section \ref{sub:SysFeatEntities}.
 
 
-\subsection{Events and Triggers}
+\subsection{Events and Triggers\label{sub:ImplementationEventsTriggers}}
 
 This section will cover the inner workings of how events and triggers
 are connected, as well as detail why we designed it the way we did.
@@ -95,18 +91,27 @@ is to minimize the number of events needed to cover a single case.
 To be clear on how exactly this transpires, we have drawn a sequence
 diagram.
 
-\texttt{\emph{{[}SHOW Sequence diagram of an event being raised on
-an entity and then transferred to the event manager{]}}}
+\texttt{\emph{}}
+\begin{figure}
+\begin{centering}
+\includegraphics[width=0.7\textwidth]{ImplementationEventAndEventManagerSequenceDiagram}
+\par\end{centering}
 
-As shown on this sequence diagram, an action -- in this case a move
-action -- raises an \texttt{EntityMovedEvent} on a given entity. The
-entity then calls all triggers registered to it, where the trigger
-also contain the event being raised. After this, the entity informs
-the \texttt{EventManager} that an event has been raised on it, which
-causes the \texttt{EventManager} to also call all its registered Triggers
-with the given Event. Once all relevant triggers have been informed
-of the Event being raised, the procedure is complete and the \texttt{EventManager}
-returns to its dormant state.
+\texttt{\emph{\caption{\texttt{\emph{A sequence diagram of an event being raised on an entity\label{fig:ImplementationEventAndEventManagerSequenceDiagram}}}}
+}}
+
+\end{figure}
+
+
+As shown on fig. \ref{fig:ImplementationEventAndEventManagerSequenceDiagram},
+an action -- in this case a move action -- raises an \texttt{EntityMovedEvent}
+on a given entity. The entity then calls all triggers registered to
+it, where the trigger also contain the event being raised. After this,
+the entity informs the \texttt{EventManager} that an event has been
+raised on it, which causes the \texttt{EventManager} to also call
+all its registered Triggers with the given Event. Once all relevant
+triggers have been informed of the Event being raised, the procedure
+is complete and the \texttt{EventManager} returns to its dormant state.
 
 In the case of events that are not linkable to a specific entity such
 as an \textquotedblleft{}Engine Close Event\textquotedblright{}, the
@@ -124,19 +129,19 @@ why we designed it as we did.
 
 \paragraph*{Problems of C\# events and why we chose to design our own events}
 
-The language which our engine is written in is C\#, one of the fantastic
+The language which our engine is written in is C\#, one of the good
 things about C\# is that events is built into the language. As such
 it may come as a surprise that we have chosen to re-implement events
-ourselves. However, while the name be the same, the intent between
+ourselves. However, while the name might be the same, the intent between
 C\# events and our events is so different that it is impossible to
 compare the two. The intent behind C\# events is to keep maintenance
 on single objects, so that changes to a given object can affect its
 linked objects without having to be designed specifically to do so.
 This allows for really decoupled projects and is what makes object
-maintenance in C\# quite easy. However our events are not meant for
-such low-level tasks. Instead they are meant to allow reactions to
-occur in response to other actions. Furthermore, C\# actions are bound
-to a specific class, and can only be fired inside methods of an instantiation
+maintenance in C\# easy. However our events are not meant for such
+low-level tasks. Instead they are meant to allow reactions to occur
+in response to other actions. Furthermore, C\# actions are bound to
+a specific class, and can only be fired inside methods of an instantiation
 of the specific class. The events we have designed are meant to be
 raised by all types of class that wish to signal such an event has
 occurred.
@@ -144,14 +149,12 @@ occurred.
 To give an idea of what sort of problems that would arise from using
 C\# events, one need only look at how global events would have to
 be implemented. Since Events using C\# are linked to a specific class,
-which would essentially mean that the EventManager class would need
+this would essentially mean that the EventManager class would need
 to be setup for every single event the engine is capable of running.
 What this basically has accomplished is to couple a single class into
-the entire workings of an engine, this makes for poor programming
-design in more than one way and greatly reduces productivity. It also
-makes the engine difficult to extend and modify at a later time since
-the design would be practically hardcoded into it. \texttt{\emph{{[}Explain
-in detail / rewrite paragraph{]}}}
+the entire workings of an engine, this makes the engine difficult
+to extend and modify at a later time since the design would be practically
+hardcoded into it. 
 
 
 \paragraph*{Improvements of events}
@@ -187,7 +190,7 @@ However we preferred to encapsulate this into what we call the Trigger,
 since we wanted to have the ability to expand the capability of the
 trigger at a later time.
 
-In short, triggers are a simple design that gives the engine logic
+In short, triggers are a simple design that gives the engine user
 a lot of flexibility. 
 
 
@@ -252,9 +255,9 @@ the case of non-instantanious actions, as explained in the example
 below. 
 
 Consider the action of moving from one place to another. In this case
-the move action would need to create a timer to give the idea that
-the move action had a speed. As we can\textquoteright{}t halt other
-actions during this time it is paramount that the \texttt{Execute}
+the move action would need to set a delay before the actual move,
+to give the idea that the move action had a speed. As we can\textquoteright{}t
+halt other actions during this time it is paramount that the \texttt{Execute}
 method is released so that other actions can be executed during this
 period. 
 
@@ -270,10 +273,10 @@ the queue
 method of its parent Action (the \texttt{MoveAction})
 \end{enumerate}
 As one can see, the problem in this design is the redundancy created
-by having to call the method \texttt{Completed }on each execution.
-This might not seem like a problem but it is problematic in a few
-ways. First and foremost it adds complexity in usage of the engine,
-a person with no knowledge of using the engine would not intuitively
+by having to call the method \texttt{Completed }on every designed
+action execution. This might not seem like a problem but it is problematic
+in a few ways. First and foremost it adds complexity in usage of the
+engine, a person with no knowledge of using the engine would not intuitively
 deduce the correct way to make and use actions. Thus it creates a
 second problem: there is no way to determine if an action is correctly
 constructed during compile time. This means bugs will naturally accumulate

@@ -56,9 +56,10 @@ well. For example, you could use the functional programming language
 F\#, which also runs on the .NET platform. As such, if we imposed
 that all \texttt{AgentManager}s are \texttt{AgentServer}s, it would
 be required to setup a server just for using a language which the
-engine already understands. \texttt{\emph{{[}Consider rewriting paragraph
-from another standpoint: AgentManager is more general, less restrictive
-than AgentServer{]}}}
+engine already understands. There is also that our goal for the engine
+was to be general as possible and since an \texttt{AgentServer} is
+more restrictive than an \texttt{AgentManger}, then \texttt{AgentManager}
+is the design we went with.
 
 
 \subsection*{Summary}
@@ -66,4 +67,4 @@ than AgentServer{]}}}
 \texttt{AgentManager} and \texttt{AgentController} is designed as
 a framework for making an interface between an APL and the engine.
 They are intentionally made very lightweight so that they do not prohibit
-the any special requirements of any given APL.
+any special requirements of any given APL.
