@@ -68,7 +68,7 @@ Architecture
 The section will cover how all the components of the engine interacts with
  one another, it will detail how flow of information is transferred through
  the engine and into the components connected to it.
- The component diagram of the Xmas Engine can be found on appendix 
+ The component diagram of the Xmas Engine can be found in appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ComponentDiagramAppendix"
@@ -186,7 +186,7 @@ ActionManager
 \family typewriter
 XmasAction 
 \family default
-are not executed immediately however as they wait until all prior 
+are not executed immediately however, as they wait until all prior 
 \family typewriter
 XmasActions
 \family default
@@ -213,9 +213,9 @@ XmasAction
 \family default
 is designed to allow other threads the ability to interact with the engine.
  The reason is that we did not wish for multiple threads to change the state
- of the model component at once, is that would force the designer using
- the engin to deal with mutli threading problems.
- To guarentee this was never necessary we provide the abiltity to inject
+ of the model component at once is that would force the designer using the
+ engine to deal with mutli threading problems.
+ To guarentee that this is never necessary we provide the abiltity to inject
  code into the 
 \family typewriter
 ModelComponent

@@ -95,46 +95,134 @@ Reactivity in the environments, allowing agents and entities to dynamically
  respond to changes in the world.
 \end_layout
 
-\begin_layout Section*
-What has been done, what needs to be done
+\begin_layout Section
+Results of comparisons
 \end_layout
 
 \begin_layout Standard
-All of our goals for the engine have -- to some extent -- been reached.
- However, There are many aspects of the engine which could be severely improved.
+As discussed in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:DiscussionComparison"
+
+\end_inset
+
+, our engine is placed somewhere in between Cartgo and EIS in terms of multi-app
+licability and features.
+ That is, our engine is more general than Cartago, while providing more
+ convenient features for a MAS than EIS (and, conversely, being more specific
+ in its implementation than EIS, and less feature complete than Cartago).
+ We have argued that the meta-model used in the Cartago project can be implement
+ed in Xmas, and shown that EIS can be used as an extension to the engine
+ in order to exploit its APL compatibility.
+\end_layout
+
+\begin_layout Section
+Engine completion
+\end_layout
+
+\begin_layout Standard
+We will now evaluate whether the goals we listed in the introduction have
+ been reached:
+\end_layout
+
+\begin_layout Description
+Generality: As we discussed in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:DiscussionGenerality"
+
+\end_inset
+
+, we believe we have reached a good amount of generality in the engine,
+ as we impose few restrictions on the design of environments.
+ The eternal problem is the trade-off between generality and features, and
+ much of our effort have been directed towards equalizing these two qualities.
+ Without several implementations of the engine, it is difficult to say how
+ well our solution caters to different environment systems and their needs.
+\end_layout
+
+\begin_layout Description
+Ease
+\begin_inset space ~
+\end_inset
+
+of
+\begin_inset space ~
+\end_inset
+
+use: While our engine features tools that can ease the development of larger
+ systems, it is not comparatively easier to use in small scale apllications.
+ Our minimal example implementation (Vacuum World, see Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:VacuumWorldAppendix"
+
+\end_inset
+
+) consists of a total of 17 C# classes.
+ It should be noted, however, that the example does not use any extensions
+ apart from the very basic logger extension.
+ Extensions can be used to define some of the abstract notions such as position,
+ and thus ease the development burden.
+ It is also worth noting that most of the classes contains very little code.
+\end_layout
+
+\begin_layout Description
+Cross
+\begin_inset space ~
+\end_inset
+
+platform
+\begin_inset space ~
+\end_inset
+
+compatibility: We have compiled the project against the mono platform, which
+ provides the .NET platform on Mac, Linux and Windows.
+ We have developed the engine in both Linux and Windows, and it works as
+ it should on both platforms.
+ At the moment, our reference implementation can not be run on Linux or
+ Mac due to a bug in Mono regarding text buffer sizes when printing to a
+ terminal.
+ While the reference implementation is an important part of this project,
+ we do not consider it a part of the core of the Xmas engine, and therefore
+ conclude that this goal has been reached.
+\end_layout
+
+\begin_layout Standard
+In summation, we believe that the goals for the engine have mostly been
+ reached.
+\end_layout
+
+\begin_layout Standard
+However, There are many aspects of the engine which could be severely improved.
  These include, but is not limited to, 
 \end_layout
 
-\begin_layout Itemize
-The specific way actions and events are designed.
+\begin_layout Standard
+• The specific way actions and events are designed.
  For instance, the distinction between environment events and entity events,
  as discussed in section 
-\family typewriter
-\emph on
-
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:ImplementationEventsTriggers"
 
 \end_inset
 
-
-\family default
-\emph default
 .
 \end_layout
 
-\begin_layout Itemize
-The way the view is supposed to communicate with the model
+\begin_layout Standard
+• The way the view is supposed to communicate with the model
 \end_layout
 
-\begin_layout Itemize
-The way agent controllers are forced to have their own threads.
- This is a unnecessary when APLs runs all agents on a single thread, however
+\begin_layout Standard
+• The way agent controllers are forced to have their own threads.
+ This is unnecessary when APLs runs all agents on a single thread, however
  inefficient that may be.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Future work
 \end_layout
 
@@ -167,9 +255,13 @@ An extension allowing construction and management of discrete worlds.
 \end_layout
 
 \begin_layout Itemize
-Extensing the reference implementation to include agents cooperating finding
- packages.
- Or copying the environment and functionality of the Agents on Mars scenario,
+Extending the reference implementation to include agents cooperating to
+ find packages.
+ 
+\end_layout
+
+\begin_layout Itemize
+Copying the environment and functionality of the Agents on Mars scenario,
  to showcase and test our engine against an established implementation.
 \end_layout
 

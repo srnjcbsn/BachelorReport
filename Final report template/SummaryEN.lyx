@@ -1,0 +1,98 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+In this report we will document our efforts to develop the Xmas (cross platform
+ Multi-Agent System) engine for designing MAS (Multi Agent System) environments
+ and managing intelligent agents acting in them.
+ As the engine is for designing environments, the agents are supposed to
+ receive commands from and send percepts to a seperate agent programming
+ language, which implements the artificial intelligence of the agents.
+ 
+\end_layout
+
+\begin_layout Standard
+The primary goal of the project is to make the engine as general as possible
+ so as to allow any desirable environment to be designed with it, while
+ making it easy to extend individual components to suit the needs of specific
+ types of MASs.
+ The engine comes packaged with support for interfacing with EIS (Environment
+ Interface Standard), and, by extension, the agent programming languages
+ supported by it.
+ A simple tile-based environment is also provided.
+ The engine is designed with the model-view-controller (MVC) pattern, to
+ allow clear seperation of components.
+ To showcase and test our engine, we have created a reference implementation
+ which uses the GOAL agent programming language to control agents.
+\end_layout
+
+\begin_layout Standard
+We believe that the Xmas engine have achieved a high degree of generality,
+ although this comes at the expense of features and functionality useful
+ to many MASs, which have instead been delegated to extensions.
+ The engine is best suited for designing, setting up and executing larger
+ systems, as there is a lot of overhead involved.
+ The engine as well as the example extensions runs on the major operating
+ systems, including Linux, Windows and Mac OS.
+\end_layout
+
+\end_body
+\end_document

@@ -1,3 +1,7 @@
 \chapter{Summary (English)}
 
-The goal of the thesis is to ...
+In this report we will document our efforts to develop the Xmas (cross platform Multi-Agent System) engine for designing MAS (Multi Agent System) environments and managing intelligent agents acting in them. As the engine is for designing environments, the agents are supposed to receive commands from and send percepts to a seperate agent programming language, which implements the artificial intelligence of the agents. 
+
+The primary goal of the project is to make the engine as general as possible so as to allow any desirable environment to be designed with it, while making it easy to extend individual components to suit the needs of specific types of MASs. The engine comes packaged with support for interfacing with EIS (Environment Interface Standard), and, by extension, the agent programming languages supported by it. A simple tile-based environment is also provided. The engine is designed with the model-view-controller (MVC) pattern, to allow clear seperation of components. To showcase and test our engine, we have created a reference implementation which uses the GOAL agent programming language to control agents.
+
+We believe that the Xmas engine have achieved a high degree of generality, although this comes at the expense of features and functionality useful to many MASs, which have instead been delegated to extensions. The engine is best suited for designing, setting up and executing larger systems, as there is a lot of overhead involved. The engine as well as the example extensions runs on the major operating systems, including Linux, Windows and Mac OS.

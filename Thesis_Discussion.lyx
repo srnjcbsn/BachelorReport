@@ -68,6 +68,13 @@ In this section we will discuss the major considerations we faced during
 
 \begin_layout Section
 Generality of the engine
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DiscussionGenerality"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -309,6 +316,13 @@ As our reference implementation was developed to showcase and test our engine,
 
 \begin_layout Section
 Comparison to other Environment Construction Tools
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DiscussionComparison"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -647,18 +661,18 @@ Environment Interface Standard
 \end_layout
 
 \begin_layout Standard
-While Cartago was rather comprehensive; EIS is at the completely opposite
- side of the spectrum.
- The only thing EIS provides is an interface between a single APL and java,
+While Cartago provides a very specific approach to designing an environment,
+ EIS is at the completely opposite side of the spectrum.
+ The only thing EIS provides is an interface between a single APL and Java,
  this means that its goals are different from ours.
  What EIS is good at, is providing a way to comunicate with a language that
  otherwise had no way of doing so.
  While the goal of our engine is simply to use APLs that are capable of
- comunication(Some of them being so through EIS).
+ comunication (some of them being so through EIS).
 \end_layout
 
 \begin_layout Standard
-As such comparing our engine to EIS would be a mistake since they are different
+As such, comparing our engine to EIS would be a mistake since they are different
  at the core, meaning that EIS is much better at what it is designed for,
  while our engine is much better at what we designed it for.
 \end_layout
