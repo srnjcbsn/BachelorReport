@@ -8,16 +8,15 @@ else entirely. The only restriction imposed on the structure of the
 environment is that all entities have an associated \emph{position}
 in it, fitting the data structure describing the environment. This
 is a pretty loose requirement, considering that it can effectively
-be ignored \texttt{\emph{{[}could any meaningful environment be constructed
-where position doesn't matter?{]}}}
+be ignored.
 
-In a tile based environment, for example, the world could consist
-of a two dimensional array containing lists of entities, with each
-field representing a tile, and positions represented as $(x,y)$ coordinates.
-In a graph based environment, the world would contain some structural
-representation of a graph, and the positions could be references to
-nodes, or representations of the graph as seen from different nodes.
-\texttt{\emph{{[}More detailed usage examples?, Tile Extension{]}}}
+To give an example of how these positions should look like, imagine
+a tile based environment, the world could consist of a two dimensional
+array containing lists of entities, with each field representing a
+tile, and positions represented as $(x,y)$ coordinates. In a graph
+based environment, the world would contain some structural representation
+of a graph, and the positions could be references to nodes, or representations
+of the graph as seen from different nodes.
 
 
 \subsection{Entities, Agents and Entity Modules\label{sub:SysFeatEntities}}
@@ -53,17 +52,18 @@ produce a modified output.
 
 As an example, consider an entity \emph{e} with a \emph{speed} type
 module $s_{0}$. Assume that $s_{0}$ has a method \emph{Speed}, such
-that $s_{0}.Speed$ returns the speed of $e$. If it is for some reason
-desired to change the movement speed of entity \emph{e} by 50\%, it
-is recommended practice to register a new module $s_{1}$ to the entity,
-which identifies itself as a \emph{speed} type module, and likewise
-has a method \emph{Speed}. As $s_{1}$ is registered to the $e$,
-it stores a reference to $s_{0}$, and replaces it so that $e.M_{speed}=s_{1}$.
-Now $s_{1}$'s \emph{Speed} method can be defined such that it returns
-half the value $s_{0}$ would, so that $e.M_{speed}.Speed=s_{1}.Speed=\frac{s_{0.Speed}}{2}$.
-If at some point this effect is no longer desired, $s_{1}$ can be
-deregistered from $e$, which causes $s_{0}$ to be reattached and
-$e.M_{speed}=s_{0}$ once again.
+that $Speed(s_{0})$ returns the speed of $e$. If it is for some
+reason desired to change the movement speed of entity \emph{e} by
+50\%, it is recommended practice to register a new module $s_{1}$
+to the entity, which identifies itself as a \emph{speed} type module,
+and likewise has a method \emph{Speed}. As $s_{1}$ is registered
+to the $e$, it stores a reference to $s_{0}$, and replaces it so
+that $e.M_{speed}=s_{1}$. Now $s_{1}$'s \emph{Speed} method can
+be defined such that it returns half the value $s_{0}$ would, so
+that $e.M_{speed}.Speed=s_{1}.Speed=\frac{s_{0.Speed}}{2}$. If at
+some point this effect is no longer desired, $s_{1}$ can be deregistered
+from $e$, which causes $s_{0}$ to be reattached and $e.M_{speed}=s_{0}$
+once again.
 
 \begin{figure}
 \begin{centering}
@@ -86,7 +86,7 @@ This imposes somewhat of a limit, and may not work as desired in all
 cases. Consider a stack of $n$ modules, where module $m_{1}$ has
 been pushed first, followed by $m_{2}$ and so on, so that $m_{n}$
 is at the top of the stack. Then a module $m_{i}$ can not directly
-alter the way modules $m_{i+1}\dots m_{n}$ changes it output. This
+alter the way modules $m_{i+1}\dots m_{n}$ changes its output. This
 may or may not be desirable, depending on the situation. It is not
 possible, for example, to apply an effect causing an agent's speed
 to be set to $x$, no matter what happens, using this method.
@@ -100,4 +100,6 @@ a runtime exception.
 An \emph{agent} is a special entity which have a unique name and can
 collect percepts. When an agent is asked to return all of its percepts,
 it queries each module for any available percepts, and returns those
-as a collection. \texttt{\emph{{[}move this paragraph up (and rewrite?){]}}}
+as a collection. The agents are designed to be controlled by an APL,
+they are done so through an \texttt{AgentController}, see sec. \ref{SystemFeaturesAgentControllers}
+on how to work with agent controllers. 

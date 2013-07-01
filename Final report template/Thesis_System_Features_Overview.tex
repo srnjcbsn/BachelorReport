@@ -1,6 +1,11 @@
 
 \section{Overview}
 
+Before we begin explaining all the features of the engine we would
+like to point out that if it necessary for the reader to see an actual
+implementation using all the feature, there is one available on appendix
+\ref{chap:VacuumWorldAppendix} Vacuum World.
+
 The goal of the engine is to allow for simulation of a world where
 agents within are allowed to act. As such, it is important that it
 can accurately model a state-machine. To model a state-machine, one
@@ -45,25 +50,28 @@ meant to be a way of distinguishing the agents from one another.
 
 \paragraph*{Modules}
 
-The modules can be viewed as the constraints and as the abilities
+The modules can be viewed as either the constraints or as the abilities
 of all entities. For instance if you wanted to constrain entities
 from moving into each other than you would create a Movement blocking
 module, this module would then contain information on whether or not
-a given entities is allowed to pass through it. \texttt{\emph{{[}Rewrite?{]}}}
+a given entities is allowed to pass through it. However if you wanted
+to give an agent the ability to move then a Speed module would be
+required. Whether a certain module is a constraint or an ability is
+up to the individual module.
 
 
 \subsection{Actions}
 
 A world is static and unexciting if one is not allowed to perform
-any changes to it, for this we have what we have chosen to name actions.
-There are two different types of actions: environment actions entity
-actions. The core difference between them is that entity actions are
-meant as actions performed by a single entity, such as moving the
-entity or having the entity pick up another object. Environment actions
-are actions that affect the entire world. In our domain model, we
-have chosen to add two actions that are built into the engine, the
-first is an entity action that gets all the percepts for a given entity
-called \texttt{GetallPerceptsAction} and the other is an environment
+any changes to it, for this we have: what we have chosen to name actions.
+There are two different types of actions: environment actions and
+entity actions. The core difference between them is that entity actions
+are meant as actions performed by a single entity, such as moving
+the entity or having the entity pick up another object. Environment
+actions are actions that affect the entire world. In our domain model,
+we have chosen to add two actions that are built into the engine,
+the first is an entity action that gets all the percepts for a given
+entity called \texttt{GetallPerceptsAction} and the other is an environment
 action that can shut down the engine called \texttt{CloseEngineAction}. 
 
 

@@ -62,6 +62,13 @@
 
 \begin_layout Section
 Reference Implementation
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:ImplementationReferenceImplementation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -348,6 +355,48 @@ Explored the agent’s goal is to eventually have all tiles explored as this
 A tile is determined to be explored if all tiles adjacent to has been seen
  by the agent, fig.
  VisionExploredGoalAgent shows an image of this.
+\end_layout
+
+\begin_layout Subsection
+Interfacing with GOAL and EIS
+\end_layout
+
+\begin_layout Standard
+As mentioned in previous sections, all agents in the XMAS engine execute
+ asynchronously in their own thread.
+ GOAL, however, seems to be designed to run all agents sequentially in a
+ single thread, which means that if a single agent blocks in the call to
+ get all its percepts from the environment (because the environment only
+ returns when the agent’s current action is fully performed), no other agents
+ can continue execution until the call returns.
+ One way to circumvent this is to use 
+\emph on
+durative actions
+\emph default
+ (as explained in the GOAL user manual).
+ With this method an ongoing action is started through GOAL, and in each
+ percept cycle GOAL evaluates whether the agent should continue executing
+ the action or choose another.
+ The problem with this approach is that we are effectively polling the environme
+nt through GOAL; the agent may not have any new information in each percept
+ cycle, and it may sit idle, waiting for the next percept cycle when it
+ has finished the action.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to have a more dynamic, responsive and efficient system, we have
+ chosen to launch a GOAL environment for each agent.
+ This means -- as mentioned in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:ReferenceImplementation"
+
+\end_inset
+
+ -- that the the agents cannot communicate through GOAL, since the instances
+ have no knowledge of each other.
+ To remedy this, a communicative action should be provided by the XMAS engine.
 \end_layout
 
 \begin_layout Subsection*

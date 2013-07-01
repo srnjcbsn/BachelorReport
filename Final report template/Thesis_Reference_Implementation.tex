@@ -2,11 +2,11 @@ In this section we will introduce our reference implementation (henceforth
 sometimes called the \emph{package grabber scenario}), which we have
 developed to showcase and test our engine. It will also serve as an
 example of using the engine as well as the extensions we have provided.
-In section \ref{ImplementationRefImpl}, we will detail the actual
-implementation of the scenario in the engine, the agent programs,
-as well as the integration of the two. A less complex example, which
-describes the simple vacuum world (Russel, Norvig, 2010, p 35), can
-be found in appendix\texttt{\emph{ \ref{HelloWorld}}}.
+In section \ref{sec:ImplementationReferenceImplementation}, we will
+detail the actual implementation of the scenario in the engine, the
+agent programs, as well as the integration of the two. A less complex
+example, which describes the simple vacuum world (~\cite{Norvig96},
+p.\ 35), can be found in appendix\texttt{\emph{ \ref{chap:VacuumWorldAppendix}}}.
 
 The reference implementation is intended to cover as many of the engine
 features and extensions as possible, while not focusing on creating
@@ -56,7 +56,7 @@ this movement rule.
 (if any) from the world, and marks the agent as carrying a package.
 \item [{\texttt{drop}}] adds a package to the world in the same tile as
 the agent (if it is carrying a package) and marks the agent as not
-carrying a package. If a tile is dropped at a dropzone, it is removed
+carrying a package. If a package is dropped at a dropzone, it is removed
 from the world.
 \end{description}
 Note that this action specification does not mention any means of
@@ -65,10 +65,10 @@ feature of any multi-agent system. We have not implemented such functionality
 in the XMAS engine, although it would be a high priority task if we
 were to develop it further. Normally, GOAL provides built-in communication
 devices, which we cannot use in the reference implementation, for
-reasons explained in the implementation section. In general, although
-several grabber agents can inhabit the scenario, they will not actively
-work together or compete, although they will try to accomplish the
-same goals.
+reasons explained in the implementation section{[}NOT THAT SURE{]}.
+In general, although several grabber agents can inhabit the scenario,
+they will not actively work together or compete, although they will
+try to accomplish the same goals.
 
 
 \subsection*{Percepts}
