@@ -6,7 +6,7 @@ refers to the object type that performs actions inside the engine.
 The reasoning behind these actions being its own class is to ensure
 only one action at a time is being performed. This is because there
 are many separate threads operating on the model code at once and
-as such, there must be a way to active only one action at a time.
+as such, there must be a way to activate only one action at a time.
 
 For the task of executing the actions we have the \texttt{ActionManager}.
 Its job is to take in one action at a time and place them in a queue

@@ -73,9 +73,8 @@ As we can see the condition narrows the range of events that are responded
 to at the cost of added calculations. In this case it would be much
 better to subscribe to the event \textquotedblleft{}Agent $a_{i}$
 has moved\textquotedblright{}. This is purely an example as events
-should of course not be tied to specific objects. \texttt{\emph{{[}Make
-better example, explain why it is not feasible tie events to specific
-objects{]}}}
+can not be tied to specific entity instantiations as events are defined
+at compile time.
 \item [{The~Action}] of a trigger is the part that performs the work,
 it is a method which is executed once an event has been raised and
 the condition is satisfied. For instance if a trigger is meant to

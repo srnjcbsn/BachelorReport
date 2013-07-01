@@ -65,25 +65,29 @@ Overview
 \end_layout
 
 \begin_layout Standard
-Before we begin explaining all the features of the engine we would like
- to point out that if it necessary for the reader to see an actual implementatio
-n using all the feature, there is one available on appendix 
+Before we begin explaining all the features of the engine, we would like
+ to point out that if it is necessary for the reader to see an actual implementa
+tion using all the feature, there is one available in appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "chap:VacuumWorldAppendix"
 
 \end_inset
 
- Vacuum World.
+ (Vacuum World).
 \end_layout
 
 \begin_layout Standard
 The goal of the engine is to allow for simulation of a world where agents
  within are allowed to act.
  As such, it is important that it can accurately model a state-machine.
- To model a state-machine, one must have the ability to save a state and
- perform actions to change the current state.
- A complete UML Domain model diagram is provided in appendix 
+ To model a state-machine, one must have the ability to contain a state
+ and perform actions to change the current state.
+ 
+\end_layout
+
+\begin_layout Standard
+A complete UML Domain model diagram is provided in appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Domain-Model-UML"
@@ -119,7 +123,7 @@ World
 
 \begin_layout Standard
 The world is the place all entities are meant to inhabit as either agents
- of the world or simply objects for the entities to interact with.
+ of the world or simply objects for other entities to interact with.
  The world is not defined by the engine.
  As shown in fig.
  
@@ -132,7 +136,7 @@ reference "fig:DomainModelDiagramXMAS"
 , it is an abstract class, meaning it is the developer using our engine
  that defines the world.
  As such the world can be any type of world needed, it could be a 3-d world,
- a 2-d world, a world based on tiles or hexagons or simply be nodes with
+ a 2-d world, a world based on tiles or hexagons, or simply be nodes with
  an undefined number of edges connecting each other.
 \end_layout
 
@@ -143,8 +147,8 @@ Entities
 \begin_layout Standard
 The world is empty without anything inside it, as such we have the entities
  which are meant to model the objects one would have the world contain.
- For example in our reference implementation using our engine, we have a
- world with packages scattered about a maze.
+ For example, in our reference implementation, we have a world with packages
+ scattered about a maze.
  It is then the task of the agents to collect these packages; the entities
  here are not only the walls of the maze and the packages, but also the
  agents since they inhabit the world as well.
@@ -161,12 +165,18 @@ Modules
 \begin_layout Standard
 The modules can be viewed as either the constraints or as the abilities
  of all entities.
- For instance if you wanted to constrain entities from moving into each
- other than you would create a Movement blocking module, this module would
- then contain information on whether or not a given entities is allowed
- to pass through it.
- However if you wanted to give an agent the ability to move then a Speed
- module would be required.
+ For example, if you wanted to constrain entities from moving into each
+ other, you would create a 
+\emph on
+movement blocking module
+\emph default
+, which would contain information on whether or not a given entities is
+ allowed to pass through it.
+ However, if you wanted to give an agent the ability to move, a 
+\emph on
+speed module
+\emph default
+ would be required.
  Whether a certain module is a constraint or an ability is up to the individual
  module.
 \end_layout
@@ -177,7 +187,7 @@ Actions
 
 \begin_layout Standard
 A world is static and unexciting if one is not allowed to perform any changes
- to it, for this we have: what we have chosen to name actions.
+ to it, for this we provide what we have chosen to name actions.
  There are two different types of actions: environment actions and entity
  actions.
  The core difference between them is that entity actions are meant as actions
