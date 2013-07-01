@@ -65,6 +65,13 @@
 
 \begin_layout Section
 Factory Design Pattern
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:TheoryFactoryDesignPattern"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

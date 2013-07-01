@@ -66,9 +66,9 @@ Converting Actions and Percepts
 
 \begin_layout Standard
 Both actions and percepts are very abstract objects, and the XMAS engine
- can not how they are represented in different APLs.
+ can not know how they are represented in different APLs.
  This means that the system designer needs a way to translate actions from
- foreign types into 
+ foreign types -- such as GOAL actions -- into 
 \family typewriter
 XmasAction
 \family default
@@ -86,9 +86,34 @@ converters
  A converter is, as the name implies, a class that takes objects of a foreign
  type and map them to internal types or vice versa.
  
+\end_layout
+
+\begin_layout Standard
+To user our converter one simply extends the 
 \family typewriter
-\emph on
-[Expand]
+XmasConversionTool
+\family default
+ class then procides to define what type he wishes to convert from and to
+ 
+\family typewriter
+XmasObjects
+\family default
+.
+ After this the user defines each individual object of the foreign type
+ by extending the 
+\family typewriter
+XmasConverter
+\family default
+ class.
+ Once this task is complete the converters objects are added to the Tool
+ object, thus the conversion of a Foreign object type to and from Xmas object
+ types are now possible.
+ 
+\end_layout
+
+\begin_layout Standard
+This feature is used as part of our EIS extension for converting IILanguage
+ data into Xmas percepts/actions.
 \end_layout
 
 \end_body

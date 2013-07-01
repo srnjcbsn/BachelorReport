@@ -74,8 +74,12 @@ name "sec:SystemFeaturesAgentControllers"
 \begin_layout Standard
 The purpose of the agent controllers is to be able to control agents in
  the engine from outside.
- This section will cover our design of an agent controller.
- To get an overview of the classes used for the 
+ This section will cover our setup of an agent controller.
+ 
+\end_layout
+
+\begin_layout Standard
+To get an overview of the classes used for the 
 \family typewriter
 AgentController
 \family default
@@ -173,15 +177,17 @@ AgentController
 \family typewriter
 AgentManager
 \family default
- is in that sense much akin to an Abstract Factory, which according to the
- design pattern requires that an abstract class has a method generating
- a certain type of what object but not exactly which object
-\family typewriter
-\emph on
- [rewrite sentence]
-\family default
-\emph default
-.
+ is in that sense much akin to an Abstract Factory(see sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "TheoryFactoryDesignPattern"
+
+\end_inset
+
+) , which according to the design pattern requires that an abstract class
+ has a method generating a certain type of what object but not exactly which
+ object.
  The idea is of course that if you have a 
 \family typewriter
 GoalAgentManager
@@ -191,12 +197,19 @@ GoalAgentManager
 GoalAgentController
 \family default
 .
- By making it an abstract method, we ensure at compile time that the engine
- framework is properly used which is very good for the user.
- 
+ The methods required by both the 
+\family typewriter
+AgentController
+\family default
+ and the 
+\family typewriter
+AgentManager
+\family default
+ are abstract thus, we ensure at compile time that the engine framework
+ is properly used
 \family typewriter
 \emph on
-[Explain]
+.
 \end_layout
 
 \begin_layout Description
@@ -263,7 +276,7 @@ AgentController
 \family typewriter
 AgentController
 \family default
- and can be easily accessed by the actual 
+ and can be easily accessed by the actual implemenation of the 
 \family typewriter
 AgentController
 \family default
@@ -367,19 +380,96 @@ AgentController
  to convert these commands into actual actions which the engine can understand.
 \end_layout
 
+\begin_layout Subsection
+How to use
+\end_layout
+
 \begin_layout Standard
-As this project is about working with GOAL in particular, we have created
- an extension for the 
+To use the built in controller features of the engine, the designer must
+ provide his own implementations of the AgentController and the AgentManager.
+ The designer must do this for every different APL he wishes to use in the
+ engine.
+\end_layout
+
+\begin_layout Standard
+The classes 
+\family typewriter
+AgentManger
+\family default
+ and 
 \family typewriter
 AgentController
 \family default
- designed specifically to work with GOAL.
- Therefore any example shown here would be incomplete compared to the EIS/Goal
- implementation we have made.
+ both provides functionality as part of their own classes but also directly
+ states to the designer what methods that must be implemented for the classes
+ to function.
+\end_layout
+
+\begin_layout Standard
+For the 
+\family typewriter
+AgentManager 
+\family default
+the designer must provide a method that produces 
+\family typewriter
+AgentControllers
+\family default
+ of their implemention, along with locating an agent though the 
+\family typewriter
+AgentManager
+\family default
+ does provide some assistance in that regard, in the form of a agent locating
+ method defined as: 
+\family typewriter
+TakeControlOf takes AgentName
+\family default
  
 \family typewriter
-\emph on
-[Remove paragraph?]
+returns Agent
+\family default
+.
+ Furthermore it should be noted that the 
+\family typewriter
+AgentManager
+\family default
+ is also automatically designed to make threads for the 
+\family typewriter
+AgentControllers
+\family default
+ it constructs.
+\end_layout
+
+\begin_layout Standard
+For the 
+\family typewriter
+AgentController
+\family default
+, the designer must provide all logic on how a controller handles a given
+ agent, this means getting the percepts from the agent, analyzing the percepts
+ and deciding an action(Could be outsourced to another APL such as GOAL)
+ and then queue said action to the agent.
+ The AgentController has a method called PerformAction.
+ This method can be very useful as it queues an action automatically to
+ its agent, then blocks the thread until the action has been performed.
+ Furthermore this action will also trigger a C# event called 
+\family typewriter
+PerceptsRecieved
+\family default
+ in the case that the agent controller actually recieve any percepts during
+ the action.
+ For instance, this event could be used for where the 
+\family typewriter
+AgentController
+\family default
+, decides the next action for the agent to perform, as done in the Vacuum
+ World Example in appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:VacuumWorldAppendix"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*

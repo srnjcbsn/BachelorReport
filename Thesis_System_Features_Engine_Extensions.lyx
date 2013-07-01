@@ -67,7 +67,7 @@ Engine Extensions
 \begin_layout Standard
 Since most of the engine is very abstract in functionality, we have made
  three extensions, which makes it easy to implement a tile based environment
- and communicating with EIS.
+ and communicating with EIS supported APLs.
 \end_layout
 
 \begin_layout Subsection
@@ -77,12 +77,11 @@ Tile Extension
 \begin_layout Standard
 This extension represents the world as a two-dimensional array of tiles
  using what we will call a tile map.
- 
-\family typewriter
+
 \emph on
-[Elaborate on tile, that entities can move]
-\family default
+ 
 \emph default
+Tiles in this sense are squares that fit exactly one entity.
  We have implemented it so that the tile in the center has the position
  
 \begin_inset Formula $(0,0)$
@@ -119,12 +118,9 @@ This extension represents the world as a two-dimensional array of tiles
 \end_inset
 
  is returned, containing the tiles in that square.
- 
-\family typewriter
-\emph on
-[Explain that it is relevant in eg.
- vision.
- Figure?]
+ This can be used when the quering of large pieces of the map at a time
+ is needed, this is used in our vision percept to gather all tiles around
+ an agent needed before the vision algorithm filters away the unseeble tiles.
 \end_layout
 
 \begin_layout Standard
@@ -141,16 +137,14 @@ vision blocking
  modules apply to all entities with a physical presence in the environment;
  given another entity, they specify whether the entity they are attached
  to blocks the aforementioned entity's movement or vision, respectively.
- The 
-\emph on
-speed
-\emph default
- module defines how long it takes for the entity to move to an adjacent
- square.
  
-\family typewriter
-\emph on
-[Rewrite]
+\end_layout
+
+\begin_layout Standard
+Also provided in the Tile Extension is an MoveUnit action which is designed
+ to move agents along a vector inside the Tile world.
+ As a requirement to the MoveUnit action a speed module is needed for the
+ MoveUnit action to determine how fast the agent can move at a time.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -249,20 +243,6 @@ connects
 , and as such not connect.
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[expand, add image]
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[move action, move event]
-\end_layout
-
 \begin_layout Subsection
 EIS Extension
 \begin_inset CommandInset label
@@ -300,28 +280,15 @@ iilang
 \family typewriter
 iilang
 \family default
- object tree in C#, which implements XML serialization and deserialization
- (see appendix 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:iiLang"
-
-\end_inset
-
-), as well as a Java class used to parse XML to 
+ object tree in C#, which implements XML serialization and deserialization,
+ as well as a Java class used to parse XML to 
 \family typewriter
 iilang
 \family default
  objects.
  Furthermore, we have implemented special package streaming objects in both
  C# and Java, which sends the size of a payload before the actual data when
- streaming XML over sockets
-\family typewriter
-\emph on
-[Elaborate]
-\family default
-\emph default
-.
+ streaming XML over sockets.
  This allows us to detect when an XML message has been completely received.
  This means that designers wanting to use EIS with our engine should implement
  our accompanying Java libraries, as well as the EIS engine extension.
@@ -347,7 +314,7 @@ Execution Protocol
 \end_layout
 
 \begin_layout Standard
-The EIS instance can now proceed to send actions to be executed to the agent
+The EIS instance can now proceed to send actions to be executed by the agent
  controller.
  When such an action is received, the controller enqueues it, and sleeps
  till it is finished, at which point it resumes listening for actions on
@@ -365,11 +332,12 @@ getAllPercepts
  it is executing an action that takes time, such as the tile extension's
  move action (this is a restriction imposed by the agent controller base
  class as described in section 
-\family typewriter
-\emph on
-[insert section number]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:SystemFeaturesAgentControllers"
+
+\end_inset
+
 , as it is the default behaviour of the 
 \family typewriter
 performAction
@@ -478,13 +446,6 @@ This method does have some problems.
  logic and percept pool.
 \end_layout
 
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[Actions and conversion]
-\end_layout
-
 \begin_layout Subsection
 Logger Extension
 \end_layout
@@ -507,7 +468,7 @@ LoggerView
 ThreadSafeEventManager
 \family default
 , this manager will have its events automatically executed.
- As such the only thing required by the user is to create a 
+ As such the only thing required by the user is to: create a 
 \family typewriter
 ThreadSafeEventQueue 
 \family default
