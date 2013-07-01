@@ -80,17 +80,14 @@ position
 \emph default
  in it, fitting the data structure describing the environment.
  This is a pretty loose requirement, considering that it can effectively
- be ignored 
-\family typewriter
-\emph on
-[could any meaningful environment be constructed where position doesn't
- matter?]
+ be ignored.
 \end_layout
 
 \begin_layout Standard
-In a tile based environment, for example, the world could consist of a two
- dimensional array containing lists of entities, with each field representing
- a tile, and positions represented as 
+To give an example of how these positions should look like, imagine a tile
+ based environment, the world could consist of a two dimensional array containin
+g lists of entities, with each field representing a tile, and positions
+ represented as 
 \begin_inset Formula $(x,y)$
 \end_inset
 
@@ -98,10 +95,6 @@ In a tile based environment, for example, the world could consist of a two
  In a graph based environment, the world would contain some structural represent
 ation of a graph, and the positions could be references to nodes, or representat
 ions of the graph as seen from different nodes.
- 
-\family typewriter
-\emph on
-[More detailed usage examples?, Tile Extension]
 \end_layout
 
 \begin_layout Subsection
@@ -239,7 +232,7 @@ speed
 Speed
 \emph default
 , such that 
-\begin_inset Formula $s_{0}.Speed$
+\begin_inset Formula $Speed(s_{0})$
 \end_inset
 
  returns the speed of 
@@ -434,7 +427,7 @@ chaining
 \begin_inset Formula $m_{i+1}\dots m_{n}$
 \end_inset
 
- changes it output.
+ changes its output.
  This may or may not be desirable, depending on the situation.
  It is not possible, for example, to apply an effect causing an agent's
  speed to be set to 
@@ -479,10 +472,21 @@ agent
  is a special entity which have a unique name and can collect percepts.
  When an agent is asked to return all of its percepts, it queries each module
  for any available percepts, and returns those as a collection.
- 
+ The agents are designed to be controlled by an APL, they are done so through
+ an 
 \family typewriter
-\emph on
-[move this paragraph up (and rewrite?)]
+AgentController
+\family default
+, see sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "SystemFeaturesAgentControllers"
+
+\end_inset
+
+ on how to work with agent controllers.
+ 
 \end_layout
 
 \end_body

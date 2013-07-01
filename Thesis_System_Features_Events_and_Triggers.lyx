@@ -194,13 +194,8 @@ As we can see the condition narrows the range of events that are responded
 \end_inset
 
  has moved”.
- This is purely an example as events should of course not be tied to specific
- objects.
- 
-\family typewriter
-\emph on
-[Make better example, explain why it is not feasible tie events to specific
- objects]
+ This is purely an example as events can not be tied to specific entity
+ instantiations as events are defined at compile time.
 \end_layout
 
 \begin_layout Description

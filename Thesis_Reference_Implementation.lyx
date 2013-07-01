@@ -79,7 +79,7 @@ reference "ImplementationRefImpl"
 , we will detail the actual implementation of the scenario in the engine,
  the agent programs, as well as the integration of the two.
  A less complex example, which describes the simple vacuum world (Russel,
- Norvig, 2010, p 35), can be found in appendix
+ Norvig, 2010, p 35)[FIX IT], can be found in appendix
 \family typewriter
 \emph on
  
@@ -262,7 +262,7 @@ drop
 \family default
  adds a package to the world in the same tile as the agent (if it is carrying
  a package) and marks the agent as not carrying a package.
- If a tile is dropped at a dropzone, it is removed from the world.
+ If a package is dropped at a dropzone, it is removed from the world.
 \end_layout
 
 \begin_layout Standard
@@ -273,7 +273,7 @@ Note that this action specification does not mention any means of communicating
  it would be a high priority task if we were to develop it further.
  Normally, GOAL provides built-in communication devices, which we cannot
  use in the reference implementation, for reasons explained in the implementatio
-n section.
+n section[NOT THAT SURE].
  In general, although several grabber agents can inhabit the scenario, they
  will not actively work together or compete, although they will try to accomplis
 h the same goals.

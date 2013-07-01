@@ -68,12 +68,14 @@ Factory Design Pattern
 \end_layout
 
 \begin_layout Standard
-Removing flexibility from a program is normally consider very bad, one way
- to do that can be by tieing object creation to the business logic of the
- program.
+Removing flexibility from a program is normally considered a poor design
+ decision.
+ One way to do that however would be by tying object creation to the business
+ logic of the program.
  This section will show why this combining of object creation and business
- logic removes flexibility in the program; furthermore it will show how
- to solve this problem using the Factory Design Pattern.
+ logic actually removes flexibility in the program.
+ Furthermore it will show how to solve this problem using the Factory Design
+ Pattern.
  We refer to 
 \begin_inset ERT
 status open
@@ -105,9 +107,9 @@ Object Oriented Programming
 
 \end_inset
 
- Languages you have the ability to create new objects to be used in the
+ languages you have the ability to create new objects to be used in the
  program.
- When creating an object in a function you inadvertently tie a specific
+ When instantiating an object in a function, you inadvertently tie a specific
  object type to that function.
  This means that the function can never be used for other purposes than
  to work with that type of object.
@@ -180,43 +182,60 @@ end{alltt}
 \end_layout
 
 \begin_layout Standard
-As we can see in this example A4Sheet is an implementation of the Object
- type Paper, however seen we have mixed object creation with business logic
- we are forced to specify the exact type of paper that our printer produces.
- This means that if we wanted to make to make the printer able to print
- multiple types of paper we would have to make new functions copying the
- functionality of PrintPaper we would have to make PrintPaperA3, PrintPaperA5,
- etc.
- As is quickly evident this is very redundant and increases code complexity,
- not only that but if years later someone invented a new type of paper then
- the printer would not be changeable since the class was locked to specific
- paper types on the business logic level.
+As we can see in this example, 
+\family typewriter
+A4Sheet
+\family default
+ is an implementation of the object type 
+\family typewriter
+Paper
+\family default
+, however as we have mixed object creation with business logic, we are forced
+ to specify the exact type of paper that our printer produces.
+ This means that if we wanted to make the printer able to print multiple
+ types of paper, we would have to make new functions copying the functionality
+ of 
+\family typewriter
+PrintPaper
+\family default
+ we would have to make 
+\family typewriter
+PrintPaperA3
+\family default
+, 
+\family typewriter
+PrintPaperA5
+\family default
+, etc.
+ As is evident, this is very redundant and increases code complexity.
+ Not only that, but if years later someone invented a new type of paper,
+ the printer would have to be completely changed, since the class was locked
+ to specific paper types on the business logic level.
  
 \end_layout
 
 \begin_layout Subsection*
-Solving the problem of mixing objection with business logic
+Solving the problem of mixing object creation with business logic
 \end_layout
 
 \begin_layout Standard
-As we have shown there are many problems involved when business logic contains
- object creation logic, in order to solve this problem it is necessary to
- separate the two.
- This can be done in multiple ways, for instance when going back to our
- printer example it could be that instead of having the method 
+As we have shown, there are many problems involved when business logic contains
+ object creation logic.
+ In order to solve this problem it is necessary to separate the two.
+ This can be done in multiple ways.
+ Consider our previous printer example.
+ In this case, instead of having the method 
 \family typewriter
 PrintPaper 
 \family default
-take only a message instead make it take both a message and the paper as
- part of its arguments.
+take only a message, it could also take paper as part of its arguments.
  This way we would avoid having to create the Paper as part of printing
- the paper.
- The only problem is that this would only remove the problem from that part
- of the business logic, and move it to the code that uses the method 
+ it.
+ However, this would only move the problem from the 
 \family typewriter
 PrintPaper
 \family default
-.
+ method to the business logic that is calling it.
  It also changes the overall functionality of the method which was to produce
  paper with messages on them and instead makes it so it doesn’t produce
  the paper and only prints on paper given to it.
@@ -243,11 +262,11 @@ The
 PaperFactory
 \family default
  only has one task and that is to create Paper objects.
- That means we have removed the object creation code away from the 
+ That means we have moved the object creation code away from the 
 \family typewriter
 PrintPaper 
 \family default
-method, all the 
+method; all the 
 \family typewriter
 PrintPaper 
 \family default
@@ -399,12 +418,12 @@ The abstract factory design pattern is closely tied to Factory design pattern
 \end_layout
 
 \begin_layout Standard
-An Abstract Factory is made by making an Abstract class of the factory,
- going back to Printer example, imagine that the 
+An Abstract Factory is made by making an Abstract class of the factory.
+ Going back to Printer example, imagine that the 
 \family typewriter
 PaperFactory 
 \family default
-instead was an abstract class.
+instead was an abstract class, as displayed below:
 \end_layout
 
 \begin_layout Standard
@@ -509,16 +528,16 @@ end{alltt}
 \end_layout
 
 \begin_layout Standard
-As we can see the 
+As we can see, the 
 \family typewriter
 A4PaperFactory 
 \family default
-class that is an implementation of the 
+class -- which is an implementation of the 
 \family typewriter
 PaperFactory 
 \family default
-class is capable of producing a special type of paper, as such if this factory
- was used by the 
+class -- is capable of producing a special type of paper.
+ As such if this factory was used by the 
 \family typewriter
 Printer 
 \family default
@@ -573,8 +592,8 @@ Increase the need for redundancy of business logic to accommodate for new
 \end_layout
 
 \begin_layout Itemize
-Makes making changes to legacy code difficult as the code is tied to specific
- object types
+Makes changing legacy code difficult, as the code is tied to specific object
+ types
 \end_layout
 
 \end_body

@@ -65,6 +65,19 @@ Overview
 \end_layout
 
 \begin_layout Standard
+Before we begin explaining all the features of the engine we would like
+ to point out that if it necessary for the reader to see an actual implementatio
+n using all the feature, there is one available on appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:VacuumWorldAppendix"
+
+\end_inset
+
+ Vacuum World.
+\end_layout
+
+\begin_layout Standard
 The goal of the engine is to allow for simulation of a world where agents
  within are allowed to act.
  As such, it is important that it can accurately model a state-machine.
@@ -146,16 +159,16 @@ Modules
 \end_layout
 
 \begin_layout Standard
-The modules can be viewed as the constraints and as the abilities of all
- entities.
+The modules can be viewed as either the constraints or as the abilities
+ of all entities.
  For instance if you wanted to constrain entities from moving into each
  other than you would create a Movement blocking module, this module would
  then contain information on whether or not a given entities is allowed
  to pass through it.
- 
-\family typewriter
-\emph on
-[Rewrite?]
+ However if you wanted to give an agent the ability to move then a Speed
+ module would be required.
+ Whether a certain module is a constraint or an ability is up to the individual
+ module.
 \end_layout
 
 \begin_layout Subsection
@@ -164,8 +177,9 @@ Actions
 
 \begin_layout Standard
 A world is static and unexciting if one is not allowed to perform any changes
- to it, for this we have what we have chosen to name actions.
- There are two different types of actions: environment actions entity actions.
+ to it, for this we have: what we have chosen to name actions.
+ There are two different types of actions: environment actions and entity
+ actions.
  The core difference between them is that entity actions are meant as actions
  performed by a single entity, such as moving the entity or having the entity
  pick up another object.

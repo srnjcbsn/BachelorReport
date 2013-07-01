@@ -62,6 +62,13 @@
 
 \begin_layout Section
 Agent Controllers
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:SystemFeaturesAgentControllers"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

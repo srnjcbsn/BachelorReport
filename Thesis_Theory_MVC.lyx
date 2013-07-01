@@ -67,7 +67,7 @@ Model View Controller
 \begin_layout Standard
 To ensure that code is correctly decoupled from one another, strict design
  patterns are necessary, as these allow developing complex projects without
- losing the sight of the entire project.
+ losing sight of the entire project.
  If no pattern is followed, code can easily become so entangled that later
  development might prove impossible.
  This section will cover all the rules and ideas behind the MVC (Model-View-Cont
@@ -85,8 +85,8 @@ cite{WikiMVC}
 
 \end_inset
 
- provides a short introduction to MVC, but in order to comletele comprehension
- of the design pattern requires experience in using it.
+ provides a short introduction to MVC, although complete comprehension of
+ the design pattern requires experience using it.
  Hence, this section will be based on our prior experiences with MVC.
 \end_layout
 
@@ -159,8 +159,8 @@ Model
 
 \begin_layout Standard
 The model is the core of the program.
- It is why the program functions as it does, it contains all information
- of the data, and it is here all business logic is located.
+ It is why the program functions as it does, it contains all the data, and
+ it is here all business logic is located.
  The model should have no knowledge of either the view or the controller;
  by not knowing either the program is ensured to not be tainted by their
  influence.
@@ -181,20 +181,20 @@ This gives the model a way to publish its state when it has been altered
 .
 
 \emph default
- What this does for the model is that in the case that model state has been
+ What this does for the model is, that in case the model state has been
  altered, it will have a way to provide the information of the state.
  
 \end_layout
 
 \begin_layout Standard
-If such features are not built into the model then it would require the
- component changing the state to inform of the state changes, in case of
- a MVC design.
- The component changing state is the controller and such the controller
- would both have the duty of changing the state and maintaining the view.
- This is generally the case of a badly designed model and can be completely
- avoided if the model simply has the ability to inform its listeners of
- any changes.
+If such features are not built into the model, it would require the component
+ changing the state to inform of the state changes, in case of a MVC design.
+ The component changing state is the controller and as such the controller
+ would have both the duty of changing the state of the model and maintaining
+ the view.
+ This is generally a case of a badly designed model and can be completely
+ avoided if the model simply has the ability to inform its listeners(such
+ as a view) of any changes.
 \end_layout
 
 \begin_layout Subsection
@@ -205,24 +205,24 @@ View
 The view is a way to visualize what is currently occurring inside model
  by visualizing it to the user.
  A view may take many shapes depending on the model.
- If, for instance, the model is a program crunching data on a server, then
+ If, for instance, the model is a program processing data on a server, then
  the view could take the form of a logging console.
  Or if the model was a computer game then the view would be the graphic
  representation of the game.
- Additionally, a model can have severl views, each displaying information
+ Additionally, a model can have several views, each displaying information
  in a different manner.
  For example, the computer game mentioned above could also feature a view
  printing debugging information to a console while the game was running.
  Generally, a view should only have knowledge of the model and not the controlle
 r.
- The idea is that if the model data is complete then interaction with the
- controller should not be necessary.
+ The idea is that if the view can see all model data then interaction with
+ the controller should not be necessary.
 \end_layout
 
 \begin_layout Standard
-When designing a view there are some common pitfalls that happen easily
- if one is not careful of the design.
- First off, the view is what it is named; a view.
+When designing a view there are some common pitfalls that can be avoided
+ with careful design.
+ First off, the view is what it is named: a view.
  This means that it should never do any state changes to the model.
  If getting hold of data means that the model must change its state to accommoda
 te this, then the model is poorly made and should be changed.
@@ -398,7 +398,7 @@ The model of a view (such as a menu bar) would contain data about the names
  Its view would be that of a drawing board responsible for properly drawing
  the menu bars.
  Luckily, most views are simple, so one does not need to make an entire
- MVC design, but for graphical user interface used in most operating system
+ MVC design, but for graphical user interfaces used in most operating system
  it is very important to understand that a view can be an entire MVC setup
  in itself.
  This is why most operating system comes with libraries to easily design
