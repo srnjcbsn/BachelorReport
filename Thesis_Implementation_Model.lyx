@@ -190,23 +190,6 @@ OnRemoveEntity
 \family default
  method, and returns its return value.
  
-\family typewriter
-\emph on
-[entity.OnLeaveWorld?]
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[pseudo code for AddEntity, RemoveEntity?]
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[abstract methods in System Features?]
 \end_layout
 
 \begin_layout Subsection
@@ -254,6 +237,13 @@ reference "sub:SysFeatEntities"
 
 \begin_layout Subsection
 Events and Triggers
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:ImplementationEventsTriggers"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -294,13 +284,67 @@ EventManager
 
 \family typewriter
 \emph on
-[SHOW Sequence diagram of an event being raised on an entity and then transferre
-d to the event manager]
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ImplementationEventAndEventManagerSequenceDiagram.png
+	lyxscale 20
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\emph on
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\family typewriter
+\emph on
+A sequence diagram of an event being raised on an entity
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ImplementationEventAndEventManagerSequenceDiagram"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-As shown on this sequence diagram, an action -- in this case a move action
- -- raises an 
+As shown on fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ImplementationEventAndEventManagerSequenceDiagram"
+
+\end_inset
+
+, an action -- in this case a move action -- raises an 
 \family typewriter
 EntityMovedEvent
 \family default
@@ -350,17 +394,17 @@ Problems of C# events and why we chose to design our own events
 \end_layout
 
 \begin_layout Standard
-The language which our engine is written in is C#, one of the fantastic
- things about C# is that events is built into the language.
+The language which our engine is written in is C#, one of the good things
+ about C# is that events is built into the language.
  As such it may come as a surprise that we have chosen to re-implement events
  ourselves.
- However, while the name be the same, the intent between C# events and our
- events is so different that it is impossible to compare the two.
+ However, while the name might be the same, the intent between C# events
+ and our events is so different that it is impossible to compare the two.
  The intent behind C# events is to keep maintenance on single objects, so
  that changes to a given object can affect its linked objects without having
  to be designed specifically to do so.
  This allows for really decoupled projects and is what makes object maintenance
- in C# quite easy.
+ in C# easy.
  However our events are not meant for such low-level tasks.
  Instead they are meant to allow reactions to occur in response to other
  actions.
@@ -373,18 +417,14 @@ The language which our engine is written in is C#, one of the fantastic
 \begin_layout Standard
 To give an idea of what sort of problems that would arise from using C#
  events, one need only look at how global events would have to be implemented.
- Since Events using C# are linked to a specific class, which would essentially
+ Since Events using C# are linked to a specific class, this would essentially
  mean that the EventManager class would need to be setup for every single
  event the engine is capable of running.
  What this basically has accomplished is to couple a single class into the
- entire workings of an engine, this makes for poor programming design in
- more than one way and greatly reduces productivity.
- It also makes the engine difficult to extend and modify at a later time
- since the design would be practically hardcoded into it.
+ entire workings of an engine, this makes the engine difficult to extend
+ and modify at a later time since the design would be practically hardcoded
+ into it.
  
-\family typewriter
-\emph on
-[Explain in detail / rewrite paragraph]
 \end_layout
 
 \begin_layout Paragraph*
@@ -447,7 +487,7 @@ Another way the triggers could have been designed would be if the user simply
 \end_layout
 
 \begin_layout Standard
-In short, triggers are a simple design that gives the engine logic a lot
+In short, triggers are a simple design that gives the engine user a lot
  of flexibility.
  
 \end_layout
@@ -607,8 +647,8 @@ Completed
 
 \begin_layout Standard
 Consider the action of moving from one place to another.
- In this case the move action would need to create a timer to give the idea
- that the move action had a speed.
+ In this case the move action would need to set a delay before the actual
+ move, to give the idea that the move action had a speed.
  As we can’t halt other actions during this time it is paramount that the
  
 \family typewriter
@@ -653,7 +693,7 @@ As one can see, the problem in this design is the redundancy created by
 \family typewriter
 Completed 
 \family default
-on each execution.
+on every designed action execution.
  This might not seem like a problem but it is problematic in a few ways.
  First and foremost it adds complexity in usage of the engine, a person
  with no knowledge of using the engine would not intuitively deduce the

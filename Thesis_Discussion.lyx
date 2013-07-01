@@ -83,7 +83,7 @@ One of the major goals of this project was to make the engine as general
 \begin_layout Standard
 For the engine to be general means it has the ability to adapt to any needed
  situation.
- The only restriction is that these situations are based on Multi agent
+ The only restriction is that these situations are based on a Multi agent
  Environment, other than that nearly any situation should be coverable by
  the engine.
  For instance if one wishes to use the engine to make a computer game, then
@@ -102,6 +102,8 @@ In many cases, the shortest path to a general system is removing restrictions.
  Unfortunately, features are often restrictive in nature; the most general
  system of all is one that is completely featureless.
  Thus, it is often a trade-off between features and generality.
+ In our engine design idea we try to overcome this by making all features
+ as extensions or optional thus not restricting the core engine.
 \end_layout
 
 \begin_layout Subsection*
@@ -121,20 +123,17 @@ For the model to be general, it should be capable of representing a world
 We have accomplished this by imposing as few restrictions as possible on
  these objects.
  For example, as described in section 
-\family typewriter
-\emph on
-[System Features.World]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:SystemFeaturesVirtualWorld"
+
+\end_inset
+
 , a world in the engine has no data associated with it by default, leaving
  the modelling of it completely in the hands of the designer.
  The only restriction on the world is the idea that all entities should
  have a postition in it, although the position object is completely general
  itself.
- 
-\family typewriter
-\emph on
-[Environments where postition does not matter?]
 \end_layout
 
 \begin_layout Standard
@@ -156,7 +155,7 @@ Interfacing with APLs
 
 \begin_layout Standard
 One of the major problems in designing an interface that works with different
- APLs is that the order in which they queue actions and queries percepts
+ APLs is that: the order in which they, queue actions and queries percepts
  may be different from APL to APL.
  In effect, they do not share a common execution protocol.
  This means that we cannot provide a general method for communicating with
@@ -173,13 +172,6 @@ It could be argued that using the notions of percepts and actions serves
  agent.
  They are basically the input and output of the agent; it perceives the
  state of the world, and produces an action based on this information.
- 
-\family typewriter
-\emph on
-[Explain why the functions of an agent can not be reduced any further (why
- they are the basis for an agent), refer to AIMA]
-\family default
-\emph default
  As such, they are essential to interacting with an agent, and incorporated
  in all agent programming languages we are aware of.
 \end_layout
@@ -193,11 +185,12 @@ For the view to be considered general it is paramount that the design of
  the view is not being restricted in anyway, this is done by keeping anything
  in the view very minimalistic.
  By minimalistic we mean that the view only provides about four classes
- and they only provide a little about of business logic.
+ and they only provide a tiny portion of business logic.
  If we had narrowed down how exactly a view should be designed such as requiring
  a frame for which the view is projected on.
  This might have made implementations of the view easier as tools to draw
- on frames could be pre-implemented into the engine.
+ on frames could be pre-implemented into the engine, but in turn restricted
+ the view from being able to become other types of view.
  We did not want to do this since we think that restrictions should be non-exist
 ent .However this also poses a potential problem in that it is so minimalistic
  that we barely provide anything for the user, and leave the user to the
@@ -213,9 +206,9 @@ As evident when discussing how to make the engine general and how to make
  it work with as many situations as possible, the problem arises that the
  workload for the user gets increased.
  This is because whenever we remove something from the engine in order to
- ensure that we impose no restrictions, we run the risk of removing something
- that made the life of the user easier, since they would not have to re-implemen
-t it themself.
+ ensure that we impose no restrictions.
+ We run the risk of removing something that made the life of the user easier,
+ as they would not have to re-implement it themself.
  To combat this problem we moved everything that added value to the engine
  but imposed a restriction to the Engine Extensions project.
  The idea would be that while the extensions was not part of the core engine,
@@ -246,20 +239,14 @@ The model view controller design pattern is one of the older design patterns
  If the user did this, they would have to write new actions to perform the
  same task for each new APL they encountered, which would increase code
  redundancy.
- As the designers of this engine we wanted to ensure those kinds of mistakes
+ As the developers of this engine we wanted to ensure those kinds of mistakes
  do not happen.
  The way we enforce this is by forcing the MVC pattern.
  Since by forcing the MVC pattern we force the user to think about how they
  should construct the implementation of the engine’s abstract classes.
  However since it is only a pattern, the user can still make bad design
  decisions as we impose no restrictions.
- As most bad design decisions comes from making an easy implementation of
- something, we hopefully reduce the number of times they are made by making
- bad decisions harder.
  
-\family typewriter
-\emph on
-[rewrite sentence?]
 \end_layout
 
 \begin_layout Section
@@ -510,9 +497,9 @@ cite{Ricci11}
 
 \begin_layout Description
 Agents In Cartago, agent programs are connected to agent bodies, which are
- -- in that respect -- conceptually similar to agent controllers in the
- XMAS engine, as they represent a vessel for the agent in the environment,
- but no agent logic.
+ -- in that respect -- conceptually similar to agents in the XMAS engine,
+ as they represent a vessel for the agent in the environment, but no agent
+ logic.
  In keeping with the A&A approach explained above, the agent API allows
  for creating and deleting artifacts, as well as executing operations on
  artifacts and retreiving percepts from them.
@@ -625,11 +612,12 @@ Sensing The agents' sensor modules would be connected to the artifact entities
  by the artifacts.
  By using trigger conditions (cf.
  section 
-\family typewriter
-\emph on
-[Events and triggers section]
-\family default
-\emph default
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:SystenFeaturesEventAndTriggers"
+
+\end_inset
+
 ), the percepts could be filtered as with Cartago sensors.
  The modules in XMAS already provides means for being queried for collections
  of percepts, so this functionality could be used to let them return all
@@ -658,8 +646,21 @@ nments, for which positions in the XMAS engine would be well suited.
 Environment Interface Standard
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Standard
+While Cartago was rather comprehensive; EIS is at the completely opposite
+ side of the spectrum.
+ The only thing EIS provides is an interface between a single APL and java,
+ this means that its goals are different from ours.
+ What EIS is good at, is providing a way to comunicate with a language that
+ otherwise had no way of doing so.
+ While the goal of our engine is simply to use APLs that are capable of
+ comunication(Some of them being so through EIS).
+\end_layout
 
+\begin_layout Standard
+As such comparing our engine to EIS would be a mistake since they are different
+ at the core, meaning that EIS is much better at what it is designed for,
+ while our engine is much better at what we designed it for.
 \end_layout
 
 \end_body
