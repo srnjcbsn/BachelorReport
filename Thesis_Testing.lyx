@@ -61,9 +61,10 @@
 \begin_body
 
 \begin_layout Standard
-When developing a large project one of the most difficult aspects of the
- process can be proper testing, this section will go through what kinds
- of tests we performed to ensure that our engine works correctly.
+When developing a large project, one of the most difficult aspects of the
+ process can be proper testing.
+ This section will go through what kinds of tests we performed to ensure
+ that our engine works correctly.
 \end_layout
 
 \begin_layout Section
@@ -93,11 +94,10 @@ projects.
 
 \begin_layout Standard
 Since our engine by itself is not meant to be executed, but rather is meant
- to have some of its components implemented first.
- This means that the only kinds of tests that can be performed on the engine
- are unit tests.
+ to have some of its components implemented first, the only kinds of tests
+ that can be performed on the engine are unit tests.
  The unit tests that are most important to the core functionality of the
- engine, is the tests concerning the 
+ engine are the tests concerning the 
 \family typewriter
 EventManager 
 \family default
@@ -107,7 +107,7 @@ ActionManager
 \family default
 , since these tests shows that the action, trigger and event functionality
  correctly works.
- However as we created the engine using a TDD approach we should have tests
+ However, as we created the engine using a TDD approach we should have tests
  for almost all classes with business logic contained in them.
  
 \end_layout
@@ -130,11 +130,10 @@ Testing the Reference Implementation
 The testing of our reference implementation hinges on the fact that we assume
  the engine works correctly, thus it is the job of engine-tests to ensure
  correctness and not our reference implementation.
- Therefor as the reference implementation complicated logic was located
- as part of the extensions, which were already tested as part of testing
- the engine.
- The only testing that the reference implementation needed was testing of
- the Goal program which is controlling the agent.
+ As the reference implementation's complicated logic was located as part
+ of the extensions, which were already tested as part of testing the engine,
+ the only testing that the reference implementation needed was testing of
+ the GOAL program which is controlling the agent.
 \end_layout
 
 \begin_layout Standard
@@ -144,7 +143,7 @@ The goal program was tested by taking out individual parts of it such as
  and then made a larger scale test of the goal program using the fully running
  engine.
  Once the agent correctly had located all packages and stopped as we wanted,
- we concluded that the reference implementation is working as it should.
+ we concluded that the reference implementation was working as it should.
 \end_layout
 
 \end_body
