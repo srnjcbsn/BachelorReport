@@ -118,9 +118,11 @@ Tiles in this sense are squares that fit exactly one entity.
 \end_inset
 
  is returned, containing the tiles in that square.
- This can be used when the quering of large pieces of the map at a time
- is needed, this is used in our vision percept to gather all tiles around
- an agent needed before the vision algorithm filters away the unseeble tiles.
+ This can be used when the querying of large pieces of the map at a time
+ is needed.
+ When determinining an agent's vision (described below), we use this functionali
+ty to collect all tiles in the agent's visible range and then filter out
+ the obscured tiles.
 \end_layout
 
 \begin_layout Standard
@@ -141,10 +143,16 @@ vision blocking
 \end_layout
 
 \begin_layout Standard
-Also provided in the Tile Extension is an MoveUnit action which is designed
- to move agents along a vector inside the Tile world.
- As a requirement to the MoveUnit action a speed module is needed for the
- MoveUnit action to determine how fast the agent can move at a time.
+Also provided in the Tile Extension is a 
+\family typewriter
+MoveUnit 
+\family default
+action which is designed to move agents along a vector inside the Tile world.
+ This action requires a 
+\emph on
+speed
+\emph default
+ module, defining how ling it takes for an agent to move one tile.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -180,7 +188,7 @@ Vision
  object uses an algorithm described in appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:VisionAppendix"
+reference "sub:ImplementationTileExtension"
 
 \end_inset
 
@@ -217,8 +225,8 @@ connects
 \begin_inset Formula $e$
 \end_inset
 
-'s tile has any corner from which we can connect lines to all corners of
- 
+'s tile has any corner from which we can connect lines to any three corners
+ of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -257,11 +265,11 @@ name "sub:EIS-Extension"
 \begin_layout Standard
 The EIS extension provides means for communicating with an EIS instance
  over a socket, as well as serializing and deserializing percepts and actions
- encoded in an XML representation of EIS' 
+ encoded in an XML representation of EIS'
 \family typewriter
-iilang
+ 
 \family default
- format.
+IILang format.
  The extension features custom a custom agent controller and manager, which
  have been developed to work well with EIS.
  
@@ -271,22 +279,16 @@ iilang
 As EIS is implemented in Java and our engine is written in C#, information
  can not easily be passed between the two in a native manner.
  Instead, we have opted to have them communicate over sockets.
- As EIS already supports formatting 
-\family typewriter
-iilang
-\family default
- objects to XML, we chose this to encode information passed over the sockets.
- We have implemented our own 
-\family typewriter
-iilang
-\family default
- object tree in C#, which implements XML serialization and deserialization,
- as well as a Java class used to parse XML to 
-\family typewriter
-iilang
-\family default
- objects.
- Furthermore, we have implemented special package streaming objects in both
+ As EIS already supports formatting IILang objects to XML, we chose this
+ to encode information passed over the sockets.
+ We have implemented our own IILang object tree in C#, which implements
+ XML serialization and deserialization, as well as a Java class used to
+ parse XML to IILang objects.
+ 
+\end_layout
+
+\begin_layout Standard
+Furthermore, we have implemented special package streaming objects in both
  C# and Java, which sends the size of a payload before the actual data when
  streaming XML over sockets.
  This allows us to detect when an XML message has been completely received.
@@ -463,16 +465,42 @@ To use the logger all that is required is that the user extends the class
 LoggerView
 \family default
 .
- The logger will then providing the extending class with a 
+ The logger will then provide the extending class with a 
 \family typewriter
 ThreadSafeEventManager
 \family default
-, this manager will have its events automatically executed.
- As such the only thing required by the user is to: create a 
+, which will have its events automatically executed.
+ As such, the only thing required by the user is to create a 
 \family typewriter
 ThreadSafeEventQueue 
 \family default
 and register the triggers with the events the user wishes to log.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+LoggerView
+\family default
+ is constructed with a 
+\family typewriter
+Logger
+\family default
+ object, on which the user can call the method 
+\family typewriter
+LogStringWithTimeStamp
+\family default
+, providing a string to be logged as well as the importance of the event,
+ that is, what debug level it is on.
+ The 
+\family typewriter
+Logger
+\family default
+ class is instantiated with a maximum debug level, and will not log messages
+ from events with higher debug level.
+ In this way, the user can specify if he only wants critical errors, critical
+ errors and warnings, or all information to be logged.
 \end_layout
 
 \begin_layout Standard
@@ -486,7 +514,7 @@ object, this object can take many different forms however for logging we
 \end_layout
 
 \begin_layout Standard
-To see an example of how the logger could be used, go to appendix 
+For an example of how the logger is used, see appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "chap:VacuumWorldAppendix"
