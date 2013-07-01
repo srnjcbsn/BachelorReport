@@ -167,7 +167,8 @@ the mental state thus takes a prolog statement as input.
 
 \subsubsection*{Acting and Perceiving}
 
-When a GOAL program is run, it executes the following steps, in order:
+When a GOAL program is running, it executes the following steps, in
+order:
 \begin{enumerate}
 \item Receive percepts
 \item Update the goals and beliefs of the agent if needed
@@ -223,9 +224,9 @@ implementation of the environments or the agents inhabiting it.
 It provides \texttt{entities} which can function as the bodies of
 agent programs, and means for receiveing commands and returning percepts
 to the connected agents.When using EIS, the environment designer can
-handle actions sent by the agent programs with the \texttt{performAction}
+handle actions sent by the agent programs with the \texttt{performEntityAction}
 method to define exactly how they affect the world the designer have
-constructed. Percepts can be requested explicitly through the \texttt{getAllPercepts}
+constructed. Percepts can be requested explicitly through the \texttt{getAllPerceptsFromEntity}
 method (this is how GOAL gets its percepts from EIS) or as notifications,
 for APLs that support it. 
 

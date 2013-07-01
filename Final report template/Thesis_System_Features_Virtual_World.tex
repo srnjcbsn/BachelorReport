@@ -10,8 +10,8 @@ in it, fitting the data structure describing the environment. This
 is a pretty loose requirement, considering that it can effectively
 be ignored.
 
-To give an example of how these positions should look like, imagine
-a tile based environment, the world could consist of a two dimensional
+To give an example of what these positions should look like, imagine
+a tile based environment the world could consist of a two dimensional
 array containing lists of entities, with each field representing a
 tile, and positions represented as $(x,y)$ coordinates. In a graph
 based environment, the world would contain some structural representation
@@ -101,5 +101,5 @@ An \emph{agent} is a special entity which have a unique name and can
 collect percepts. When an agent is asked to return all of its percepts,
 it queries each module for any available percepts, and returns those
 as a collection. The agents are designed to be controlled by an APL,
-they are done so through an \texttt{AgentController}, see sec. \ref{SystemFeaturesAgentControllers}
+they are done so through an \texttt{AgentController}, see sec. \ref{sec:SystemFeaturesAgentControllers}
 on how to work with agent controllers. 

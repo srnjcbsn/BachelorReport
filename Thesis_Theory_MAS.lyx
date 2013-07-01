@@ -535,7 +535,7 @@ Acting and Perceiving
 \end_layout
 
 \begin_layout Standard
-When a GOAL program is run, it executes the following steps, in order:
+When a GOAL program is running, it executes the following steps, in order:
 \end_layout
 
 \begin_layout Enumerate
@@ -650,13 +650,13 @@ entities
  the environment designer can handle actions sent by the agent programs
  with the 
 \family typewriter
-performAction
+performEntityAction
 \family default
  method to define exactly how they affect the world the designer have constructe
 d.
  Percepts can be requested explicitly through the 
 \family typewriter
-getAllPercepts
+getAllPerceptsFromEntity
 \family default
  method (this is how GOAL gets its percepts from EIS) or as notifications,
  for APLs that support it.

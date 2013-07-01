@@ -66,8 +66,8 @@ Engine Extensions
 
 \begin_layout Standard
 Since most of the engine is very abstract in functionality, we have made
- three extensions, which makes it easy to implement a tile based environment
- and communicating with EIS supported APLs.
+ three extensions, which makes it easy to implement a tile based environment,
+ communicating with EIS supported APLs and log events.
 \end_layout
 
 \begin_layout Subsection
@@ -85,7 +85,7 @@ status open
 \begin_inset Graphics
 	filename tilemap.png
 	lyxscale 20
-	width 60text%
+	width 90text%
 
 \end_inset
 
@@ -96,7 +96,21 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-An illustration of the Tile World's coordiate system
+Illustrating a 
+\begin_inset Formula $7\times7$
+\end_inset
+
+ tile map.
+ The tiles inside the red zone are being queried by specifying the tile
+ at 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ and the range 
+\begin_inset Formula $r=2$
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:TileWorldIlustrationInTileExtension"
@@ -171,7 +185,15 @@ Tiles in this sense are squares that fit exactly one entity.
 \begin_inset Formula $(2r+1)\times(2r+1)$
 \end_inset
 
- is returned, containing the tiles in that square.
+ is returned, containing the tiles in that square (see fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TileWorldIlustrationInTileExtension"
+
+\end_inset
+
+).
  This can be used when the querying of large pieces of the map at a time
  is needed.
  When determinining an agent's vision (described below), we use this functionali
@@ -206,7 +228,7 @@ action which is designed to move agents along a vector inside the Tile world.
 \emph on
 speed
 \emph default
- module, defining how ling it takes for an agent to move one tile.
+ module, defining how long it takes for an agent to move one tile.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -239,7 +261,8 @@ Vision
 \family typewriter
 Vision
 \family default
- object uses an algorithm described in appendix 
+ object uses an algorithm described in sec.
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:ImplementationTileExtension"
@@ -248,61 +271,7 @@ reference "sub:ImplementationTileExtension"
 
  to assemble a set of mappings from positions (relative to the entity) to
  tile references.
- To determine whether a tile 
-\begin_inset Formula $t$
-\end_inset
-
- is visible to an entity 
-\begin_inset Formula $e$
-\end_inset
-
-, we draw straight lines from each corner of 
-\begin_inset Formula $e$
-\end_inset
-
-'s tile to the corners of 
-\begin_inset Formula $t$
-\end_inset
-
-.
- If such a line does not intersect with a tile that is vision blocking with
- respect to 
-\begin_inset Formula $e$
-\end_inset
-
-, we say that the line 
-\emph on
-connects
-\emph default
-.
- If 
-\begin_inset Formula $e$
-\end_inset
-
-'s tile has any corner from which we can connect lines to any three corners
- of 
-\begin_inset Formula $t$
-\end_inset
-
-, then 
-\begin_inset Formula $t$
-\end_inset
-
- is visible to 
-\begin_inset Formula $e$
-\end_inset
-
-.
- If, however, 
-\begin_inset Formula $t$
-\end_inset
-
- is itself vision blocking, we require only two connecting lines, since
- at least one line would not have to travel through 
-\begin_inset Formula $t$
-\end_inset
-
-, and as such not connect.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -324,8 +293,8 @@ The EIS extension provides means for communicating with an EIS instance
  
 \family default
 IILang format.
- The extension features custom a custom agent controller and manager, which
- have been developed to work well with EIS.
+ The extension features a custom agent controller and manager, which have
+ been developed to work with EIS.
  
 \end_layout
 

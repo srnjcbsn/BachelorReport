@@ -78,15 +78,56 @@ name "sub:ImplementationTileExtension"
 
 \end_layout
 
+\begin_layout Standard
+The tiled environment is quite elementary, as it is basically a two-dimensional
+ array with some extra arithmetic to change the coordinate system, as described
+ in System Features.
+ The actions and events are also very straight-forward, as they function
+ as described in their own sections.
+ The most interesting part of the tile extension is thus the way we handle
+ vision, which we will describe here.
+\end_layout
+
 \begin_layout Subsubsection*
 Vision
 \end_layout
 
 \begin_layout Standard
-As the basic rules for which tiles can be seen from where have been explained
- in the System Features section, we will now turn our attention to how corners
- are connected with each other.
- 
+We say that the tile 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ is visible from another tile 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ if at least one corner of 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ connects to at least three corners of 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ is vision blocking, only two corners of 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ need be connected to.
+ In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TileMapVision"
+
+\end_inset
+
+ we have shown some examples of connecting corners.
+ Next, we will explain what it means for two corners to connect.
 \end_layout
 
 \begin_layout Standard
@@ -222,41 +263,15 @@ We say that a corner
 \end_layout
 
 \begin_layout Standard
-Recall that the tile 
-\begin_inset Formula $t_{2}$
-\end_inset
-
- is visible from 
-\begin_inset Formula $t_{1}$
-\end_inset
-
- if at least one corner of 
-\begin_inset Formula $t_{1}$
-\end_inset
-
- connects to at least three corners of 
-\begin_inset Formula $t_{2}$
-\end_inset
-
-.
- If 
-\begin_inset Formula $t_{2}$
-\end_inset
-
- is vision blocking, only two corners of 
-\begin_inset Formula $t_{2}$
-\end_inset
-
- need be connected to.
- In figure 
+Note that in fig.
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:TileMapVision"
 
 \end_inset
 
- we have shown some examples of connecting corners.
- Note that the line from the SE corner of 
+, the line from the SE corner of 
 \family typewriter
 A
 \family default
@@ -434,8 +449,11 @@ name "fig:ConnectingLine"
 \begin_layout Standard
 The interesting part of the algorithm is this: how do we determine whether
  two corners connect? That is, how do we find all the tiles a line from
- one corner to another passes through? To illustrate the problem, consider
- the line depicted in fig.
+ one corner to another passes through? 
+\end_layout
+
+\begin_layout Standard
+To illustrate the problem, consider the line depicted in fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -507,19 +525,35 @@ reference "fig:ConnectingLine"
 \end_layout
 
 \begin_layout Standard
-Additional complications occur when 
-\begin_inset Formula $v$
-\end_inset
-
- has negative components, or when 
-\begin_inset Formula $v_{x}$
-\end_inset
-
- or 
-\begin_inset Formula $v_{y}$
-\end_inset
-
- is zero, but this outlines the basic principle of the algorithm.
+In the 
+\family typewriter
+Vision
+\family default
+ class, the 
+\family typewriter
+walkAlongVector(Vector v)
+\family default
+ method performs the above operations, with some modifications to handle
+ vectors with negative components properly.
+ It is called by the 
+\family typewriter
+ConnectCorners(Point, Point)
+\family default
+ method, which calculates the vector 
+\family typewriter
+v
+\family default
+.
+ 
+\family typewriter
+WalkAlongVector
+\family default
+ uses the 
+\family typewriter
+yield return
+\family default
+ keyword to return each tile at a time, so lines are only drawn until a
+ blocking one is encountered.
 \end_layout
 
 \begin_layout Subsection

@@ -71,7 +71,7 @@ The section will cover how all the components of the engine interacts with
  The component diagram of the Xmas Engine can be found in appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "ComponentDiagramAppendix"
+reference "chap:ComponentDiagramAppendix"
 
 \end_inset
 
@@ -214,7 +214,7 @@ XmasAction
 is designed to allow other threads the ability to interact with the engine.
  The reason is that we did not wish for multiple threads to change the state
  of the model component at once is that would force the designer using the
- engine to deal with mutli threading problems.
+ engine to deal with multi threading problems.
  To guarentee that this is never necessary we provide the abiltity to inject
  code into the 
 \family typewriter

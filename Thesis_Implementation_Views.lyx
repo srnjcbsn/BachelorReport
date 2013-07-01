@@ -143,8 +143,7 @@ Thread Safety
 \begin_layout Standard
 One thing all views have in common is the dangers of having code that is
  not thread safe, by having two threads run through the same address space
- at the same time, the guarantee of a race condition or deadlock is very
- high.
+ at the same time, the risk of a race condition or deadlock is very high.
  This makes programming a view rather difficult.
  To combat this problem, we came up with the 
 \family typewriter

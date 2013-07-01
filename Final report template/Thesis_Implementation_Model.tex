@@ -22,10 +22,10 @@ with this number. This ensures unambiguity, since no number can be
 used twice. However, it does impose a limit on the number of entities
 that can be added to the world. We have represented the \texttt{id}
 as a 64 bit unsigned integer (C\#\texttt{ ulong} type), so it supports
-adding more than $1.8\times10^{19}$ entities. In an environment that
-is meant to run indefinetely, and where entities are added and removed
-often (such as a server based website indexing tool), this limit may
-be a concern. 
+adding more than $1.8\times10^{19}$ entities. Even in an environment
+that is meant to run indefinetely, and where entities are added and
+removed often (such as a server based website indexing tool), this
+limit is still very hard to reach. 
 
 The process of assigning \texttt{id}s to entities is handled in the
 \texttt{AddEntity} method, which takes as arguments the entity to
@@ -89,7 +89,7 @@ that are inside. Whenever an entity has an event raised on it, it
 is copied to the event manager which also raises the event. The intent
 is to minimize the number of events needed to cover a single case.
 To be clear on how exactly this transpires, we have drawn a sequence
-diagram.
+diagram shown in fig. \ref{fig:ImplementationEventAndEventManagerSequenceDiagram}.
 
 \texttt{\emph{}}
 \begin{figure}
@@ -97,21 +97,21 @@ diagram.
 \includegraphics[width=0.7\textwidth]{ImplementationEventAndEventManagerSequenceDiagram}
 \par\end{centering}
 
-\texttt{\emph{\caption{\texttt{\emph{A sequence diagram of an event being raised on an entity\label{fig:ImplementationEventAndEventManagerSequenceDiagram}}}}
+\texttt{\emph{\caption{A sequence diagram of an event being raised on an entity\texttt{\emph{\label{fig:ImplementationEventAndEventManagerSequenceDiagram}}}}
 }}
 
 \end{figure}
 
 
-As shown on fig. \ref{fig:ImplementationEventAndEventManagerSequenceDiagram},
-an action -- in this case a move action -- raises an \texttt{EntityMovedEvent}
-on a given entity. The entity then calls all triggers registered to
-it, where the trigger also contain the event being raised. After this,
-the entity informs the \texttt{EventManager} that an event has been
-raised on it, which causes the \texttt{EventManager} to also call
-all its registered Triggers with the given Event. Once all relevant
-triggers have been informed of the Event being raised, the procedure
-is complete and the \texttt{EventManager} returns to its dormant state.
+As can be seen in the figure, an action -- in this case a move action
+-- raises an \texttt{EntityMovedEvent} on a given entity. The entity
+then calls all triggers registered to it, where the trigger also contain
+the event being raised. After this, the entity informs the \texttt{EventManager}
+that an event has been raised on it, which causes the \texttt{EventManager}
+to also call all its registered Triggers with the given Event. Once
+all relevant triggers have been informed of the Event being raised,
+the procedure is complete and the \texttt{EventManager} returns to
+its dormant state.
 
 In the case of events that are not linkable to a specific entity such
 as an \textquotedblleft{}Engine Close Event\textquotedblright{}, the
@@ -180,8 +180,8 @@ the user to easily design reactions to a given event. The trigger
 design is very minimalistic except for the fact that it has a condition.
 We designed it with the condition because we wanted it to be obvious
 how unwanted events should be handled. Furthermore it also helps to
-split up the code containing if the action should be executed away
-from the action itself allowing for more readable code. 
+separate the code containing the condition and the code containing
+the action itself, allowing for more readable code. 
 
 Another way the triggers could have been designed would be if the
 user simply registered lambda functions (anonymous function), this

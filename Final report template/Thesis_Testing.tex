@@ -1,5 +1,5 @@
-When developing a large project one of the most difficult aspects
-of the process can be proper testing, this section will go through
+When developing a large project, one of the most difficult aspects
+of the process can be proper testing. This section will go through
 what kinds of tests we performed to ensure that our engine works correctly.
 
 
@@ -14,12 +14,12 @@ can be found in the source code in the \texttt{XmasEngine\_Test} and
 
 
 Since our engine by itself is not meant to be executed, but rather
-is meant to have some of its components implemented first. This means
-that the only kinds of tests that can be performed on the engine are
-unit tests. The unit tests that are most important to the core functionality
-of the engine, is the tests concerning the \texttt{EventManager }and
+is meant to have some of its components implemented first, the only
+kinds of tests that can be performed on the engine are unit tests.
+The unit tests that are most important to the core functionality of
+the engine are the tests concerning the \texttt{EventManager }and
 the \texttt{ActionManager}, since these tests shows that the action,
-trigger and event functionality correctly works. However as we created
+trigger and event functionality correctly works. However, as we created
 the engine using a TDD approach we should have tests for almost all
 classes with business logic contained in them. 
 
@@ -36,11 +36,11 @@ occur during the run.
 
 The testing of our reference implementation hinges on the fact that
 we assume the engine works correctly, thus it is the job of engine-tests
-to ensure correctness and not our reference implementation. Therefor
-as the reference implementation complicated logic was located as part
-of the extensions, which were already tested as part of testing the
-engine. The only testing that the reference implementation needed
-was testing of the Goal program which is controlling the agent.
+to ensure correctness and not our reference implementation. As the
+reference implementation's complicated logic was located as part of
+the extensions, which were already tested as part of testing the engine,
+the only testing that the reference implementation needed was testing
+of the GOAL program which is controlling the agent.
 
 The goal program was tested by taking out individual parts of it such
 as its path finding, and carefully tested and debugged in the SWI-prolog
@@ -48,4 +48,4 @@ program. When all parts worked correctly we moved them to the actual
 goal program and then made a larger scale test of the goal program
 using the fully running engine. Once the agent correctly had located
 all packages and stopped as we wanted, we concluded that the reference
-implementation is working as it should.
+implementation was working as it should.

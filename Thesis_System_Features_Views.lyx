@@ -101,7 +101,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename ViewUmlDomainDiagram.png
-	width 70text%
+	width 40text%
 
 \end_inset
 
@@ -132,14 +132,12 @@ name "fig:ViewUMLView"
 
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Description
 
 \family typewriter
 XmasView
-\end_layout
-
-\begin_layout Standard
-The 
+\family default
+ The 
 \family typewriter
 XmasView
 \family default
@@ -151,7 +149,7 @@ XmasView
 Start
 \family default
  method is the first method to be executed inside that thread.
- The start method should contain an endless loop that on a time interval
+ The start method could contain an endless loop that on a time interval
  updates the view.
  Another task of the implemented view is also to update its 
 \family typewriter
@@ -168,7 +166,7 @@ ThreadSafeEventManager
 ThreadSafeEventManager
 \family default
  until the view thread is ready to execute them.
- How many events that one wishes to trigger is up to the user.
+ How many events that one wishes to execute is up to the user.
  We also provide the appropriate methods for the user to specify exactly
  how long he wishes to wait for the next event, or if it should timeout.
  The 
@@ -180,14 +178,12 @@ ThreadSafeEventManager
  been applied to the system.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Description
 
 \family typewriter
 WorldView
-\end_layout
-
-\begin_layout Standard
-The 
+\family default
+ The 
 \family typewriter
 WorldView
 \family default
@@ -197,14 +193,12 @@ WorldView
  even if it is initially empty, can have many benefits as the project expands.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Description
 
 \family typewriter
 EntityView
-\end_layout
-
-\begin_layout Standard
-Much like the 
+\family default
+ Much like the 
 \family typewriter
 WorldView
 \family default
@@ -250,14 +244,12 @@ EntityView
  separating the two threads completely.
 \end_layout
 
-\begin_layout Paragraph*
+\begin_layout Description
 
 \family typewriter
 ViewFactory
-\end_layout
-
-\begin_layout Standard
-The 
+\family default
+ The 
 \family typewriter
 ViewFactory
 \family default

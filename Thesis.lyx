@@ -425,6 +425,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename componentDiagram.png
 	width 100text%
@@ -545,10 +546,6 @@ filename "Thesis_Appendix_GOAL_Source.lyx"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Chapter
-Source code excerpts
 \end_layout
 
 \end_body

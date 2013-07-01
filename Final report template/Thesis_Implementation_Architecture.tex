@@ -4,7 +4,7 @@
 The section will cover how all the components of the engine interacts
 with one another, it will detail how flow of information is transferred
 through the engine and into the components connected to it. The component
-diagram of the Xmas Engine can be found in appendix \ref{ComponentDiagramAppendix}.
+diagram of the Xmas Engine can be found in appendix \ref{chap:ComponentDiagramAppendix}.
 
 The components of the engine are
 \begin{itemize}
@@ -43,7 +43,7 @@ all necessary dependencies such as the \texttt{XmasWorld }and the
 \texttt{XmasAction }is designed to allow other threads the ability
 to interact with the engine. The reason is that we did not wish for
 multiple threads to change the state of the model component at once
-is that would force the designer using the engine to deal with mutli
+is that would force the designer using the engine to deal with multi
 threading problems. To guarentee that this is never necessary we provide
 the abiltity to inject code into the \texttt{ModelComponent} thread,
 which is transferred in the form of an \texttt{XmasAction}.
