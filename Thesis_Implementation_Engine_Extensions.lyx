@@ -298,10 +298,20 @@ begin{alltt}
 
 \backslash
 textit{Method} Vision 
+\end_layout
+
+\begin_layout Plain Layout
+
+        
 \backslash
-textit{takes} Agent A, 
+textit{takes} an Agent A, 
+\end_layout
+
+\begin_layout Plain Layout
+
+        
 \backslash
-textit{returns} a collection of tiles
+textit{returns} a collection of Tiles
 \end_layout
 
 \begin_layout Plain Layout
@@ -372,11 +382,70 @@ end{alltt}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename tilemapConnection.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+A line described by the vector 
+\begin_inset Formula $v=(3,4)$
+\end_inset
+
+ with slope 
+\begin_inset Formula $s=\frac{v_{y}}{v_{x}}=\frac{4}{3}$
+\end_inset
+
+.
+ Squares in light gray are tiles the line intersect with.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ConnectingLine"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The interesting part of the algorithm is this: how do we determine whether
  two corners connect? That is, how do we find all the tiles a line from
- one corner to another passes through? To accomplish this, we find the slope
- of the line as 
-\begin_inset Formula $\left|\frac{v_{x}}{v_{y}}\right|$
+ one corner to another passes through? To illustrate the problem, consider
+ the line depicted in fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ConnectingLine"
+
+\end_inset
+
+.
+ First, we find the slope of the line as 
+\begin_inset Formula $s=\frac{v_{y}}{v_{x}}$
 \end_inset
 
 , where 
@@ -384,43 +453,65 @@ The interesting part of the algorithm is this: how do we determine whether
 \end_inset
 
  is the vector describing the line.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{alltt}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-textit{Method} CennectCorners 
-\backslash
-textit{takes} $ two corners to connect
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{alltt}
-\end_layout
-
+ If we consider the line's equation (
+\begin_inset Formula $y=s\cdot x$
 \end_inset
 
+), as it is depicted in the figure, we can see that the line segment decribed
+ by the vector between the points 
+\begin_inset Formula $\left(x_{0},s\cdot x_{0}\right)$
+\end_inset
 
+ and 
+\begin_inset Formula $\left(x_{0}+1,s\cdot\left(x_{0}+1\right)\right)$
+\end_inset
+
+ (where 
+\begin_inset Formula $x_{0}\in\mathbb{N}$
+\end_inset
+
+) crosses the tiles between 
+\begin_inset Formula $x=x_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $x=x_{0}+1$
+\end_inset
+
+ on the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis and 
+\begin_inset Formula $y=\left\lfloor s\cdot x_{0}\right\rfloor $
+\end_inset
+
+ and 
+\begin_inset Formula $y=\left\lceil s\cdot\left(x_{0}+1\right)\right\rceil $
+\end_inset
+
+ on the 
+\begin_inset Formula $y$
+\end_inset
+
+ axis.
+ This can be repeated for every 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ in the range 
+\begin_inset Formula $0\dots v_{x}$
+\end_inset
+
+ to obtain the complete collection of intersected tiles.
 \end_layout
 
 \begin_layout Standard
-If either 
+Additional complications occur when 
+\begin_inset Formula $v$
+\end_inset
+
+ has negative components, or when 
 \begin_inset Formula $v_{x}$
 \end_inset
 
@@ -428,15 +519,7 @@ If either
 \begin_inset Formula $v_{y}$
 \end_inset
 
- is zero, the line only passes between tiles, and it is handled as a special
- case.
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-\emph on
-[Explain that it is similar to that other algorithm (name?)]
+ is zero, but this outlines the basic principle of the algorithm.
 \end_layout
 
 \begin_layout Subsection
